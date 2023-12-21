@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option csharp_namespace = "ChatServer.Chat";
+
+// send
+message SPingPacket {
+
+}
+
+// receive
+message CPongPacket {
+
+}

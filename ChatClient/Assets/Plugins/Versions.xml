@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugins>
+  <plugin>
+    <name>System.Runtime.CompilerServices.Unsafe</name>
+    <version>6.0.0</version>
+    <target-framework>.NET Standard2.0</target-framework>
+  </plugin>
+  <plugins>
+    <name>Google.Protobuf</name>
+    <version>3.24.0</version>
+    <target-framework>.NET Standard2.0</target-framework>
+  </plugins>
+  <plugins>
+    <name>Serilog</name>
+    <version>3.0.1</version>
+    <target-framework>.NET Standard2.1</target-framework>
+  </plugins>
+  <plugins>
+    <name>Serilog.Sinks.Async</name>
+    <version>1.5.0</version>
+    <target-framework>.NET Standard2.0</target-framework>
+  </plugins>
+  <plugins>
+    <name>Serilog.Sinks.File</name>
+    <version>5.0.0</version>
+    <target-framework>.NET Standard2.1</target-framework>
+  </plugins>
+</plugins>

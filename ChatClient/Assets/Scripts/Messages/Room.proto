@@ -1,0 +1,80 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "Chat/User.proto";
+
+option csharp_namespace = "ChatServer.Chat";
+
+enum CreateRoomRes {
+    CREATE_ROOM_INVALID = 0;
+    CREATE_ROOM_OK = 1;
+    CREATE_ROOM_DUPLICATED_ROOM_ID = 2;
+    CREATE_ROOM_INVALID_ROOM_ID = 3;
+    CREATE_ROOM_ERROR = 4;
+}
+
+enum EnterRoomRes {
+    ENTER_ROOM_INVALID = 0;
+    ENTER_ROOM_OK = 1;
+    ENTER_ROOM_ALREADY_IN = 2;
+    ENTER_ROOM_NO_SUCH_ROOM = 3;
+    ENTER_ROOM_REJECTED = 4;
+    ENTER_ROOM_ERROR = 5;
+}
+
+// Request creating a room with id=room_id
+message SCreateRoomReq {
+    uint64 room_id = 1;
+    string room_name = 2;
+}
+
+// Response the result of SCreateRoomReq.
+message CCreateRoomRes {
+    CreateRoomRes res = 1;
+}
+
+// Request entering the room with id=room_id
+message SEnterRoomReq {
+    uint64 room_id = 1;
+}
+
+// Response the result of SEnterRoomReq
+message CEnterRoomRes {
+    EnterRoomRes res = 1;
+    RoomInfo room_info = 2;
+}
+
+// Request the list of the infos of the existing all rooms
+message SAllRoomListReq {
+}
+
+// Request the list of the rooms that the user is in.
+message SRoomListReq {
+    UserInfo user_info = 1;
+}
+
+// Response the list of the time and infos of the rooms at this time
+message CRoomListRes {
+    google.protobuf.Timestamp load_time = 1;
+    repeated RoomInfo rooms = 2;
+}
+
+// Request for leaving the room; There is no res packet of it.
+message SLeaveRoomReq {
+    UserInfo user_info = 1;
+    uint64 room_id = 2;
+}
+
+// The packet which notifies that a user left the room.
+message CUserLeftRoom {
+    UserInfo left_user = 1;
+    uint64 room_id = 2;
+}
+
+
+
+message RoomInfo {
+    uint64 room_id = 1;
+    string room_name = 2;
+    repeated UserInfo users = 3;
+}

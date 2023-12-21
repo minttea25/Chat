@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "Chat/User.proto";
+
+option csharp_namespace = "ChatServer.Chat";
+
+enum ChatType {
+    CHAT_TYPE_INVALID = 0;
+    CHAT_TYPE_TEXT = 1;
+    CHAT_TYPE_ICON = 2;
+}
+
+enum SendChatError {
+    SEND_CHAT_ERROR_INVALID = 0;
+    SEND_CHAT_ERROR_SUCCESS = 1;
+    SEND_CHAT_ERROR_NO_SUCH_ROOM = 2;
+    SEND_CHAT_ERROR_ROOM_REMOVED = 3;
+    SEND_CHAT_ERROR_OTHER = 4;
+}
+
+
+message SSendChatText {
+    UserInfo sender_info = 1;
+    ChatText chat = 2;
+    uint64 room_id = 3;
+}
+
+message SSendChatIcon {
+    UserInfo sender_info = 1;
+    ChatIcon icon = 2;
+    uint64 room_id = 3;
+}
+
+// The response of SSendChatText and SSendChatIcon
+message CSendChat {
+    SendChatError error = 1;
+}
+
+// The text chat packet for broadcasting
+message CChatText {
+    UserInfo sender_info = 1;
+    ChatText chat = 2;
+    uint64 room_id = 3;
+}
+
+// The icon chat packet for broadcasting
+message CSendIcon {
+    UserInfo sender_info = 1;
+    ChatIcon chat = 2;
+    uint64 room_id = 3;
+}
+
+
+message ChatBase {
+    ChatType chat_type = 1;
+    google.protobuf.Timestamp timestamp = 2;
+}
+
+message ChatText {
+    ChatBase chat_base = 1;
+    string msg = 2;
+}
+
+message ChatIcon {
+    ChatBase chat_base = 1;
+    uint32 icon_id = 2;
+}
