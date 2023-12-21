@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "ChatServer.Chat";
+
+
+enum LoginRes {
+	LOGIN_INVALID = 0;
+	LOGIN_SUCCESS = 1;
+	LOGIN_FAILED = 2;
+	LOGIN_ERROR = 3;
+}
+
+
+
+message SLoginReq {
+	UserInfo user_info = 1;
+	string auth_token = 2;
+}
+
+message CLoginRes {
+	LoginRes login_res = 1;
+}
+
+
+
+message UserInfo {
+	uint64 user_id = 1;
+	string user_name = 2;
+}

@@ -1,0 +1,9 @@
+{
+    "CommonNamespace": "ChatServer.Chat",
+    "TargetDirectoryPath": "Chat",
+    "OutputServerCodeDirectoryPath": "server",
+    "OutputClientCodeDirectoryPath": "client",
+    "ServerPacketExcludePrefix": "C",
+    "ClientPacketExcludePrefix": "S",
+    "ProtoFileExtension": "proto"
+}

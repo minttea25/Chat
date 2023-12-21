@@ -1,0 +1,29 @@
+{
+  "PROTOC_PATH": "",
+  "IMPORT_PATH": [],
+  "FILES": [],
+  "TARGET_DIR": "Chat",
+  "COMMON_OUTPUT_PATH": "",
+  "LANGS": {
+    "C++": false,
+    "Java": false,
+    "Python": false,
+    "Python(pyi)": false,
+    "CRuby": false,
+    "Objective-C": false,
+    "C#": true,
+    "Kotlin": false,
+    "PHP": false
+  },
+  "LANGS_PATH": {
+    "C++": "",
+    "Java": "",
+    "Python": "",
+    "Python(pyi)": "",
+    "CRuby": "",
+    "Objective-C": "",
+    "C#": "C#",
+    "Kotlin": "",
+    "PHP": ""
+  }
+}
