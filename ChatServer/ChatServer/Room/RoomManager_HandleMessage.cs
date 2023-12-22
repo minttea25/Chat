@@ -1,4 +1,4 @@
-﻿using ChatServer.Chat;
+﻿using Chat;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System;

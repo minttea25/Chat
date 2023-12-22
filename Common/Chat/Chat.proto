@@ -3,7 +3,7 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 import "Chat/User.proto";
 
-option csharp_namespace = "ChatServer.Chat";
+option csharp_namespace = "Chat";
 
 enum ChatType {
     CHAT_TYPE_INVALID = 0;

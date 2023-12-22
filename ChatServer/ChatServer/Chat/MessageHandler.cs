@@ -4,8 +4,9 @@ using ServerCoreTCP;
 using Google.Protobuf;
 using Google.Protobuf.WellKnownTypes;
 using System.Diagnostics;
+using ChatServer;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageHandler
     {

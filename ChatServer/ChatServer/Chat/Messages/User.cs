@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace ChatServer.Chat {
+namespace Chat {
 
   /// <summary>Holder for reflection information generated from Chat/User.proto</summary>
   public static partial class UserReflection {
@@ -33,10 +33,10 @@ namespace ChatServer.Chat {
             "ci5DaGF0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ChatServer.Chat.LoginRes), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SLoginReq), global::ChatServer.Chat.SLoginReq.Parser, new[]{ "UserInfo", "AuthToken" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CLoginRes), global::ChatServer.Chat.CLoginRes.Parser, new[]{ "LoginRes" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.UserInfo), global::ChatServer.Chat.UserInfo.Parser, new[]{ "UserId", "UserName" }, null, null, null, null)
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.LoginRes), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLoginReq), global::Chat.SLoginReq.Parser, new[]{ "UserInfo", "AuthToken" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CLoginRes), global::Chat.CLoginRes.Parser, new[]{ "LoginRes" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserId", "UserName" }, null, null, null, null)
           }));
     }
     #endregion
@@ -67,7 +67,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.UserReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -100,10 +100,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "user_info" field.</summary>
     public const int UserInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo userInfo_;
+    private global::Chat.UserInfo userInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo UserInfo {
+    public global::Chat.UserInfo UserInfo {
       get { return userInfo_; }
       set {
         userInfo_ = value;
@@ -222,7 +222,7 @@ namespace ChatServer.Chat {
       }
       if (other.userInfo_ != null) {
         if (userInfo_ == null) {
-          UserInfo = new global::ChatServer.Chat.UserInfo();
+          UserInfo = new global::Chat.UserInfo();
         }
         UserInfo.MergeFrom(other.UserInfo);
       }
@@ -246,7 +246,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -272,7 +272,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -302,7 +302,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.UserReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -334,10 +334,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "login_res" field.</summary>
     public const int LoginResFieldNumber = 1;
-    private global::ChatServer.Chat.LoginRes loginRes_ = global::ChatServer.Chat.LoginRes.LoginInvalid;
+    private global::Chat.LoginRes loginRes_ = global::Chat.LoginRes.LoginInvalid;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.LoginRes LoginRes {
+    public global::Chat.LoginRes LoginRes {
       get { return loginRes_; }
       set {
         loginRes_ = value;
@@ -367,7 +367,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (LoginRes != global::ChatServer.Chat.LoginRes.LoginInvalid) hash ^= LoginRes.GetHashCode();
+      if (LoginRes != global::Chat.LoginRes.LoginInvalid) hash ^= LoginRes.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -386,7 +386,7 @@ namespace ChatServer.Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (LoginRes != global::ChatServer.Chat.LoginRes.LoginInvalid) {
+      if (LoginRes != global::Chat.LoginRes.LoginInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) LoginRes);
       }
@@ -400,7 +400,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (LoginRes != global::ChatServer.Chat.LoginRes.LoginInvalid) {
+      if (LoginRes != global::Chat.LoginRes.LoginInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) LoginRes);
       }
@@ -414,7 +414,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (LoginRes != global::ChatServer.Chat.LoginRes.LoginInvalid) {
+      if (LoginRes != global::Chat.LoginRes.LoginInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) LoginRes);
       }
       if (_unknownFields != null) {
@@ -429,7 +429,7 @@ namespace ChatServer.Chat {
       if (other == null) {
         return;
       }
-      if (other.LoginRes != global::ChatServer.Chat.LoginRes.LoginInvalid) {
+      if (other.LoginRes != global::Chat.LoginRes.LoginInvalid) {
         LoginRes = other.LoginRes;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -448,7 +448,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            LoginRes = (global::ChatServer.Chat.LoginRes) input.ReadEnum();
+            LoginRes = (global::Chat.LoginRes) input.ReadEnum();
             break;
           }
         }
@@ -467,7 +467,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            LoginRes = (global::ChatServer.Chat.LoginRes) input.ReadEnum();
+            LoginRes = (global::Chat.LoginRes) input.ReadEnum();
             break;
           }
         }
@@ -491,7 +491,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.UserReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

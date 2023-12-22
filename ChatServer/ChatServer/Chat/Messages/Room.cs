@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace ChatServer.Chat {
+namespace Chat {
 
   /// <summary>Holder for reflection information generated from Chat/Room.proto</summary>
   public static partial class RoomReflection {
@@ -47,18 +47,18 @@ namespace ChatServer.Chat {
             "T00QAxIXChNFTlRFUl9ST09NX1JFSkVDVEVEEAQSFAoQRU5URVJfUk9PTV9F",
             "UlJPUhAFQhKqAg9DaGF0U2VydmVyLkNoYXRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::ChatServer.Chat.UserReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ChatServer.Chat.CreateRoomRes), typeof(global::ChatServer.Chat.EnterRoomRes), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SCreateRoomReq), global::ChatServer.Chat.SCreateRoomReq.Parser, new[]{ "RoomId", "RoomName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CCreateRoomRes), global::ChatServer.Chat.CCreateRoomRes.Parser, new[]{ "Res" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SEnterRoomReq), global::ChatServer.Chat.SEnterRoomReq.Parser, new[]{ "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CEnterRoomRes), global::ChatServer.Chat.CEnterRoomRes.Parser, new[]{ "Res", "RoomInfo" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SAllRoomListReq), global::ChatServer.Chat.SAllRoomListReq.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SRoomListReq), global::ChatServer.Chat.SRoomListReq.Parser, new[]{ "UserInfo" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CRoomListRes), global::ChatServer.Chat.CRoomListRes.Parser, new[]{ "LoadTime", "Rooms" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SLeaveRoomReq), global::ChatServer.Chat.SLeaveRoomReq.Parser, new[]{ "UserInfo", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CUserLeftRoom), global::ChatServer.Chat.CUserLeftRoom.Parser, new[]{ "LeftUser", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.RoomInfo), global::ChatServer.Chat.RoomInfo.Parser, new[]{ "RoomId", "RoomName", "Users" }, null, null, null, null)
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Chat.UserReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.CreateRoomRes), typeof(global::Chat.EnterRoomRes), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SCreateRoomReq), global::Chat.SCreateRoomReq.Parser, new[]{ "RoomId", "RoomName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CCreateRoomRes), global::Chat.CCreateRoomRes.Parser, new[]{ "Res" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SEnterRoomReq), global::Chat.SEnterRoomReq.Parser, new[]{ "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEnterRoomRes), global::Chat.CEnterRoomRes.Parser, new[]{ "Res", "RoomInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SAllRoomListReq), global::Chat.SAllRoomListReq.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SRoomListReq), global::Chat.SRoomListReq.Parser, new[]{ "UserInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CRoomListRes), global::Chat.CRoomListRes.Parser, new[]{ "LoadTime", "Rooms" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLeaveRoomReq), global::Chat.SLeaveRoomReq.Parser, new[]{ "UserInfo", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CUserLeftRoom), global::Chat.CUserLeftRoom.Parser, new[]{ "LeftUser", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.RoomInfo), global::Chat.RoomInfo.Parser, new[]{ "RoomId", "RoomName", "Users" }, null, null, null, null)
           }));
     }
     #endregion
@@ -102,7 +102,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -331,7 +331,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -363,10 +363,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "res" field.</summary>
     public const int ResFieldNumber = 1;
-    private global::ChatServer.Chat.CreateRoomRes res_ = global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid;
+    private global::Chat.CreateRoomRes res_ = global::Chat.CreateRoomRes.CreateRoomInvalid;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.CreateRoomRes Res {
+    public global::Chat.CreateRoomRes Res {
       get { return res_; }
       set {
         res_ = value;
@@ -396,7 +396,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Res != global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid) hash ^= Res.GetHashCode();
+      if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) hash ^= Res.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -415,7 +415,7 @@ namespace ChatServer.Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Res != global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid) {
+      if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
@@ -429,7 +429,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Res != global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid) {
+      if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
@@ -443,7 +443,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Res != global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid) {
+      if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
       }
       if (_unknownFields != null) {
@@ -458,7 +458,7 @@ namespace ChatServer.Chat {
       if (other == null) {
         return;
       }
-      if (other.Res != global::ChatServer.Chat.CreateRoomRes.CreateRoomInvalid) {
+      if (other.Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         Res = other.Res;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -477,7 +477,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Res = (global::ChatServer.Chat.CreateRoomRes) input.ReadEnum();
+            Res = (global::Chat.CreateRoomRes) input.ReadEnum();
             break;
           }
         }
@@ -496,7 +496,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Res = (global::ChatServer.Chat.CreateRoomRes) input.ReadEnum();
+            Res = (global::Chat.CreateRoomRes) input.ReadEnum();
             break;
           }
         }
@@ -523,7 +523,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -715,7 +715,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -748,10 +748,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "res" field.</summary>
     public const int ResFieldNumber = 1;
-    private global::ChatServer.Chat.EnterRoomRes res_ = global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid;
+    private global::Chat.EnterRoomRes res_ = global::Chat.EnterRoomRes.EnterRoomInvalid;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.EnterRoomRes Res {
+    public global::Chat.EnterRoomRes Res {
       get { return res_; }
       set {
         res_ = value;
@@ -760,10 +760,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "room_info" field.</summary>
     public const int RoomInfoFieldNumber = 2;
-    private global::ChatServer.Chat.RoomInfo roomInfo_;
+    private global::Chat.RoomInfo roomInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.RoomInfo RoomInfo {
+    public global::Chat.RoomInfo RoomInfo {
       get { return roomInfo_; }
       set {
         roomInfo_ = value;
@@ -794,7 +794,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Res != global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid) hash ^= Res.GetHashCode();
+      if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) hash ^= Res.GetHashCode();
       if (roomInfo_ != null) hash ^= RoomInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -814,7 +814,7 @@ namespace ChatServer.Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Res != global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid) {
+      if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
@@ -832,7 +832,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Res != global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid) {
+      if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
@@ -850,7 +850,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Res != global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid) {
+      if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
       }
       if (roomInfo_ != null) {
@@ -868,12 +868,12 @@ namespace ChatServer.Chat {
       if (other == null) {
         return;
       }
-      if (other.Res != global::ChatServer.Chat.EnterRoomRes.EnterRoomInvalid) {
+      if (other.Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         Res = other.Res;
       }
       if (other.roomInfo_ != null) {
         if (roomInfo_ == null) {
-          RoomInfo = new global::ChatServer.Chat.RoomInfo();
+          RoomInfo = new global::Chat.RoomInfo();
         }
         RoomInfo.MergeFrom(other.RoomInfo);
       }
@@ -893,12 +893,12 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Res = (global::ChatServer.Chat.EnterRoomRes) input.ReadEnum();
+            Res = (global::Chat.EnterRoomRes) input.ReadEnum();
             break;
           }
           case 18: {
             if (roomInfo_ == null) {
-              RoomInfo = new global::ChatServer.Chat.RoomInfo();
+              RoomInfo = new global::Chat.RoomInfo();
             }
             input.ReadMessage(RoomInfo);
             break;
@@ -919,12 +919,12 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Res = (global::ChatServer.Chat.EnterRoomRes) input.ReadEnum();
+            Res = (global::Chat.EnterRoomRes) input.ReadEnum();
             break;
           }
           case 18: {
             if (roomInfo_ == null) {
-              RoomInfo = new global::ChatServer.Chat.RoomInfo();
+              RoomInfo = new global::Chat.RoomInfo();
             }
             input.ReadMessage(RoomInfo);
             break;
@@ -953,7 +953,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1108,7 +1108,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1140,10 +1140,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "user_info" field.</summary>
     public const int UserInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo userInfo_;
+    private global::Chat.UserInfo userInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo UserInfo {
+    public global::Chat.UserInfo UserInfo {
       get { return userInfo_; }
       set {
         userInfo_ = value;
@@ -1237,7 +1237,7 @@ namespace ChatServer.Chat {
       }
       if (other.userInfo_ != null) {
         if (userInfo_ == null) {
-          UserInfo = new global::ChatServer.Chat.UserInfo();
+          UserInfo = new global::Chat.UserInfo();
         }
         UserInfo.MergeFrom(other.UserInfo);
       }
@@ -1258,7 +1258,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -1280,7 +1280,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -1309,7 +1309,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1354,12 +1354,12 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "rooms" field.</summary>
     public const int RoomsFieldNumber = 2;
-    private static readonly pb::FieldCodec<global::ChatServer.Chat.RoomInfo> _repeated_rooms_codec
-        = pb::FieldCodec.ForMessage(18, global::ChatServer.Chat.RoomInfo.Parser);
-    private readonly pbc::RepeatedField<global::ChatServer.Chat.RoomInfo> rooms_ = new pbc::RepeatedField<global::ChatServer.Chat.RoomInfo>();
+    private static readonly pb::FieldCodec<global::Chat.RoomInfo> _repeated_rooms_codec
+        = pb::FieldCodec.ForMessage(18, global::Chat.RoomInfo.Parser);
+    private readonly pbc::RepeatedField<global::Chat.RoomInfo> rooms_ = new pbc::RepeatedField<global::Chat.RoomInfo>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::ChatServer.Chat.RoomInfo> Rooms {
+    public pbc::RepeatedField<global::Chat.RoomInfo> Rooms {
       get { return rooms_; }
     }
 
@@ -1536,7 +1536,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1569,10 +1569,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "user_info" field.</summary>
     public const int UserInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo userInfo_;
+    private global::Chat.UserInfo userInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo UserInfo {
+    public global::Chat.UserInfo UserInfo {
       get { return userInfo_; }
       set {
         userInfo_ = value;
@@ -1691,7 +1691,7 @@ namespace ChatServer.Chat {
       }
       if (other.userInfo_ != null) {
         if (userInfo_ == null) {
-          UserInfo = new global::ChatServer.Chat.UserInfo();
+          UserInfo = new global::Chat.UserInfo();
         }
         UserInfo.MergeFrom(other.UserInfo);
       }
@@ -1715,7 +1715,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -1741,7 +1741,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (userInfo_ == null) {
-              UserInfo = new global::ChatServer.Chat.UserInfo();
+              UserInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(UserInfo);
             break;
@@ -1774,7 +1774,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[8]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1807,10 +1807,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "left_user" field.</summary>
     public const int LeftUserFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo leftUser_;
+    private global::Chat.UserInfo leftUser_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo LeftUser {
+    public global::Chat.UserInfo LeftUser {
       get { return leftUser_; }
       set {
         leftUser_ = value;
@@ -1929,7 +1929,7 @@ namespace ChatServer.Chat {
       }
       if (other.leftUser_ != null) {
         if (leftUser_ == null) {
-          LeftUser = new global::ChatServer.Chat.UserInfo();
+          LeftUser = new global::Chat.UserInfo();
         }
         LeftUser.MergeFrom(other.LeftUser);
       }
@@ -1953,7 +1953,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (leftUser_ == null) {
-              LeftUser = new global::ChatServer.Chat.UserInfo();
+              LeftUser = new global::Chat.UserInfo();
             }
             input.ReadMessage(LeftUser);
             break;
@@ -1979,7 +1979,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (leftUser_ == null) {
-              LeftUser = new global::ChatServer.Chat.UserInfo();
+              LeftUser = new global::Chat.UserInfo();
             }
             input.ReadMessage(LeftUser);
             break;
@@ -2009,7 +2009,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.RoomReflection.Descriptor.MessageTypes[9]; }
+      get { return global::Chat.RoomReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2067,12 +2067,12 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "users" field.</summary>
     public const int UsersFieldNumber = 3;
-    private static readonly pb::FieldCodec<global::ChatServer.Chat.UserInfo> _repeated_users_codec
-        = pb::FieldCodec.ForMessage(26, global::ChatServer.Chat.UserInfo.Parser);
-    private readonly pbc::RepeatedField<global::ChatServer.Chat.UserInfo> users_ = new pbc::RepeatedField<global::ChatServer.Chat.UserInfo>();
+    private static readonly pb::FieldCodec<global::Chat.UserInfo> _repeated_users_codec
+        = pb::FieldCodec.ForMessage(26, global::Chat.UserInfo.Parser);
+    private readonly pbc::RepeatedField<global::Chat.UserInfo> users_ = new pbc::RepeatedField<global::Chat.UserInfo>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::ChatServer.Chat.UserInfo> Users {
+    public pbc::RepeatedField<global::Chat.UserInfo> Users {
       get { return users_; }
     }
 

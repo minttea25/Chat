@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace ChatServer.Chat {
+namespace Chat {
 
   /// <summary>Holder for reflection information generated from Chat/Chat.proto</summary>
   public static partial class ChatReflection {
@@ -46,16 +46,16 @@ namespace ChatServer.Chat {
             "EiAKHFNFTkRfQ0hBVF9FUlJPUl9ST09NX1JFTU9WRUQQAxIZChVTRU5EX0NI",
             "QVRfRVJST1JfT1RIRVIQBEISqgIPQ2hhdFNlcnZlci5DaGF0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::ChatServer.Chat.UserReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ChatServer.Chat.ChatType), typeof(global::ChatServer.Chat.SendChatError), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SSendChatText), global::ChatServer.Chat.SSendChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.SSendChatIcon), global::ChatServer.Chat.SSendChatIcon.Parser, new[]{ "SenderInfo", "Icon", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CSendChat), global::ChatServer.Chat.CSendChat.Parser, new[]{ "Error" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CChatText), global::ChatServer.Chat.CChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.CSendIcon), global::ChatServer.Chat.CSendIcon.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.ChatBase), global::ChatServer.Chat.ChatBase.Parser, new[]{ "ChatType", "Timestamp" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.ChatText), global::ChatServer.Chat.ChatText.Parser, new[]{ "ChatBase", "Msg" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ChatServer.Chat.ChatIcon), global::ChatServer.Chat.ChatIcon.Parser, new[]{ "ChatBase", "IconId" }, null, null, null, null)
+          new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Chat.UserReflection.Descriptor, },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.ChatType), typeof(global::Chat.SendChatError), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatText), global::Chat.SSendChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatIcon), global::Chat.SSendChatIcon.Parser, new[]{ "SenderInfo", "Icon", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CSendChat), global::Chat.CSendChat.Parser, new[]{ "Error" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CChatText), global::Chat.CChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CSendIcon), global::Chat.CSendIcon.Parser, new[]{ "SenderInfo", "Chat", "RoomId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.ChatBase), global::Chat.ChatBase.Parser, new[]{ "ChatType", "Timestamp" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.ChatText), global::Chat.ChatText.Parser, new[]{ "ChatBase", "Msg" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.ChatIcon), global::Chat.ChatIcon.Parser, new[]{ "ChatBase", "IconId" }, null, null, null, null)
           }));
     }
     #endregion
@@ -93,7 +93,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[0]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -127,10 +127,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "sender_info" field.</summary>
     public const int SenderInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo senderInfo_;
+    private global::Chat.UserInfo senderInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo SenderInfo {
+    public global::Chat.UserInfo SenderInfo {
       get { return senderInfo_; }
       set {
         senderInfo_ = value;
@@ -139,10 +139,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat" field.</summary>
     public const int ChatFieldNumber = 2;
-    private global::ChatServer.Chat.ChatText chat_;
+    private global::Chat.ChatText chat_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatText Chat {
+    public global::Chat.ChatText Chat {
       get { return chat_; }
       set {
         chat_ = value;
@@ -274,13 +274,13 @@ namespace ChatServer.Chat {
       }
       if (other.senderInfo_ != null) {
         if (senderInfo_ == null) {
-          SenderInfo = new global::ChatServer.Chat.UserInfo();
+          SenderInfo = new global::Chat.UserInfo();
         }
         SenderInfo.MergeFrom(other.SenderInfo);
       }
       if (other.chat_ != null) {
         if (chat_ == null) {
-          Chat = new global::ChatServer.Chat.ChatText();
+          Chat = new global::Chat.ChatText();
         }
         Chat.MergeFrom(other.Chat);
       }
@@ -304,14 +304,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatText();
+              Chat = new global::Chat.ChatText();
             }
             input.ReadMessage(Chat);
             break;
@@ -337,14 +337,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatText();
+              Chat = new global::Chat.ChatText();
             }
             input.ReadMessage(Chat);
             break;
@@ -374,7 +374,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[1]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -408,10 +408,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "sender_info" field.</summary>
     public const int SenderInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo senderInfo_;
+    private global::Chat.UserInfo senderInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo SenderInfo {
+    public global::Chat.UserInfo SenderInfo {
       get { return senderInfo_; }
       set {
         senderInfo_ = value;
@@ -420,10 +420,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "icon" field.</summary>
     public const int IconFieldNumber = 2;
-    private global::ChatServer.Chat.ChatIcon icon_;
+    private global::Chat.ChatIcon icon_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatIcon Icon {
+    public global::Chat.ChatIcon Icon {
       get { return icon_; }
       set {
         icon_ = value;
@@ -555,13 +555,13 @@ namespace ChatServer.Chat {
       }
       if (other.senderInfo_ != null) {
         if (senderInfo_ == null) {
-          SenderInfo = new global::ChatServer.Chat.UserInfo();
+          SenderInfo = new global::Chat.UserInfo();
         }
         SenderInfo.MergeFrom(other.SenderInfo);
       }
       if (other.icon_ != null) {
         if (icon_ == null) {
-          Icon = new global::ChatServer.Chat.ChatIcon();
+          Icon = new global::Chat.ChatIcon();
         }
         Icon.MergeFrom(other.Icon);
       }
@@ -585,14 +585,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (icon_ == null) {
-              Icon = new global::ChatServer.Chat.ChatIcon();
+              Icon = new global::Chat.ChatIcon();
             }
             input.ReadMessage(Icon);
             break;
@@ -618,14 +618,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (icon_ == null) {
-              Icon = new global::ChatServer.Chat.ChatIcon();
+              Icon = new global::Chat.ChatIcon();
             }
             input.ReadMessage(Icon);
             break;
@@ -658,7 +658,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -690,10 +690,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "error" field.</summary>
     public const int ErrorFieldNumber = 1;
-    private global::ChatServer.Chat.SendChatError error_ = global::ChatServer.Chat.SendChatError.Invalid;
+    private global::Chat.SendChatError error_ = global::Chat.SendChatError.Invalid;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.SendChatError Error {
+    public global::Chat.SendChatError Error {
       get { return error_; }
       set {
         error_ = value;
@@ -723,7 +723,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Error != global::ChatServer.Chat.SendChatError.Invalid) hash ^= Error.GetHashCode();
+      if (Error != global::Chat.SendChatError.Invalid) hash ^= Error.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -742,7 +742,7 @@ namespace ChatServer.Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Error != global::ChatServer.Chat.SendChatError.Invalid) {
+      if (Error != global::Chat.SendChatError.Invalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Error);
       }
@@ -756,7 +756,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Error != global::ChatServer.Chat.SendChatError.Invalid) {
+      if (Error != global::Chat.SendChatError.Invalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) Error);
       }
@@ -770,7 +770,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Error != global::ChatServer.Chat.SendChatError.Invalid) {
+      if (Error != global::Chat.SendChatError.Invalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Error);
       }
       if (_unknownFields != null) {
@@ -785,7 +785,7 @@ namespace ChatServer.Chat {
       if (other == null) {
         return;
       }
-      if (other.Error != global::ChatServer.Chat.SendChatError.Invalid) {
+      if (other.Error != global::Chat.SendChatError.Invalid) {
         Error = other.Error;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -804,7 +804,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            Error = (global::ChatServer.Chat.SendChatError) input.ReadEnum();
+            Error = (global::Chat.SendChatError) input.ReadEnum();
             break;
           }
         }
@@ -823,7 +823,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            Error = (global::ChatServer.Chat.SendChatError) input.ReadEnum();
+            Error = (global::Chat.SendChatError) input.ReadEnum();
             break;
           }
         }
@@ -850,7 +850,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[3]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -884,10 +884,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "sender_info" field.</summary>
     public const int SenderInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo senderInfo_;
+    private global::Chat.UserInfo senderInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo SenderInfo {
+    public global::Chat.UserInfo SenderInfo {
       get { return senderInfo_; }
       set {
         senderInfo_ = value;
@@ -896,10 +896,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat" field.</summary>
     public const int ChatFieldNumber = 2;
-    private global::ChatServer.Chat.ChatText chat_;
+    private global::Chat.ChatText chat_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatText Chat {
+    public global::Chat.ChatText Chat {
       get { return chat_; }
       set {
         chat_ = value;
@@ -1031,13 +1031,13 @@ namespace ChatServer.Chat {
       }
       if (other.senderInfo_ != null) {
         if (senderInfo_ == null) {
-          SenderInfo = new global::ChatServer.Chat.UserInfo();
+          SenderInfo = new global::Chat.UserInfo();
         }
         SenderInfo.MergeFrom(other.SenderInfo);
       }
       if (other.chat_ != null) {
         if (chat_ == null) {
-          Chat = new global::ChatServer.Chat.ChatText();
+          Chat = new global::Chat.ChatText();
         }
         Chat.MergeFrom(other.Chat);
       }
@@ -1061,14 +1061,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatText();
+              Chat = new global::Chat.ChatText();
             }
             input.ReadMessage(Chat);
             break;
@@ -1094,14 +1094,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatText();
+              Chat = new global::Chat.ChatText();
             }
             input.ReadMessage(Chat);
             break;
@@ -1134,7 +1134,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[4]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1168,10 +1168,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "sender_info" field.</summary>
     public const int SenderInfoFieldNumber = 1;
-    private global::ChatServer.Chat.UserInfo senderInfo_;
+    private global::Chat.UserInfo senderInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.UserInfo SenderInfo {
+    public global::Chat.UserInfo SenderInfo {
       get { return senderInfo_; }
       set {
         senderInfo_ = value;
@@ -1180,10 +1180,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat" field.</summary>
     public const int ChatFieldNumber = 2;
-    private global::ChatServer.Chat.ChatIcon chat_;
+    private global::Chat.ChatIcon chat_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatIcon Chat {
+    public global::Chat.ChatIcon Chat {
       get { return chat_; }
       set {
         chat_ = value;
@@ -1315,13 +1315,13 @@ namespace ChatServer.Chat {
       }
       if (other.senderInfo_ != null) {
         if (senderInfo_ == null) {
-          SenderInfo = new global::ChatServer.Chat.UserInfo();
+          SenderInfo = new global::Chat.UserInfo();
         }
         SenderInfo.MergeFrom(other.SenderInfo);
       }
       if (other.chat_ != null) {
         if (chat_ == null) {
-          Chat = new global::ChatServer.Chat.ChatIcon();
+          Chat = new global::Chat.ChatIcon();
         }
         Chat.MergeFrom(other.Chat);
       }
@@ -1345,14 +1345,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatIcon();
+              Chat = new global::Chat.ChatIcon();
             }
             input.ReadMessage(Chat);
             break;
@@ -1378,14 +1378,14 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (senderInfo_ == null) {
-              SenderInfo = new global::ChatServer.Chat.UserInfo();
+              SenderInfo = new global::Chat.UserInfo();
             }
             input.ReadMessage(SenderInfo);
             break;
           }
           case 18: {
             if (chat_ == null) {
-              Chat = new global::ChatServer.Chat.ChatIcon();
+              Chat = new global::Chat.ChatIcon();
             }
             input.ReadMessage(Chat);
             break;
@@ -1415,7 +1415,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[5]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1448,10 +1448,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat_type" field.</summary>
     public const int ChatTypeFieldNumber = 1;
-    private global::ChatServer.Chat.ChatType chatType_ = global::ChatServer.Chat.ChatType.Invalid;
+    private global::Chat.ChatType chatType_ = global::Chat.ChatType.Invalid;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatType ChatType {
+    public global::Chat.ChatType ChatType {
       get { return chatType_; }
       set {
         chatType_ = value;
@@ -1494,7 +1494,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (ChatType != global::ChatServer.Chat.ChatType.Invalid) hash ^= ChatType.GetHashCode();
+      if (ChatType != global::Chat.ChatType.Invalid) hash ^= ChatType.GetHashCode();
       if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1514,7 +1514,7 @@ namespace ChatServer.Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ChatType != global::ChatServer.Chat.ChatType.Invalid) {
+      if (ChatType != global::Chat.ChatType.Invalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) ChatType);
       }
@@ -1532,7 +1532,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ChatType != global::ChatServer.Chat.ChatType.Invalid) {
+      if (ChatType != global::Chat.ChatType.Invalid) {
         output.WriteRawTag(8);
         output.WriteEnum((int) ChatType);
       }
@@ -1550,7 +1550,7 @@ namespace ChatServer.Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (ChatType != global::ChatServer.Chat.ChatType.Invalid) {
+      if (ChatType != global::Chat.ChatType.Invalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ChatType);
       }
       if (timestamp_ != null) {
@@ -1568,7 +1568,7 @@ namespace ChatServer.Chat {
       if (other == null) {
         return;
       }
-      if (other.ChatType != global::ChatServer.Chat.ChatType.Invalid) {
+      if (other.ChatType != global::Chat.ChatType.Invalid) {
         ChatType = other.ChatType;
       }
       if (other.timestamp_ != null) {
@@ -1593,7 +1593,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            ChatType = (global::ChatServer.Chat.ChatType) input.ReadEnum();
+            ChatType = (global::Chat.ChatType) input.ReadEnum();
             break;
           }
           case 18: {
@@ -1619,7 +1619,7 @@ namespace ChatServer.Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            ChatType = (global::ChatServer.Chat.ChatType) input.ReadEnum();
+            ChatType = (global::Chat.ChatType) input.ReadEnum();
             break;
           }
           case 18: {
@@ -1650,7 +1650,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[6]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1683,10 +1683,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat_base" field.</summary>
     public const int ChatBaseFieldNumber = 1;
-    private global::ChatServer.Chat.ChatBase chatBase_;
+    private global::Chat.ChatBase chatBase_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatBase ChatBase {
+    public global::Chat.ChatBase ChatBase {
       get { return chatBase_; }
       set {
         chatBase_ = value;
@@ -1805,7 +1805,7 @@ namespace ChatServer.Chat {
       }
       if (other.chatBase_ != null) {
         if (chatBase_ == null) {
-          ChatBase = new global::ChatServer.Chat.ChatBase();
+          ChatBase = new global::Chat.ChatBase();
         }
         ChatBase.MergeFrom(other.ChatBase);
       }
@@ -1829,7 +1829,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (chatBase_ == null) {
-              ChatBase = new global::ChatServer.Chat.ChatBase();
+              ChatBase = new global::Chat.ChatBase();
             }
             input.ReadMessage(ChatBase);
             break;
@@ -1855,7 +1855,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (chatBase_ == null) {
-              ChatBase = new global::ChatServer.Chat.ChatBase();
+              ChatBase = new global::Chat.ChatBase();
             }
             input.ReadMessage(ChatBase);
             break;
@@ -1885,7 +1885,7 @@ namespace ChatServer.Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::ChatServer.Chat.ChatReflection.Descriptor.MessageTypes[7]; }
+      get { return global::Chat.ChatReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1918,10 +1918,10 @@ namespace ChatServer.Chat {
 
     /// <summary>Field number for the "chat_base" field.</summary>
     public const int ChatBaseFieldNumber = 1;
-    private global::ChatServer.Chat.ChatBase chatBase_;
+    private global::Chat.ChatBase chatBase_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ChatServer.Chat.ChatBase ChatBase {
+    public global::Chat.ChatBase ChatBase {
       get { return chatBase_; }
       set {
         chatBase_ = value;
@@ -2040,7 +2040,7 @@ namespace ChatServer.Chat {
       }
       if (other.chatBase_ != null) {
         if (chatBase_ == null) {
-          ChatBase = new global::ChatServer.Chat.ChatBase();
+          ChatBase = new global::Chat.ChatBase();
         }
         ChatBase.MergeFrom(other.ChatBase);
       }
@@ -2064,7 +2064,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (chatBase_ == null) {
-              ChatBase = new global::ChatServer.Chat.ChatBase();
+              ChatBase = new global::Chat.ChatBase();
             }
             input.ReadMessage(ChatBase);
             break;
@@ -2090,7 +2090,7 @@ namespace ChatServer.Chat {
             break;
           case 10: {
             if (chatBase_ == null) {
-              ChatBase = new global::ChatServer.Chat.ChatBase();
+              ChatBase = new global::Chat.ChatBase();
             }
             input.ReadMessage(ChatBase);
             break;

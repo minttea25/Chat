@@ -29,18 +29,21 @@ namespace Core
 
         // add custom managers...
         readonly static NetworkManager _network = new();
+        readonly static UnityManager _unity = new();
 
         public static NetworkManager Network => _network;
+        public static UnityManager Unity => _unity;
 
         readonly static List<IManager> _managers = new()
         {
             _resource, _ui, _scene, _sound, _data, // add customs...
-            _network
+            _network, _unity
         };
 
         private void Update()
         {
             _network.Update();
+            _unity.Update();
         }
 
         public void OnDisable()
@@ -50,9 +53,11 @@ namespace Core
 
         // Game Contents
 
-        public static Coroutine StartCoroutineEx(IEnumerator coroutine)
+        public static void StartCoroutineEx(IEnumerator coroutine)
         {
-            return _instance.StartCoroutine(coroutine);
+            var co = _instance.StartCoroutine(coroutine);
+           // _instance._coroutines.Add(nameof(coroutine), co);
+            Debug.Log(nameof(coroutine));
         }
 
         internal static void Init()

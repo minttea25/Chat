@@ -7,6 +7,8 @@ using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Core;
 using ServerCoreTCP.Utils;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -26,6 +28,8 @@ public class NetworkManager : IManager, IUpdate
 
     ClientService client = null;
     public ServerSession session = null;
+
+    Coroutine pingTask = null;
 
     /// <summary>
     /// Connect to server
@@ -73,6 +77,8 @@ public class NetworkManager : IManager, IUpdate
 
     void IManager.ClearManager()
     {
+        CoroutineManager.StopCoroutineEx(pingTask);
+
         endPoint = null;
         session = null;
         client = null;
@@ -104,6 +110,27 @@ public class NetworkManager : IManager, IUpdate
         foreach (var packet in packets)
         {
             MessageManager.Instance.HandlePacket(packet.Type, packet.Message, session);
+        }
+    }
+
+    public void PingPong()
+    {
+        pingTask = CoroutineManager.StartCoroutineEx(SendPing(), nameof(SendPing));
+    }
+
+    public long PingTick { get; private set;} = 0;
+
+    IEnumerator SendPing()
+    {
+        yield return null;
+
+        while (true)
+        {
+            // TODO : use constant
+            yield return new WaitForSeconds(3f);
+
+            PingTick = Global.G_Stopwatch.ElapsedMilliseconds;
+            ManagerCore.Network.session.Send(new SPingPacket());
         }
     }
 }

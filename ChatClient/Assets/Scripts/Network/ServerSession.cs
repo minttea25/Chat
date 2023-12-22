@@ -13,22 +13,6 @@ using System.Threading;
 
 public class ServerSession : PacketSession
 {
-    public long PingTick { get; private set; } = 0;
-
-    Coroutine pingTask;
-
-    IEnumerator SendPing(float intervalSeconds)
-    {
-        yield return null;
-
-        while (true)
-        {
-            PingTick = Global.G_Stopwatch.ElapsedTicks;
-            Send(new SPingPacket());
-
-            yield return new WaitForSeconds(intervalSeconds);
-        }
-    }
 
     void QueuePacket(ushort msgType, Session _, IMessage message)
     {
@@ -44,7 +28,7 @@ public class ServerSession : PacketSession
     {
         Debug.Log($"Connected to server: {endPoint}");
 
-        // TODO
+        UnityJobQueue.Instance.Push(ManagerCore.Network.PingPong);
     }
 
     public override void OnDisconnected(EndPoint endPoint, object error = null)

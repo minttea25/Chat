@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net;
-using ChatServer.Chat;
+using Chat;
 using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Core;

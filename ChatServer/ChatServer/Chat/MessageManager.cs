@@ -7,7 +7,7 @@ using ServerCoreTCP;
 using ServerCoreTCP.MessageWrapper;
 using ServerCoreTCP.Utils;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageManager
     {

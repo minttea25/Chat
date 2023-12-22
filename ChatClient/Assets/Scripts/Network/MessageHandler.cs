@@ -73,7 +73,7 @@ namespace Chat
 
             // TODO
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;
-            var pingTick = ManagerCore.Scene.GetScene<MainScene>().PingTick;
+            var pingTick = ManagerCore.Network.PingTick;
             UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
         }
     }

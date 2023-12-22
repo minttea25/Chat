@@ -1,4 +1,4 @@
-﻿using ChatServer.Chat;
+﻿using Chat;
 using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.MessageWrapper;
 using System;

@@ -1,6 +1,6 @@
 using System;
 
-namespace ChatServer.Chat
+namespace Chat
 {
 #if PACKET_TYPE_INT
     public enum PacketType : uint
