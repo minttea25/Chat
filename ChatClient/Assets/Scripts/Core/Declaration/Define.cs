@@ -14,7 +14,8 @@ namespace Core
     {
         INVALID = -1,
 
-        Main = 1,
+        Start = 1,
+        Main = 2,
         
         // add your type here from 0, 1, ...
         //Title = 0,

@@ -49,7 +49,7 @@ namespace Chat
         {
             CRoomListRes msg = message as CRoomListRes;
 
-            // TODO
+            ManagerCore.Network.ResRoomList(msg);
         }
 
         public static void CUserLeftRoomMessageHandler(IMessage message, Session session)
@@ -63,13 +63,12 @@ namespace Chat
         {
             CLoginRes msg = message as CLoginRes;
 
-            // TODO
+            ManagerCore.Network.ResLogin(msg);
         }
 
         public static void CPongPacketMessageHandler(IMessage message, Session session)
         {
             CPongPacket msg = message as CPongPacket;
-            ServerSession s = session as ServerSession;
 
             // TODO
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;

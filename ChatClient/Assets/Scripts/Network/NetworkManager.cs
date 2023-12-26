@@ -1,19 +1,17 @@
 using Chat;
 using Core;
 using Google.Protobuf;
-using JetBrains.Annotations;
 using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Core;
 using ServerCoreTCP.Utils;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
 
-public class NetworkManager : IManager, IUpdate
+public partial class NetworkManager : IManager, IUpdate
 {
     #region Singleton
     static NetworkManager instance = new NetworkManager();
@@ -24,17 +22,21 @@ public class NetworkManager : IManager, IUpdate
 
     public uint ConnectedId { get; private set; } = 0;
     public string AuthToken { get; private set; } = null;
-    public bool Connected { get; private set; } = false;
+    public bool Connected { get; set; } = false;
+    public UserInfo UserInfo { get; private set; }
 
     ClientService client = null;
     public ServerSession session = null;
 
     Coroutine pingTask = null;
 
+    
+
+    #region Service
     /// <summary>
     /// Connect to server
     /// </summary>
-    public void StartService()
+    public void StartService(Action<SocketError> failedCallback = null)
     {
         Utils.AssertCrash(endPoint != null);
 
@@ -42,11 +44,9 @@ public class NetworkManager : IManager, IUpdate
 
         client = new ClientService(
             endPoint, () => { session = new ServerSession(); return session; },
-            config, ConnectFailed);
+            config, failedCallback ?? ConnectFailed);
 
         client.Start();
-
-        Connected = true;
     }
 
     /// <summary>
@@ -60,7 +60,7 @@ public class NetworkManager : IManager, IUpdate
         Connected = false;
     }
 
-    public void Send(IMessage message)
+    public void Send<T>(T message) where T : IMessage
     {
         session?.Send(message);
     }
@@ -73,7 +73,7 @@ public class NetworkManager : IManager, IUpdate
 
         // TODO : Àç¿¬°á question popup
     }
-
+    #endregion
 
     void IManager.ClearManager()
     {

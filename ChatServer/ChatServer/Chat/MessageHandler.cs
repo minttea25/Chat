@@ -91,7 +91,7 @@ namespace Chat
             ClientSession cs = session as ClientSession;
 
             // TEMP
-            Console.WriteLine(msg);
+             Console.WriteLine(msg);
             cs.UserInfo = msg.UserInfo;
             CLoginRes res = new()
             {
@@ -109,5 +109,7 @@ namespace Chat
 
             cs?.Send(new CPongPacket());
         }
+
+
     }
 }

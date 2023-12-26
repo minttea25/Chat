@@ -53,12 +53,6 @@ namespace Core
 
         // Game Contents
 
-        public static void StartCoroutineEx(IEnumerator coroutine)
-        {
-            var co = _instance.StartCoroutine(coroutine);
-           // _instance._coroutines.Add(nameof(coroutine), co);
-            Debug.Log(nameof(coroutine));
-        }
 
         internal static void Init()
         {

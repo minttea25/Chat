@@ -38,7 +38,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c0ec94f6f5b556b419fe8a354cbd23dc
-    m_Address: RoomListItem
+    m_Address: RoomListItemUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: cc7e2a1de6205bb4e8502844bbf2c53d
@@ -58,7 +58,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: db9824e292390c24aac3c94f65392ad8
-    m_Address: MainUI
+    m_Address: MainSceneUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 8cee4055facdbfa4b8ffe6b81bb51919
@@ -67,6 +67,10 @@ MonoBehaviour:
     m_SerializedLabels: []
   - m_GUID: aeb5f7652af1d4e4793211b3d8a96577
     m_Address: ChatContentEtc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b12046d495ffd44c9b9d02f0d22f047
+    m_Address: StartSceneUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

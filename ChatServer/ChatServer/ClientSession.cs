@@ -29,6 +29,12 @@ namespace ChatServer
                 res.Rooms.Add(room);
             }
             res.LoadTime = Timestamp.FromDateTime(DateTime.UtcNow);
+
+            // TEST
+            res.Rooms.Add(new RoomInfo() { RoomId = 100, RoomName = "Room100" });
+            res.Rooms.Add(new RoomInfo() { RoomId = 200, RoomName = "Room200" });
+            res.Rooms.Add(new RoomInfo() { RoomId = 300, RoomName = "Room300" });
+
             Send(res);
         }
 

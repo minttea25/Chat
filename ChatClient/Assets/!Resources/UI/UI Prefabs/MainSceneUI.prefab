@@ -1114,8 +1114,9 @@ GameObject:
   - component: {fileID: 8546442978839114380}
   - component: {fileID: 8546442978839114381}
   - component: {fileID: 8546442978839114418}
+  - component: {fileID: 7992141739890413373}
   m_Layer: 5
-  m_Name: MainUI
+  m_Name: MainSceneUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1204,6 +1205,56 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &7992141739890413373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8546442978839114419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11cb466b08381314481b6ffb9bfdd46c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DBInfo:
+    IsNew: 0
+    AllFound: 1
+    NotFoundObjects: []
+  Context:
+    LeftPanel:
+      BindObject: {fileID: 8546442980023466277}
+      BindObjectType: 4
+    RightPanel:
+      BindObject: {fileID: 8546442978246735098}
+      BindObjectType: 4
+    RoomList:
+      BindObject: {fileID: 8546442978681353381}
+      BindObjectType: 0
+    RefreshedTimeText:
+      BindObject: {fileID: 9135058594440255650}
+      BindObjectType: 2
+    EnterRoomButton:
+      BindObject: {fileID: 8546442978063062149}
+      BindObjectType: 4
+    CreateRoomButton:
+      BindObject: {fileID: 8546442979149968816}
+      BindObjectType: 4
+    InfoButton:
+      BindObject: {fileID: 8546442978935740947}
+      BindObjectType: 4
+    LogoutButton:
+      BindObject: {fileID: 8546442978699376649}
+      BindObjectType: 4
+    SettingButton:
+      BindObject: {fileID: 8546442978537985257}
+      BindObjectType: 4
+    NoSelectedImage:
+      BindObject: {fileID: 8546442978186662077}
+      BindObjectType: 4
+    ChatPanel:
+      BindObject: {fileID: 8546442978012078071}
+      BindObjectType: 4
 --- !u!1 &8546442978935740947
 GameObject:
   m_ObjectHideFlags: 0
