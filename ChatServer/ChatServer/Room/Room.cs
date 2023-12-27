@@ -4,25 +4,22 @@ using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System.Collections.Generic;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class Room : JobSerializer, IUpdate
     {
-        public ulong Id { get; private set; }
-        public string Name { get; private set; }
+        public ulong DbId => RoomInfo?.RoomDbId ?? throw new System.NullReferenceException();
+        public string Name => RoomInfo?.RoomName ?? throw new System.NullReferenceException();
+        public ulong Number => RoomInfo?.RoomNumber ?? throw new System.NullReferenceException();
         public int UserCount => _users.Count;
         public RoomInfo RoomInfo { get; private set; }
 
         Dictionary<ulong, ClientSession> _users = new Dictionary<ulong, ClientSession>();
 
-        public Room(ulong roomId, string name)
+        public Room(RoomInfo roomInfo)
         {
-            Id = roomId;
-            Name = name;
-
-            RoomInfo = new RoomInfo();
-            RoomInfo.RoomId = roomId;
-            RoomInfo.RoomName = name;
+            // copy
+            RoomInfo.MergeFrom(roomInfo);
         }
 
         void Broadcast<T>(T message) where T : IMessage
@@ -42,7 +39,7 @@ namespace ChatServer
 
         void UserEnterRoom(ClientSession session)
         {
-            _users.Add(session.UserInfo.UserId, session);
+            _users.Add(session.UserInfo.UserDbId, session);
         }
     }
 }

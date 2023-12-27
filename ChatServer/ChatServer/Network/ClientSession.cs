@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 
-namespace ChatServer
+namespace Chat
 {
-    public class ClientSession : PacketSession
+    public partial class ClientSession : PacketSession
     {
         public uint ServerSessionId { get; set; } = 0;
         public UserInfo UserInfo { get; set; }
@@ -20,23 +20,6 @@ namespace ChatServer
             return _rooms.Select(r => r.RoomInfo).ToList();
         }
 
-
-        public void HandleRoomListReq()
-        {
-            CRoomListRes res = new();
-            foreach (RoomInfo room in GetRoomInfos())
-            {
-                res.Rooms.Add(room);
-            }
-            res.LoadTime = Timestamp.FromDateTime(DateTime.UtcNow);
-
-            // TEST
-            res.Rooms.Add(new RoomInfo() { RoomId = 100, RoomName = "Room100" });
-            res.Rooms.Add(new RoomInfo() { RoomId = 200, RoomName = "Room200" });
-            res.Rooms.Add(new RoomInfo() { RoomId = 300, RoomName = "Room300" });
-
-            Send(res);
-        }
 
 
         public override void InitSession()

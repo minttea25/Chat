@@ -3,7 +3,7 @@ using System;
 using ServerCoreTCP;
 using Google.Protobuf;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageHandler
     {
@@ -21,9 +21,9 @@ namespace ChatServer.Chat
             // TODO
         }
 
-        public static void CSendIconMessageHandler(IMessage message, Session session)
+        public static void CChatIconMessageHandler(IMessage message, Session session)
         {
-            CSendIcon msg = message as CSendIcon;
+            CChatIcon msg = message as CChatIcon;
 
             // TODO
         }

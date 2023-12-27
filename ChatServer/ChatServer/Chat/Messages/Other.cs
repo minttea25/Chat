@@ -25,7 +25,7 @@ namespace Chat {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChBDaGF0L090aGVyLnByb3RvIg0KC1NQaW5nUGFja2V0Ig0KC0NQb25nUGFj",
-            "a2V0QhKqAg9DaGF0U2VydmVyLkNoYXRiBnByb3RvMw=="));
+            "a2V0QgeqAgRDaGF0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

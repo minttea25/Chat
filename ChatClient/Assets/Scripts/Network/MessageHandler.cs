@@ -24,9 +24,10 @@ namespace Chat
             // TODO
         }
 
-        public static void CSendIconMessageHandler(IMessage message, Session session)
+
+        public static void CChatIconMessageHandler(IMessage message, Session session)
         {
-            CSendIcon msg = message as CSendIcon;
+            CChatIcon msg = message as CChatIcon;
 
             // TODO
         }
@@ -73,7 +74,8 @@ namespace Chat
             // TODO
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;
             var pingTick = ManagerCore.Network.PingTick;
-            UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
+            //UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
+            ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick);
         }
     }
 }

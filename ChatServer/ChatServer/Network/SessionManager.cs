@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ChatServer
+namespace Chat.Network
 {
     public class SessionManager
     {
@@ -31,16 +31,16 @@ namespace ChatServer
 
         public bool Remove(uint id)
         {
-           lock (_lock)
-           {
+            lock (_lock)
+            {
                 return _sessions.Remove(id);
-           }
+            }
         }
 
         public List<ClientSession> GetSessions()
         {
             List<ClientSession> sessions;
-            lock(_lock)
+            lock (_lock)
             {
                 sessions = _sessions.Values.ToList();
             }

@@ -30,7 +30,6 @@ public partial class NetworkManager : IManager, IUpdate
         Debug.Log($"ResRoomList: {res.Rooms.Count}");
 
         ManagerCore.Scene.GetScene<MainScene>().RefreshRoomList(res.LoadTime, res.Rooms);
-
         
     }
 }

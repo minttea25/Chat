@@ -23,13 +23,13 @@ enum SendChatError {
 message SSendChatText {
     UserInfo sender_info = 1;
     ChatText chat = 2;
-    uint64 room_id = 3;
+    uint64 room_number = 3;
 }
 
 message SSendChatIcon {
     UserInfo sender_info = 1;
-    ChatIcon icon = 2;
-    uint64 room_id = 3;
+    ChatIcon chat = 2;
+    uint64 room_number = 3;
 }
 
 // The response of SSendChatText and SSendChatIcon
@@ -41,20 +41,21 @@ message CSendChat {
 message CChatText {
     UserInfo sender_info = 1;
     ChatText chat = 2;
-    uint64 room_id = 3;
+    uint64 room_number = 3;
 }
 
 // The icon chat packet for broadcasting
-message CSendIcon {
+message CChatIcon {
     UserInfo sender_info = 1;
     ChatIcon chat = 2;
-    uint64 room_id = 3;
+    uint64 room_number = 3;
 }
 
 
 message ChatBase {
-    ChatType chat_type = 1;
-    google.protobuf.Timestamp timestamp = 2;
+    uint64 chat_db_id = 1;
+    ChatType chat_type = 2;
+    google.protobuf.Timestamp timestamp = 3;
 }
 
 message ChatText {

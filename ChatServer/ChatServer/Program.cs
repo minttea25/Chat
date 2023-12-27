@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Net;
-using Chat;
+using Chat.DB;
+using Chat.Network;
 using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Core;
 using ServerCoreTCP.Utils;
 
-namespace ChatServer
+namespace Chat
 {
     class Program
     {
@@ -21,6 +22,11 @@ namespace ChatServer
             {
                 session.FlushSend();
             }
+        }
+
+        static void DbTask()
+        {
+            DbProcess.Instance.Flush();
         }
 
         static void Main(string[] args)
@@ -54,6 +60,7 @@ namespace ChatServer
             TaskManager taskManager = new TaskManager();
             taskManager.AddTask(RoomManagerTask);
             taskManager.AddTask(SessionTask);
+            taskManager.AddTask(DbTask);
             taskManager.StartTasks();
 
 

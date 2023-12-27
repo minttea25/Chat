@@ -1,4 +1,7 @@
 ﻿using Chat;
+using Chat.DB;
+using Microsoft.EntityFrameworkCore;
+using ServerCoreTCP;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System;
@@ -7,57 +10,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class RoomManager : JobSerializerWithTimer, IUpdate
     {
         public void HandleCreateRoom(ClientSession session, SCreateRoomReq req)
         {
-            Add(() =>
-            {
-                if (Rooms.ContainsKey(req.RoomId) == true)
-                {
-                    CCreateRoomRes res = new()
-                    {
-                        Res = CreateRoomRes.CreateRoomDuplicatedRoomId
-                    };
-                    session.Send(res);
-                }
-                else
-                {
-                    // 방 생성 및 입장 한번에 하기 (한번에 안하면 비어있는 방으로 간주될 수 있음)
-                    // TODO : 방 생성 요청에 이름추가하기
-                    CreateRoom(req.RoomId, req.RoomName);
-
-                    // 로직이 방체크(timer) -> RoomManager.Update -> Room.Update 
-                    // 방생성 후에 비어있는 방체크하지 않음
-                    HandleEnterRoom(session, req.RoomId);
-                }
-            });
+            DbProcess.CreateRoom(req.RoomNumber, req.RoomName, session);
         }
 
         public void HandleEnterRoom(ClientSession session, ulong roomId)
         {
-            Add(() =>
-            {
-                if (Rooms.ContainsKey(roomId) == false)
-                {
-                    CEnterRoomRes res = new()
-                    {
-                        Res = EnterRoomRes.EnterRoomNoSuchRoom,
-                        RoomInfo = null,
-                    };
-                    session.Send(res);
-                }
-                else Rooms[roomId].HandleEnterRoom(session);
-            });
+            DbProcess.EnterRoom(roomId, session);
         }
 
-        public void HandleLeaveRoom(ClientSession session, ulong roomId)
+        public void HandleLeaveRoom(ClientSession session, ulong roomNumber)
         {
+            // TODO : RoomManager 에서 Room 캐싱 추가
+            // 현재 Db에서 일일히 확인중...
+
+            // db 처리 (room에서 user 삭제)
+            DbProcess.LeaveRoom(session.UserInfo.UserDbId, roomNumber);
+
+            // 방에 있는 다른 유저 broadcast
             Add(() =>
             {
-                if (Rooms.ContainsKey(roomId) == false)
+                if (Rooms.ContainsKey(roomNumber) == false)
                 {
                     // wrong request
 
@@ -66,10 +44,48 @@ namespace ChatServer
                 }
                 else
                 {
-                    Rooms[roomId].HandleLeaveRoom(session.UserInfo);
+                    Rooms[roomNumber].HandleLeaveRoom(session.UserInfo);
                 }
             });
         }
 
+        public void HandleChatText(SSendChatText chat, ClientSession session)
+        {
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(chat.RoomNumber) == false)
+                {
+                    // wrong request
+
+                    // TODO : Error Handling
+                    return;
+                }
+                else
+                {
+                    Rooms[chat.RoomNumber].HandleSendChatText(chat, session);
+                }
+            });
+        }
+
+        public void HandleChatIcon(SSendChatIcon chat, ClientSession session)
+        {
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(chat.RoomNumber) == false)
+                {
+                    // wrong request
+
+                    // TODO : Error Handling
+                    return;
+                }
+                else
+                {
+                    // 전송 확인 패킷 전송
+
+
+                    Rooms[chat.RoomNumber].HandleSendChatIcon(chat, session);
+                }
+            });
+        }
     }
 }

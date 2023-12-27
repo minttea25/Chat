@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class Room : JobSerializer, IUpdate
     {
@@ -15,13 +15,14 @@ namespace ChatServer
         {
             Add(() =>
             {
-                if (_users.ContainsKey(session.UserInfo.UserId) == true)
+                // TODO 
+                if (_users.ContainsKey(session.UserInfo.UserDbId) == true)
                 {
                     CEnterRoomRes res = new()
                     {
                         Res = EnterRoomRes.EnterRoomAlreadyIn,
-                        RoomInfo = RoomInfo
                     };
+                    res.RoomInfo.MergeFrom(RoomInfo);
                     session.Send(res);
                 }
                 else
@@ -31,8 +32,8 @@ namespace ChatServer
                     CEnterRoomRes res = new()
                     {
                         Res = EnterRoomRes.EnterRoomOk,
-                        RoomInfo = RoomInfo
                     };
+                    res.RoomInfo.MergeFrom(RoomInfo);
                     session.Send(res);
                 }
             });
@@ -40,6 +41,17 @@ namespace ChatServer
 
         public void HandleLeaveRoom(UserInfo leftUser)
         {
+            Add(() =>
+            {
+                // 방에 있는 유저들 broadcast
+                CUserLeftRoom userLeftRoomMsg = new CUserLeftRoom()
+                {
+                    RoomNumber = Number
+                };
+                userLeftRoomMsg.LeftUser.MergeFrom(leftUser);
+                Broadcast(userLeftRoomMsg);
+            });
+
             // TODO : 굳이 한번어 add하여 job을 추가할 필요가 있을까? (어차피 하나의 스레드에서 실행됨)
             // Room에서 실행하도록 일을 위임한다는 뜻이면 괜찮을거 같기도 한데
             // Add 자체에 lock을 쓰기 때문에 좀 더 생각해봐야 할 수도...
@@ -53,15 +65,54 @@ namespace ChatServer
             // 그러면 일관되게 Room이나 RoomManager에서 Add를 호출하는 일은 없는게 좋을듯?
             // 근데 이방법은 실수로 Add 하지 않고 곧바로 호출하게 되면 로직 관련 메서드들이
             // 여러 스레드에서 작동될 수 있는 큰 위험성이 있음
+            //Add(() =>
+            //{
+            //    // 방에 있는 유저들 broadcast
+            //    CUserLeftRoom userLeftRoomMsg = new CUserLeftRoom()
+            //    {
+            //        LeftUser = leftUser,
+            //        RoomId = Id,
+            //    };
+            //    Broadcast(userLeftRoomMsg);
+            //});
+        }
+
+        public void HandleSendChatText(SSendChatText chat, ClientSession senderSession)
+        {
             Add(() =>
             {
+                // TODO : 여기서 호출...?
+                senderSession?.Send(new CSendChat() { Error = SendChatError.Success });
+
                 // 방에 있는 유저들 broadcast
-                CUserLeftRoom userLeftRoomMsg = new CUserLeftRoom()
+                CChatText sChat = new()
                 {
-                    LeftUser = leftUser,
-                    RoomId = Id,
+                    Chat = chat.Chat,
+                    RoomNumber = chat.RoomNumber,
+                    SenderInfo = chat.SenderInfo,
                 };
-                Broadcast(userLeftRoomMsg);
+                // TODO : 객체에 대해서 copy를 해야 하나?
+                Broadcast(sChat);
+            });
+        }
+
+        public void HandleSendChatIcon(SSendChatIcon chat, ClientSession senderSession)
+        {
+            Add(() =>
+            {
+                // TODO : 여기서 호출...?
+                senderSession?.Send(new CSendChat() { Error = SendChatError.Success });
+
+
+                // 방에 있는 유저들 broadcast
+                CChatIcon sChat = new()
+                {
+                    Chat = chat.Chat,
+                    RoomNumber = chat.RoomNumber,
+                    SenderInfo = chat.SenderInfo,
+                };
+                // TODO : 객체에 대해서 copy를 해야 하나?
+                Broadcast(sChat);
             });
         }
     }

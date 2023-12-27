@@ -19,6 +19,7 @@ class MainSceneUIContext : UIContext
     public UIObject RoomList = new();
 
     public UIObject<TextMeshProUGUI> RefreshedTimeText = new();
+    public UIObject<TextMeshProUGUI> PingText = new();
 
     public UIObject<Button> EnterRoomButton = new();
     public UIObject<Button> CreateRoomButton = new();
@@ -38,12 +39,17 @@ public class MainSceneUI : BaseUIScene
     public Transform RoomListTransform => Context.RoomList.BindObject.transform;
 
     public readonly Property<string, TextMeshProUGUI> RoomListRefreshTime = new();
+    public readonly Property<string, TextMeshProUGUI> Ping = new();
 
     public override void Init()
     {
         base.Init();
 
         Clear();
+
+        RoomListRefreshTime.AddUI(Context.RefreshedTimeText);
+        Ping.AddUI(Context.PingText);
+
 
         Context.EnterRoomButton.Component.onClick.AddListener(OpenEnterRoomPopup);
         Context.CreateRoomButton.Component.onClick.AddListener(OpenCreateRoomPopup);
@@ -71,15 +77,20 @@ public class MainSceneUI : BaseUIScene
                 (ui) =>
                 {
                     ui.SetRoomName(r.RoomName);
-                    ui.SetRoomNumber(r.RoomId);
+                    ui.SetRoomNumber(r.RoomNumber);
                 });
         }
     }
 
-    public void SetRefreshTime(Timestamp time)
+    public void SetRefreshTime(DateTime time)
     {
         // TODO : change the format const.
-        RoomListRefreshTime.Data = time.ToDateTime().ToString("HH-mm-ss");
+        RoomListRefreshTime.Data = time.ToString("HH:mm:ss");
+    }
+
+    public void SetPing(long ping)
+    {
+        Ping.Data = $"{ping} ms";
     }
 
     public void Clear()

@@ -68,7 +68,10 @@ public class StartSceneUI : BaseUIScene
     {
         Debug.Log("LoginReq");
 
-        //ManagerCore.Scene.GetScene<StartScene>().ReqLogin();
+        string id = Context.IdInput.Component.text;
+        string password = Context.PasswordInput.Component.text;
+
+        //ManagerCore.Scene.GetScene<StartScene>().ReqLogin(id, password);
 
         // TEMP
         ManagerCore.Scene.GetScene<StartScene>().TestLogin();

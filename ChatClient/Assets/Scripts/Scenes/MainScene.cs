@@ -3,6 +3,7 @@ using Core;
 using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.Core;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -10,9 +11,11 @@ using UnityEngine;
 
 public class MainScene : BaseScene
 {
+    public MainSceneUI UI => ui != null ? ui : throw new System.NullReferenceException();
+
     List<RoomInfo> rooms = new List<RoomInfo>();
     MainSceneUI ui = null;
-    Timestamp roomRefreshTime = null;
+    DateTime roomRefreshTime;
 
 
 
@@ -37,8 +40,10 @@ public class MainScene : BaseScene
     {
         this.rooms.Clear();
 
-        roomRefreshTime = time;
-        ui.SetRefreshTime(time);
+        DateTime now = time.ToDateTime().ToLocalTime();
+
+        roomRefreshTime = now;
+        ui.SetRefreshTime(now);
         foreach(var room in rooms)
         {
             this.rooms.Add(room);

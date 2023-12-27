@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class RoomManager : JobSerializerWithTimer, IUpdate
     {
@@ -18,6 +18,9 @@ namespace ChatServer
 
         const int CheckEmptyRoomIntervalMilliseconds = 1000;
 
+        /// <summary>
+        /// RoomNumber / Room
+        /// </summary>
         public Dictionary<ulong, Room> Rooms = new Dictionary<ulong, Room>();
 
         public void Update()
@@ -40,12 +43,12 @@ namespace ChatServer
             return Rooms.Values.Select(r => r.RoomInfo).ToList();
         }
 
-        Room CreateRoom(ulong roomId, string name)
+        Room CreateRoom(RoomInfo roomInfo)
         {
-            if (Rooms.ContainsKey(roomId) == true) return null;
+            if (Rooms.ContainsKey(roomInfo.RoomNumber) == true) return null;
 
-            Room room = new Room(roomId, name);
-            Rooms.Add(roomId, room);
+            Room room = new Room(roomInfo);
+            Rooms.Add(roomInfo.RoomNumber, room);
             return room;
         }
 

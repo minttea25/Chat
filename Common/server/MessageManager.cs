@@ -7,7 +7,7 @@ using ServerCoreTCP;
 using ServerCoreTCP.MessageWrapper;
 using ServerCoreTCP.Utils;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageManager
     {
@@ -45,7 +45,7 @@ namespace ChatServer.Chat
             MessageWrapper.PacketMap.Add(typeof(SSendChatIcon), (uint)PacketType.P_SSendChatIcon);
             MessageWrapper.PacketMap.Add(typeof(CSendChat), (uint)PacketType.P_CSendChat);
             MessageWrapper.PacketMap.Add(typeof(CChatText), (uint)PacketType.P_CChatText);
-            MessageWrapper.PacketMap.Add(typeof(CSendIcon), (uint)PacketType.P_CSendIcon);
+            MessageWrapper.PacketMap.Add(typeof(CChatIcon), (uint)PacketType.P_CChatIcon);
             MessageWrapper.PacketMap.Add(typeof(ChatBase), (uint)PacketType.P_ChatBase);
             MessageWrapper.PacketMap.Add(typeof(ChatText), (uint)PacketType.P_ChatText);
             MessageWrapper.PacketMap.Add(typeof(ChatIcon), (uint)PacketType.P_ChatIcon);
@@ -55,7 +55,6 @@ namespace ChatServer.Chat
             MessageWrapper.PacketMap.Add(typeof(CCreateRoomRes), (uint)PacketType.P_CCreateRoomRes);
             MessageWrapper.PacketMap.Add(typeof(SEnterRoomReq), (uint)PacketType.P_SEnterRoomReq);
             MessageWrapper.PacketMap.Add(typeof(CEnterRoomRes), (uint)PacketType.P_CEnterRoomRes);
-            MessageWrapper.PacketMap.Add(typeof(SAllRoomListReq), (uint)PacketType.P_SAllRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(SRoomListReq), (uint)PacketType.P_SRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(CRoomListRes), (uint)PacketType.P_CRoomListRes);
             MessageWrapper.PacketMap.Add(typeof(SLeaveRoomReq), (uint)PacketType.P_SLeaveRoomReq);
@@ -68,7 +67,7 @@ namespace ChatServer.Chat
             MessageWrapper.PacketMap.Add(typeof(SSendChatIcon), (ushort)PacketType.P_SSendChatIcon);
             MessageWrapper.PacketMap.Add(typeof(CSendChat), (ushort)PacketType.P_CSendChat);
             MessageWrapper.PacketMap.Add(typeof(CChatText), (ushort)PacketType.P_CChatText);
-            MessageWrapper.PacketMap.Add(typeof(CSendIcon), (ushort)PacketType.P_CSendIcon);
+            MessageWrapper.PacketMap.Add(typeof(CChatIcon), (ushort)PacketType.P_CChatIcon);
             MessageWrapper.PacketMap.Add(typeof(ChatBase), (ushort)PacketType.P_ChatBase);
             MessageWrapper.PacketMap.Add(typeof(ChatText), (ushort)PacketType.P_ChatText);
             MessageWrapper.PacketMap.Add(typeof(ChatIcon), (ushort)PacketType.P_ChatIcon);
@@ -78,7 +77,6 @@ namespace ChatServer.Chat
             MessageWrapper.PacketMap.Add(typeof(CCreateRoomRes), (ushort)PacketType.P_CCreateRoomRes);
             MessageWrapper.PacketMap.Add(typeof(SEnterRoomReq), (ushort)PacketType.P_SEnterRoomReq);
             MessageWrapper.PacketMap.Add(typeof(CEnterRoomRes), (ushort)PacketType.P_CEnterRoomRes);
-            MessageWrapper.PacketMap.Add(typeof(SAllRoomListReq), (ushort)PacketType.P_SAllRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(SRoomListReq), (ushort)PacketType.P_SRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(CRoomListRes), (ushort)PacketType.P_CRoomListRes);
             MessageWrapper.PacketMap.Add(typeof(SLeaveRoomReq), (ushort)PacketType.P_SLeaveRoomReq);
@@ -102,9 +100,6 @@ namespace ChatServer.Chat
 
             _parsers.Add(MessageWrapper.PacketMap[typeof(SEnterRoomReq)], SEnterRoomReq.Parser);
             _handlers.Add(MessageWrapper.PacketMap[typeof(SEnterRoomReq)], MessageHandler.SEnterRoomReqMessageHandler);
-
-            _parsers.Add(MessageWrapper.PacketMap[typeof(SAllRoomListReq)], SAllRoomListReq.Parser);
-            _handlers.Add(MessageWrapper.PacketMap[typeof(SAllRoomListReq)], MessageHandler.SAllRoomListReqMessageHandler);
 
             _parsers.Add(MessageWrapper.PacketMap[typeof(SRoomListReq)], SRoomListReq.Parser);
             _handlers.Add(MessageWrapper.PacketMap[typeof(SRoomListReq)], MessageHandler.SRoomListReqMessageHandler);

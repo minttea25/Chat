@@ -3,7 +3,7 @@ using System;
 using ServerCoreTCP;
 using Google.Protobuf;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageHandler
     {
@@ -38,13 +38,6 @@ namespace ChatServer.Chat
         public static void SEnterRoomReqMessageHandler(IMessage message, Session session)
         {
             SEnterRoomReq msg = message as SEnterRoomReq;
-
-            // TODO
-        }
-
-        public static void SAllRoomListReqMessageHandler(IMessage message, Session session)
-        {
-            SAllRoomListReq msg = message as SAllRoomListReq;
 
             // TODO
         }

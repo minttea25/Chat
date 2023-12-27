@@ -23,11 +23,12 @@ public class StartScene : BaseScene
         ManagerCore.Scene.LoadScene(SceneTypes.Main);
     }
 
-    public void ReqLogin()
+    public void ReqLogin(string id, string password)
     {
         ConnectingUI.Show();
 
         // TODO : Request Login to login server
+
     }
 
     public void ReqRegister()
