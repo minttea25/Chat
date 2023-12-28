@@ -49,6 +49,7 @@ namespace Core
         public void OnDisable()
         {
             _network.StopService();
+            Clear();
         }
 
         // Game Contents

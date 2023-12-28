@@ -76,7 +76,8 @@ namespace Core
 
         void IManager.ClearManager()
         {
-            CurrentScene.Clear();
+            if (CurrentScene != null) CurrentScene.Clear();
+
         }
 
         void IManager.InitManager()

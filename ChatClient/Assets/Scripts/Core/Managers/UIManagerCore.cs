@@ -101,6 +101,33 @@ namespace Core
                 );
         }
 
+        public T ShowPopupUI<T>(string key, bool alwaysShowOnTop = false, string name = null) where T : BaseUIPopup
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T popup = go.GetComponent<T>();
+            if (alwaysShowOnTop == true)
+            {
+                _onTopPopup = popup;
+                popup.gameObject.GetOrAddComponent<Canvas>().sortingOrder = TopPopupSortingLayer;
+            }
+            else
+            {
+                _popupStack.Push(popup);
+            }
+
+            popup.transform.SetParent(RootObject.transform);
+            popup.Show();
+
+            return popup;
+        }
+
         public void ShowSceneUIAsync<T>(string key, Action<T> callback = null) where T : BaseUIScene
         {
             ManagerCore.Resource.Instantiate(
@@ -140,6 +167,20 @@ namespace Core
                     callback?.Invoke(itemUI);
                 }
                 );
+        }
+
+        public T AddItemUI<T>(string key, Transform parent, string name = null) where T : BaseUIItem
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T item = go.GetComponent<T>();
+            return item;
         }
 
         public void CloseTopPopupUI()
@@ -196,7 +237,7 @@ namespace Core
 
         void IManager.ClearManager()
         {
-            ClosePopupUI();
+            //ClosePopupUI();
 
             if (_sceneUI != null)
             {

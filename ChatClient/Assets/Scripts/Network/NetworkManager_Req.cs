@@ -10,10 +10,8 @@ public partial class NetworkManager : IManager, IUpdate
 {
     public void ReqLogin()
     {
-        //int rand = Random.Range(0, 10000);
-        int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
-        AuthToken = "TestToken";
-        UserInfo = new UserInfo() { UserLoginId = $"TestId{rand}", UserName = $"TestName{rand}" };
+        ConnectingUI.Show();
+        
         SLoginReq loginReq = new SLoginReq()
         {
             AuthToken = AuthToken,
@@ -24,6 +22,8 @@ public partial class NetworkManager : IManager, IUpdate
 
     public void ReqRoomList()
     {
+        ConnectingUI.Show();
+
         SRoomListReq roomListReq = new SRoomListReq()
         {
             UserInfo = UserInfo,
@@ -31,5 +31,17 @@ public partial class NetworkManager : IManager, IUpdate
         Send(roomListReq);
     }
 
+    public void ReqCreateRoom(ulong roomNumber)
+    {
+        LoadingUI.Show();
 
+        Debug.Log("TODO : ReqCreateRoom");
+    }
+
+    public void ReqEnterRoom(ulong roomNumber)
+    {
+        LoadingUI.Show();
+
+        Debug.Log($"Enter room {roomNumber}");
+    }
 }

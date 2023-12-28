@@ -7,6 +7,7 @@ using ServerCoreTCP.Core;
 using ServerCoreTCP.Utils;
 using System;
 using System.Collections;
+using System.Data;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -18,11 +19,20 @@ public partial class NetworkManager : IManager, IUpdate
     public static NetworkManager Instance => instance;
     #endregion
 
+    public enum ConnectState
+    {
+        NotConnected = 0,
+        Connecting = 1,
+        Connected = 2,
+        FailedToConnect = 3,
+        Disconnected = 4,
+    }
+
     IPEndPoint endPoint = null;
 
     public uint ConnectedId { get; private set; } = 0;
     public string AuthToken { get; private set; } = null;
-    public bool Connected { get; set; } = false;
+    public ConnectState Connected { get; set; } = ConnectState.NotConnected;
     public UserInfo UserInfo { get; private set; }
 
     ClientService client = null;
@@ -30,7 +40,11 @@ public partial class NetworkManager : IManager, IUpdate
 
     Coroutine pingTask = null;
 
-    
+    public void SetUserInfo(string authToken, string userLoginId, string userName)
+    {
+        AuthToken = authToken;
+        UserInfo = new() { UserLoginId = userLoginId, UserName = userName };
+    }
 
     #region Service
     /// <summary>
@@ -46,6 +60,7 @@ public partial class NetworkManager : IManager, IUpdate
             endPoint, () => { session = new ServerSession(); return session; },
             config, failedCallback ?? ConnectFailed);
 
+        Connected = ConnectState.Connecting;
         client.Start();
     }
 
@@ -54,31 +69,43 @@ public partial class NetworkManager : IManager, IUpdate
     /// </summary>
     public void StopService()
     {
-        // disconnect
-        session?.Disconnect();
-        client?.Stop();
-        Connected = false;
+        if (Connected == ConnectState.Disconnected) return;
+        Logout();
     }
 
     public void Send<T>(T message) where T : IMessage
     {
+        if (Connected != ConnectState.Connected) return;
         session?.Send(message);
     }
 
 
     void ConnectFailed(SocketError error)
     {
-        Connected = false;
+        Connected = ConnectState.FailedToConnect;
         Debug.LogError($"[{error}]Can not connect to server: {endPoint}");
 
         // TODO : Àç¿¬°á question popup
     }
     #endregion
 
+    public void Logout()
+    {
+        // disconnect
+        session?.Disconnect();
+        client?.Stop();
+        Connected = ConnectState.Disconnected;
+        CoroutineManager.StopCoroutineEx(pingTask);
+    }
+
+    public void LogoutAndQuit()
+    {
+        Logout();
+        Application.Quit();
+    }
+
     void IManager.ClearManager()
     {
-        CoroutineManager.StopCoroutineEx(pingTask);
-
         endPoint = null;
         session = null;
         client = null;
@@ -100,7 +127,7 @@ public partial class NetworkManager : IManager, IUpdate
 
     public void Update()
     {
-        if (Connected == false) return;
+        if (Connected != ConnectState.Connected) return;
 
         // send
         session?.FlushSend();

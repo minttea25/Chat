@@ -1,11 +1,8 @@
 using Chat;
 using Core;
-using Google.Protobuf.Collections;
-using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -41,6 +38,42 @@ public class MainSceneUI : BaseUIScene
     public readonly Property<string, TextMeshProUGUI> RoomListRefreshTime = new();
     public readonly Property<string, TextMeshProUGUI> Ping = new();
 
+    public MainScene Scene { get; set; }
+
+
+    CreateRoomPopup createRoomPopup = null;
+    EnterRoomPopup enterRoomPopup = null;
+    InfoPopup infoPopup = null;
+    LogoutPopup logoutPopup = null;
+
+    private void OnEnable()
+    {
+        LoadingUI.Show();
+
+        // pre-load
+        ManagerCore.Resource.LoadAllAsync(
+            (failed) =>
+            {
+                Utils.AssertCrash(failed.Count == 0);
+                OnLoaded(); // hide loading ui here
+            },
+            AddrKeys.RoomListItemUI,
+            AddrKeys.CreateRoomPopupUI,
+            AddrKeys.EnterRoomPopupUI,
+            AddrKeys.InfoPopupUI,
+            AddrKeys.LogoutPopupUI);
+    }
+
+    private void OnDisable()
+    {
+        ManagerCore.Resource.ReleaseAll(
+            AddrKeys.RoomListItemUI,
+            AddrKeys.CreateRoomPopupUI,
+            AddrKeys.EnterRoomPopupUI,
+            AddrKeys.InfoPopupUI,
+            AddrKeys.LogoutPopupUI);
+    }
+
     public override void Init()
     {
         base.Init();
@@ -56,29 +89,16 @@ public class MainSceneUI : BaseUIScene
         Context.InfoButton.Component.onClick.AddListener(OpenInfoPopup);
         Context.LogoutButton.Component.onClick.AddListener(OpenLogoutPopup);
         Context.SettingButton.Component.onClick.AddListener(OpenSettingPopup);
-
-
     }
 
     public void RefreshRoomList(List<RoomInfo> rooms)
     {
-        // TEMP
-        foreach (var r in rooms)
-        {
-            Debug.Log(r);
-        }
-
         // TODO : loading?
         foreach (var r in rooms)
         {
-            ManagerCore.UI.AddItemUIAsync<RoomListItemUI>(
-                AddrKeys.RoomListItemUI,
-                RoomListTransform,
-                (ui) =>
-                {
-                    ui.SetRoomName(r.RoomName);
-                    ui.SetRoomNumber(r.RoomNumber);
-                });
+            RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
+            item.SetRoomName(r.RoomName);
+            item.SetRoomNumber(r.RoomNumber);
         }
     }
 
@@ -101,22 +121,42 @@ public class MainSceneUI : BaseUIScene
 
     public void OpenEnterRoomPopup()
     {
-        Debug.Log("OpenEnterRoomPopup");
+        if (enterRoomPopup == null)
+        {
+            enterRoomPopup = ManagerCore.UI.ShowPopupUI<EnterRoomPopup>(AddrKeys.EnterRoomPopupUI);
+            Utils.AssertCrash(enterRoomPopup != null);
+        }
+        else enterRoomPopup.Show();
     }
 
     public void OpenCreateRoomPopup()
     {
-        Debug.Log("OpenCreateRoomPopup");
+        if (createRoomPopup == null)
+        {
+            createRoomPopup = ManagerCore.UI.ShowPopupUI<CreateRoomPopup>(AddrKeys.CreateRoomPopupUI);
+            Utils.AssertCrash(createRoomPopup != null);
+        }
+        else createRoomPopup.Show();
     }
 
     public void OpenInfoPopup()
     {
-        Debug.Log("OpenInfoPopup");
+        if (infoPopup == null)
+        {
+            infoPopup = ManagerCore.UI.ShowPopupUI<InfoPopup>(AddrKeys.InfoPopupUI);
+            Utils.AssertCrash(infoPopup != null);
+        }
+        else infoPopup.Show();
     }
 
     public void OpenLogoutPopup()
     {
-        Debug.Log("OpenLogoutPopup");
+        if (logoutPopup == null)
+        {
+            logoutPopup = ManagerCore.UI.ShowPopupUI<LogoutPopup>(AddrKeys.LogoutPopupUI);
+            Utils.AssertCrash(logoutPopup != null);
+        }
+        else logoutPopup.Show();
     }
 
     public void OpenSettingPopup()
@@ -124,9 +164,33 @@ public class MainSceneUI : BaseUIScene
         Debug.Log("OpenSettingPopup");
     }
 
-    #region Network
+    void OnLoaded()
+    {
+        LoadingUI.Hide();
+        StartCoroutine(nameof(CheckLoad));
+    }
 
-    #endregion
+    IEnumerator CheckLoad()
+    {
+        while (ManagerCore.Network.Connected == NetworkManager.ConnectState.Connecting)
+        {
+            yield return null;
+        }
+
+        if (ManagerCore.Network.Connected == NetworkManager.ConnectState.FailedToConnect)
+        {
+            // TODO : 연결 실패
+
+        }
+
+        if (ManagerCore.Network.Connected == NetworkManager.ConnectState.Disconnected)
+        {
+            // TODO : 오류
+        }
+
+        // UI 로드 완료 시 로그인 요청
+        Scene.TryLogin();
+    }
 
 
 #if UNITY_EDITOR

@@ -26,13 +26,11 @@ public class ServerSession : PacketSession
 
     public override void OnConnected(EndPoint endPoint)
     {
-        ManagerCore.Network.Connected = true;
+        ManagerCore.Network.Connected = NetworkManager.ConnectState.Connected;
         Debug.Log($"Connected to server: {endPoint}");
 
         UnityJobQueue.Instance.Push(ConnectingUI.Hide);
         UnityJobQueue.Instance.Push(ManagerCore.Network.PingPong);
-
-        ManagerCore.Network.ReqLogin();
     }
 
     public override void OnDisconnected(EndPoint endPoint, object error = null)

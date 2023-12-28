@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -18,8 +19,10 @@ namespace Core
         // Number of async-loadings in progress (로딩 완료 후 _handles에서 삭제안함, _handles.Count와 의미가 다름)
         public int HandleCount = 0;
 
+        public IReadOnlyDictionary<string, UObject> Results => _results;
+
         // for cache (pooling)
-        readonly Dictionary<string, UObject> _resources = new();
+        readonly Dictionary<string, UObject> _results = new();
         readonly Dictionary<string, UObject> _locResources = new();
 
         // async handles with addressable asset key
@@ -29,7 +32,7 @@ namespace Core
         public void LoadAsync<T>(string key, Action<T> callback = null) where T : UObject
         {
             // cached -> already done!
-            if (_resources.TryGetValue(key, out UObject resource))
+            if (_results.TryGetValue(key, out UObject resource))
             {
                 callback?.Invoke(resource as T);
                 return;
@@ -49,7 +52,7 @@ namespace Core
             {
                 if (opHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    _resources.Add(key, opHandle.Result as UObject);
+                    _results.Add(key, opHandle.Result as UObject);
                     callback?.Invoke(opHandle.Result as T);
                     HandleCount--;
                 }
@@ -91,6 +94,73 @@ namespace Core
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="completed">The successfully completed count of the keys</param>
+        /// <param name="keys">Addressable keys to load GameObject</param>
+        public void LoadAllAsync(Action<List<string>> completed, params string[] keys)
+        {
+            if (keys == null || keys.Length == 0)
+            {
+                completed?.Invoke(new List<string>());
+                return;
+            }
+
+            List<string> failedKey = new List<string>();
+            int completedCount = 0;
+
+            foreach (string key in keys)
+            {
+                void OnHandleCompleted(AsyncOperationHandle handle)
+                {
+                    completedCount++;
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        _results.Add(key, handle.Result as UObject);
+                    }
+
+                    if (completedCount >= keys.Length)
+                    {
+                        foreach (string key in keys)
+                        {
+                            if (_handles.TryGetValue(key, out var h) == true)
+                            {
+                                if (h.Status != AsyncOperationStatus.Succeeded)
+                                {
+                                    Debug.LogError("Failed to load addressable prefab: " + h.OperationException);
+                                    failedKey.Add(key);
+                                }
+                            }
+                        }
+
+                        // 모든 로드가 완료되면 콜백 실행
+                        completed?.Invoke(failedKey);
+                    }
+                }
+
+                // 이미 로드 되어 있는지 확인
+                if (_results.ContainsKey(key) == true)
+                {
+                    completedCount++;
+                    continue;
+                }
+
+                // _handle에 핸들 추가
+                // 이미 로드 중인지 확인
+                if (_handles.ContainsKey(key) == true)
+                {
+                    _handles[key].Completed += OnHandleCompleted;
+                    continue;
+                }
+
+                AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<GameObject>(key);
+                loadHandle.Completed += OnHandleCompleted;
+                _handles.Add(key, loadHandle);
+            }
+        }
+
+
+        /// <summary>
         /// Load a resource with the key and release it after callback. (no caching)
         /// </summary>
         /// <typeparam name="T"></typeparam>
@@ -98,7 +168,7 @@ namespace Core
         /// <param name="callback"></param>
         public void LoadAsyncOnce<T>(string key, Action<T> callback = null) where T : UObject
         {
-            if (_resources.TryGetValue(key, out var resource))
+            if (_results.TryGetValue(key, out var resource))
             {
                 callback?.Invoke(resource as T);
                 return;
@@ -118,7 +188,7 @@ namespace Core
             {
                 if (opHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    _resources.Add(key, opHandle.Result as UObject);
+                    _results.Add(key, opHandle.Result as UObject);
                     callback?.Invoke(opHandle.Result as T);
                     HandleCount--;
                 }
@@ -184,7 +254,7 @@ namespace Core
 
         public void Clear()
         {
-            _resources.Clear();
+            _results.Clear();
 
             foreach (var handle in _handles.Values)
                 Addressables.Release(handle);
@@ -202,11 +272,11 @@ namespace Core
         public void Release(string key)
         {
             // if there is no object with the key in _resources, do nothing
-            if (_resources.ContainsKey(key) == false)
+            if (_results.ContainsKey(key) == false)
             {
                 return;
             }
-            _resources.Remove(key);
+            _results.Remove(key);
 
             if (_handles.TryGetValue(key, out AsyncOperationHandle handle))
             {
@@ -214,6 +284,11 @@ namespace Core
             }
 
             _handles.Remove(key);
+        }
+
+        public void ReleaseAll(params string[] keys)
+        {
+            foreach (var key in keys) Release(key);
         }
 
         /// <summary>

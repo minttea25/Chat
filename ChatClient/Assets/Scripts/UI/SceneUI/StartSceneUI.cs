@@ -66,8 +66,6 @@ public class StartSceneUI : BaseUIScene
 
     void LoginReq()
     {
-        Debug.Log("LoginReq");
-
         string id = Context.IdInput.Component.text;
         string password = Context.PasswordInput.Component.text;
 

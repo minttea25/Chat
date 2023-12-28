@@ -31,9 +31,27 @@ public class MainScene : BaseScene
             (ui) =>
             {
                 this.ui = ui;
+                ui.Scene = this;
                 ConnectingUI.Show();
                 ManagerCore.Network.StartService(ConnectionFailed);
             });
+    }
+
+    public void TryLogin()
+    {
+        int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
+        ManagerCore.Network.SetUserInfo("TestToken", $"TestLoginId{rand}", $"TestName{rand}");
+        ManagerCore.Network.ReqLogin();
+    }
+
+    public void ReqEditUserName(string userName)
+    {
+        Debug.Log("TODO : send edit req");
+    }
+
+    public void Logout()
+    {
+        ManagerCore.Network.LogoutAndQuit();
     }
 
     public void RefreshRoomList(Timestamp time, RepeatedField<RoomInfo> rooms)
