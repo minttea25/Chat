@@ -56,6 +56,13 @@ namespace Chat
             // TODO
         }
 
+        public static void CUserEnterRoomMessageHandler(IMessage message, Session session)
+        {
+            CUserEnterRoom msg = message as CUserEnterRoom;
+
+            // TODO
+        }
+
         public static void CUserLeftRoomMessageHandler(IMessage message, Session session)
         {
             CUserLeftRoom msg = message as CUserLeftRoom;
@@ -66,6 +73,13 @@ namespace Chat
         public static void CLoginResMessageHandler(IMessage message, Session session)
         {
             CLoginRes msg = message as CLoginRes;
+
+            // TODO
+        }
+
+        public static void CEditUserNameResMessageHandler(IMessage message, Session session)
+        {
+            CEditUserNameRes msg = message as CEditUserNameRes;
 
             // TODO
         }

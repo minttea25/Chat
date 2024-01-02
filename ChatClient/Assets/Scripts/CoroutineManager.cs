@@ -31,6 +31,7 @@ public class CoroutineManager : MonoBehaviour
 
     public static void StopCoroutineEx(Coroutine routine)
     {
+        if (routine == null) return;
         instance.StopCoroutine(routine);
     }
     public static void StopCoroutineEx(string name)

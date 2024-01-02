@@ -63,6 +63,13 @@ namespace Chat
             // TODO
         }
 
+        public static void SEditUserNameReqMessageHandler(IMessage message, Session session)
+        {
+            SEditUserNameReq msg = message as SEditUserNameReq;
+
+            // TODO
+        }
+
 
     }
 }

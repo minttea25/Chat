@@ -20,6 +20,18 @@ public partial class NetworkManager : IManager, IUpdate
         session.Send(loginReq);
     }
 
+    public void ReqEditUserName(string userName)
+    {
+        ConnectingUI.Show();
+
+        SEditUserNameReq req = new SEditUserNameReq()
+        {
+            NewUserName = userName,
+            UserInfo = UserInfo,
+        };
+        session.Send(req);
+    }
+
     public void ReqRoomList()
     {
         ConnectingUI.Show();
@@ -36,6 +48,11 @@ public partial class NetworkManager : IManager, IUpdate
         LoadingUI.Show();
 
         Debug.Log("TODO : ReqCreateRoom");
+        SCreateRoomReq req = new() 
+        { 
+            RoomNumber = roomNumber, RoomName = $"Room{roomNumber}"
+        };
+        Send(req);
     }
 
     public void ReqEnterRoom(ulong roomNumber)

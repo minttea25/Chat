@@ -83,6 +83,14 @@ namespace Chat
             cs?.HandleLoginReq(msg);
         }
 
+        public static void SEditUserNameReqMessageHandler(IMessage message, Session session)
+        {
+            SEditUserNameReq msg = message as SEditUserNameReq;
+            ClientSession cs = session as ClientSession;
+
+            // TODO
+        }
+
         public static void SPingPacketMessageHandler(IMessage message, Session session)
         {
             SPingPacket msg = message as SPingPacket;

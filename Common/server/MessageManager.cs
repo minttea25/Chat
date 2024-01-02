@@ -58,9 +58,12 @@ namespace Chat
             MessageWrapper.PacketMap.Add(typeof(SRoomListReq), (uint)PacketType.P_SRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(CRoomListRes), (uint)PacketType.P_CRoomListRes);
             MessageWrapper.PacketMap.Add(typeof(SLeaveRoomReq), (uint)PacketType.P_SLeaveRoomReq);
+            MessageWrapper.PacketMap.Add(typeof(CUserEnterRoom), (uint)PacketType.P_CUserEnterRoom);
             MessageWrapper.PacketMap.Add(typeof(CUserLeftRoom), (uint)PacketType.P_CUserLeftRoom);
             MessageWrapper.PacketMap.Add(typeof(SLoginReq), (uint)PacketType.P_SLoginReq);
             MessageWrapper.PacketMap.Add(typeof(CLoginRes), (uint)PacketType.P_CLoginRes);
+            MessageWrapper.PacketMap.Add(typeof(SEditUserNameReq), (uint)PacketType.P_SEditUserNameReq);
+            MessageWrapper.PacketMap.Add(typeof(CEditUserNameRes), (uint)PacketType.P_CEditUserNameRes);
 
 #else
             MessageWrapper.PacketMap.Add(typeof(SSendChatText), (ushort)PacketType.P_SSendChatText);
@@ -80,9 +83,12 @@ namespace Chat
             MessageWrapper.PacketMap.Add(typeof(SRoomListReq), (ushort)PacketType.P_SRoomListReq);
             MessageWrapper.PacketMap.Add(typeof(CRoomListRes), (ushort)PacketType.P_CRoomListRes);
             MessageWrapper.PacketMap.Add(typeof(SLeaveRoomReq), (ushort)PacketType.P_SLeaveRoomReq);
+            MessageWrapper.PacketMap.Add(typeof(CUserEnterRoom), (ushort)PacketType.P_CUserEnterRoom);
             MessageWrapper.PacketMap.Add(typeof(CUserLeftRoom), (ushort)PacketType.P_CUserLeftRoom);
             MessageWrapper.PacketMap.Add(typeof(SLoginReq), (ushort)PacketType.P_SLoginReq);
             MessageWrapper.PacketMap.Add(typeof(CLoginRes), (ushort)PacketType.P_CLoginRes);
+            MessageWrapper.PacketMap.Add(typeof(SEditUserNameReq), (ushort)PacketType.P_SEditUserNameReq);
+            MessageWrapper.PacketMap.Add(typeof(CEditUserNameRes), (ushort)PacketType.P_CEditUserNameRes);
 
 #endif
 
@@ -109,6 +115,9 @@ namespace Chat
 
             _parsers.Add(MessageWrapper.PacketMap[typeof(SLoginReq)], SLoginReq.Parser);
             _handlers.Add(MessageWrapper.PacketMap[typeof(SLoginReq)], MessageHandler.SLoginReqMessageHandler);
+
+            _parsers.Add(MessageWrapper.PacketMap[typeof(SEditUserNameReq)], SEditUserNameReq.Parser);
+            _handlers.Add(MessageWrapper.PacketMap[typeof(SEditUserNameReq)], MessageHandler.SEditUserNameReqMessageHandler);
 
 
         }

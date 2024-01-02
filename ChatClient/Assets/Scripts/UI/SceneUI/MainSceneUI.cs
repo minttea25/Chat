@@ -1,4 +1,5 @@
 using Chat;
+using Chat.Utils;
 using Core;
 using System;
 using System.Collections;
@@ -34,11 +35,15 @@ public class MainSceneUI : BaseUIScene
     MainSceneUIContext Context = new();
 
     public Transform RoomListTransform => Context.RoomList.BindObject.transform;
+    public Transform ChatPanelTransform => Context.ChatPanel.BindObject.transform;
 
     public readonly Property<string, TextMeshProUGUI> RoomListRefreshTime = new();
     public readonly Property<string, TextMeshProUGUI> Ping = new();
 
     public MainScene Scene { get; set; }
+
+    MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
+    ulong openedChatId = 0;
 
 
     CreateRoomPopup createRoomPopup = null;
@@ -54,14 +59,18 @@ public class MainSceneUI : BaseUIScene
         ManagerCore.Resource.LoadAllAsync(
             (failed) =>
             {
-                Utils.AssertCrash(failed.Count == 0);
+                Core.Utils.AssertCrash(failed.Count == 0);
                 OnLoaded(); // hide loading ui here
             },
             AddrKeys.RoomListItemUI,
             AddrKeys.CreateRoomPopupUI,
             AddrKeys.EnterRoomPopupUI,
             AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI);
+            AddrKeys.LogoutPopupUI,
+            AddrKeys.ChatPanelItemUI,
+            AddrKeys.ChatLeftItemUI,
+            AddrKeys.ChatRightItemUI,
+            AddrKeys.ChatContentEtcItemUI);
     }
 
     private void OnDisable()
@@ -71,7 +80,11 @@ public class MainSceneUI : BaseUIScene
             AddrKeys.CreateRoomPopupUI,
             AddrKeys.EnterRoomPopupUI,
             AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI);
+            AddrKeys.LogoutPopupUI,
+            AddrKeys.ChatPanelItemUI,
+            AddrKeys.ChatLeftItemUI,
+            AddrKeys.ChatRightItemUI,
+            AddrKeys.ChatContentEtcItemUI);
     }
 
     public override void Init()
@@ -91,9 +104,15 @@ public class MainSceneUI : BaseUIScene
         Context.SettingButton.Component.onClick.AddListener(OpenSettingPopup);
     }
 
+    public void AddRoomList(RoomInfo room)
+    {
+        RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
+        item.SetRoomName(room.RoomName);
+        item.SetRoomNumber(room.RoomNumber);
+    }
+
     public void RefreshRoomList(List<RoomInfo> rooms)
     {
-        // TODO : loading?
         foreach (var r in rooms)
         {
             RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
@@ -119,12 +138,36 @@ public class MainSceneUI : BaseUIScene
         Context.ChatPanel.BindObject.transform.DestroyAllItems();
     }
 
+    public void ShowChat(ulong roomId)
+    {
+        if (openedChatId == roomId) return;
+
+        if (chatPanels.TryGetValue(openedChatId, out var opened))
+        {
+            opened.gameObject.SetActive(false);
+        }
+
+        if (chatPanels.TryGetValue(roomId, out var chatPanel))
+        {
+            chatPanel.gameObject.SetActive(true);
+        }
+        else
+        {
+            var chat = ManagerCore.UI.AddItemUI<ChatPanelItem>(AddrKeys.ChatPanelItemUI, ChatPanelTransform);
+            Core.Utils.AssertCrash(chat != null);
+
+            chatPanels.Add(roomId, chat, out var removedChat);
+            if(removedChat != null) ManagerCore.Resource.Destroy(removedChat.gameObject);
+        }
+        openedChatId = roomId;
+    }
+
     public void OpenEnterRoomPopup()
     {
         if (enterRoomPopup == null)
         {
             enterRoomPopup = ManagerCore.UI.ShowPopupUI<EnterRoomPopup>(AddrKeys.EnterRoomPopupUI);
-            Utils.AssertCrash(enterRoomPopup != null);
+            Core.Utils.AssertCrash(enterRoomPopup != null);
         }
         else enterRoomPopup.Show();
     }
@@ -134,7 +177,7 @@ public class MainSceneUI : BaseUIScene
         if (createRoomPopup == null)
         {
             createRoomPopup = ManagerCore.UI.ShowPopupUI<CreateRoomPopup>(AddrKeys.CreateRoomPopupUI);
-            Utils.AssertCrash(createRoomPopup != null);
+            Core.Utils.AssertCrash(createRoomPopup != null);
         }
         else createRoomPopup.Show();
     }
@@ -144,7 +187,7 @@ public class MainSceneUI : BaseUIScene
         if (infoPopup == null)
         {
             infoPopup = ManagerCore.UI.ShowPopupUI<InfoPopup>(AddrKeys.InfoPopupUI);
-            Utils.AssertCrash(infoPopup != null);
+            Core.Utils.AssertCrash(infoPopup != null);
         }
         else infoPopup.Show();
     }
@@ -154,7 +197,7 @@ public class MainSceneUI : BaseUIScene
         if (logoutPopup == null)
         {
             logoutPopup = ManagerCore.UI.ShowPopupUI<LogoutPopup>(AddrKeys.LogoutPopupUI);
-            Utils.AssertCrash(logoutPopup != null);
+            Core.Utils.AssertCrash(logoutPopup != null);
         }
         else logoutPopup.Show();
     }

@@ -78,6 +78,12 @@ namespace Chat.DB
                         CCreateRoomRes res = new CCreateRoomRes()
                         {
                             Res = CreateRoomRes.CreateRoomDuplicatedRoomId,
+                            RoomInfo = new RoomInfo()
+                            {
+                                RoomDbId = chatRoom.ChatRoomDbId,
+                                RoomName = roomName,
+                                RoomNumber = roomNumber
+                            }
                         };
                         session.Send(res);
                     }
@@ -93,7 +99,7 @@ namespace Chat.DB
 
                         db.ChatRooms.Add(newChatRoom);
                         bool saved = db.SaveChangesEx();
-
+                        
                         // if the room is created successfully
                         if (saved == true)
                         {
@@ -169,7 +175,10 @@ namespace Chat.DB
         /// <param name="session"></param>
         static void EnterRoom_(ChatRoomDb roomDb, ClientSession session, AppDbContext db, UserDb userDb = null)
         {
-            userDb ??= db.Users.FirstOrDefault(u => u.UserDbId == session.UserInfo.UserDbId);
+            // include rooms (load)
+            userDb ??= db.Users
+                .Include(u => u.Rooms)
+                .FirstOrDefault(u => u.UserDbId == session.UserInfo.UserDbId);
 
             if (userDb == null) return;
 

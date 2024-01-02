@@ -26,14 +26,14 @@ namespace Chat.DB
         public ulong UserDbId { get; set; }
         public string UserName { get; set; }
 
-        public virtual ICollection<ChatDb> SentChats { get; set; }
+        public virtual ICollection<ChatDb> SentChats { get; set; } = new List<ChatDb>();
 
 
         [ForeignKey("Account")]
         public long AccountDbId { get; set; }
         public AccountDb Account { get; set; }
 
-        public virtual ICollection<ChatRoomDb> Rooms { get; set; }
+        public virtual ICollection<ChatRoomDb> Rooms { get; set; } = new List<ChatRoomDb>();
 
     }
     
@@ -65,8 +65,8 @@ namespace Chat.DB
         public uint ChatRoomNumber { get; set; }
         public string ChatRoomName { get; set; }
 
-        public virtual ICollection<UserDb> Users { get; set; }
-        public virtual ICollection<ChatDb> Chats { get; set; }
+        public virtual ICollection<UserDb> Users { get; set; } = new List<UserDb>();
+        public virtual ICollection<ChatDb> Chats { get; set; } = new List<ChatDb>();
     }
 
 }

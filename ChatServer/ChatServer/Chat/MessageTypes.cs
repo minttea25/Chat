@@ -23,9 +23,12 @@ namespace Chat
         P_SRoomListReq = 15,
         P_CRoomListRes = 16,
         P_SLeaveRoomReq = 17,
-        P_CUserLeftRoom = 18,
-        P_SLoginReq = 19,
-        P_CLoginRes = 20,
+        P_CUserEnterRoom = 18,
+        P_CUserLeftRoom = 19,
+        P_SLoginReq = 20,
+        P_CLoginRes = 21,
+        P_SEditUserNameReq = 22,
+        P_CEditUserNameRes = 23,
 
     }
 #else
@@ -49,9 +52,12 @@ namespace Chat
         P_SRoomListReq = 15,
         P_CRoomListRes = 16,
         P_SLeaveRoomReq = 17,
-        P_CUserLeftRoom = 18,
-        P_SLoginReq = 19,
-        P_CLoginRes = 20,
+        P_CUserEnterRoom = 18,
+        P_CUserLeftRoom = 19,
+        P_SLoginReq = 20,
+        P_CLoginRes = 21,
+        P_SEditUserNameReq = 22,
+        P_CEditUserNameRes = 23,
 
     }
 #endif

@@ -3,7 +3,6 @@ using System;
 using ServerCoreTCP;
 using Google.Protobuf;
 using ServerCoreTCP.Core;
-using System.Diagnostics;
 using Core;
 
 namespace Chat
@@ -21,7 +20,7 @@ namespace Chat
         {
             CChatText msg = message as CChatText;
 
-            // TODO
+            ManagerCore.Network.HandleChatText(msg);
         }
 
 
@@ -29,21 +28,21 @@ namespace Chat
         {
             CChatIcon msg = message as CChatIcon;
 
-            // TODO
+            ManagerCore.Network.HandleChatIcon(msg);
         }
 
         public static void CCreateRoomResMessageHandler(IMessage message, Session session)
         {
             CCreateRoomRes msg = message as CCreateRoomRes;
 
-            // TODO
+            ManagerCore.Network.ResCreateRoom(msg);
         }
 
         public static void CEnterRoomResMessageHandler(IMessage message, Session session)
         {
             CEnterRoomRes msg = message as CEnterRoomRes;
 
-            // TODO
+            ManagerCore.Network.ReqEnterRoom(msg);
         }
 
         public static void CRoomListResMessageHandler(IMessage message, Session session)
@@ -53,11 +52,18 @@ namespace Chat
             ManagerCore.Network.ResRoomList(msg);
         }
 
+        public static void CUserEnterRoomMessageHandler(IMessage message, Session session)
+        {
+            CUserEnterRoom msg = message as CUserEnterRoom;
+
+            ManagerCore.Network.HandleUserEnterRoom(msg);
+        }
+
         public static void CUserLeftRoomMessageHandler(IMessage message, Session session)
         {
             CUserLeftRoom msg = message as CUserLeftRoom;
 
-            // TODO
+            ManagerCore.Network.HandleUserLeftRoom(msg);
         }
 
         public static void CLoginResMessageHandler(IMessage message, Session session)
@@ -65,6 +71,13 @@ namespace Chat
             CLoginRes msg = message as CLoginRes;
 
             ManagerCore.Network.ResLogin(msg);
+        }
+
+        public static void CEditUserNameResMessageHandler(IMessage message, Session session)
+        {
+            CEditUserNameRes msg = message as CEditUserNameRes;
+
+            // TODO
         }
 
         public static void CPongPacketMessageHandler(IMessage message, Session session)

@@ -1,0 +1,164 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using Core;
+using System;
+using TMPro;
+using UnityEngine.UI;
+
+[Serializable]
+class ChatPanelItemContext : UIContext
+{
+    public UIObject ChatList = new();
+    public UIObject SendChatPanel = new(); // no use
+    public UIObject<TMP_InputField> ChatTextInput = new();
+    public UIObject ToolPanel = new();
+    public UIObject<Button> IconButton = new();
+    public UIObject<Button> SendButton = new();
+}
+
+public class ChatPanelItem : BaseUIItem
+{
+    [SerializeField]
+    ChatPanelItemContext Context = new();
+
+    Transform ChatListTransform => Context.ChatList.BindObject.transform;
+
+    public ulong RoomId { get; private set; } = default;
+
+    public override void Init()
+    {
+        base.Init();
+
+        Context.SendButton.Component.onClick.AddListener(SendText);
+        Context.IconButton.Component.onClick.AddListener(IconSelectButton);
+
+        
+    }
+
+    private void OnEnable()
+    {
+        if (RoomId == default) return;
+
+        if (ManagerCore.Room.TryGetRoom(RoomId, out Room room) == false)
+        {
+            Utils.AssertCrash(false, $"The room[{RoomId}] is not in RoomManager");
+            return;
+        }
+
+        // show loading
+        List<ChatData> chats = room.GetPendingChats();
+        foreach (ChatData chat in chats)
+        {
+            AddChat(chat);
+        }
+        // hide loading
+    }
+
+    public void SetRoom(ulong  roomId)
+    {
+        RoomId = roomId;
+        if (ManagerCore.Room.TryGetRoom(RoomId, out Room room) == false)
+        {
+            Utils.AssertCrash(false, $"The room[{RoomId}] is not in RoomManager");
+            return;
+        }
+        room.AttachUI(this);
+    }
+
+    //private void Update()
+    //{
+    //    if (RoomId == default) return;
+    //    if (ManagerCore.Chat.Rooms.ContainsKey(RoomId) == false) return;
+    //}
+
+    public void AddChat(ChatData chat)
+    {
+        switch (chat.DataType)
+        {
+            case ChatDataType.Text:
+                AddChatText(chat as ChatText);
+                break;
+            case ChatDataType.Icon:
+                AddChatIcon(chat as ChatIcon);
+                break;
+            case ChatDataType.Enter:
+                AddChatEnter(chat as ChatUserEnter);
+                break;
+            case ChatDataType.Leave:
+                AddChatLeave(chat as ChatUserLeave);
+                break;
+        }
+    }
+
+    void AddChatText(ChatText chat)
+    {
+        // my chat
+        if (chat.User.UserDbId == ManagerCore.Network.UserInfo.UserDbId)
+        {
+            ChatRightItemUI right = ManagerCore.UI.AddItemUI<ChatRightItemUI>(AddrKeys.ChatRightItemUI, ChatListTransform);
+            Utils.Assert(right != null);
+
+            right.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat());
+        }
+        else
+        {
+            ChatLeftItemUI left = ManagerCore.UI.AddItemUI<ChatLeftItemUI>(AddrKeys.ChatLeftItemUI, ChatListTransform);
+            Utils.Assert(left != null);
+
+            left.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat(), chat.User.UserName);
+        }
+        
+    }
+
+    void AddChatIcon(ChatIcon chat)
+    {
+        // TODO : set Icon
+        Debug.Log("AddChatIcon");
+
+        
+    }
+
+    void AddChatEnter(ChatUserEnter chat)
+    {
+        var enter = ManagerCore.UI.AddItemUI<ChatContentEtcItemUI>(AddrKeys.ChatContentEtcItemUI, ChatListTransform);
+        Utils.Assert(enter != null);
+
+        enter.SetText(chat.User.UserName, chat.Time.ToLocalTimeFormat(), enter: true);
+    }
+
+    void AddChatLeave(ChatUserLeave chat)
+    {
+        var leave = ManagerCore.UI.AddItemUI<ChatContentEtcItemUI>(AddrKeys.ChatContentEtcItemUI, ChatListTransform);
+        Utils.Assert(leave != null);
+
+        leave.SetText(chat.User.UserName, chat.Time.ToLocalTimeFormat(), enter: false);
+    }
+
+
+    void IconSelectButton()
+    {
+        Debug.Log("IconSelectButton");
+    }
+
+    void SendText()
+    {
+        string text = Context.ChatTextInput.Component.text;
+
+        Debug.Log($"SendText: {text}");
+    }
+
+
+
+#if UNITY_EDITOR
+    public override System.Type GetContextType()
+    {
+        return typeof(ChatPanelItemContext);
+    }
+
+    protected override object GetContext()
+    {
+        return Context;
+    }
+#endif
+}

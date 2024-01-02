@@ -54,6 +54,14 @@ public class MainScene : BaseScene
         ManagerCore.Network.LogoutAndQuit();
     }
 
+    public void AddRoom(RoomInfo roomInfo)
+    {
+        if (rooms.Contains(roomInfo)) { return; }
+
+        rooms.Add(roomInfo);
+        ui.AddRoomList(roomInfo);
+    }
+
     public void RefreshRoomList(Timestamp time, RepeatedField<RoomInfo> rooms)
     {
         this.rooms.Clear();
@@ -66,6 +74,7 @@ public class MainScene : BaseScene
         {
             this.rooms.Add(room);
         }
+
         ui.RefreshRoomList(this.rooms);
     }
 

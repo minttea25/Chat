@@ -27,16 +27,23 @@ namespace Chat {
             "Cg9DaGF0L1VzZXIucHJvdG8iPQoJU0xvZ2luUmVxEhwKCXVzZXJfaW5mbxgB",
             "IAEoCzIJLlVzZXJJbmZvEhIKCmF1dGhfdG9rZW4YAiABKAkiRwoJQ0xvZ2lu",
             "UmVzEhwKCWxvZ2luX3JlcxgBIAEoDjIJLkxvZ2luUmVzEhwKCXVzZXJfaW5m",
-            "bxgCIAEoCzIJLlVzZXJJbmZvIkgKCFVzZXJJbmZvEhIKCnVzZXJfZGJfaWQY",
-            "ASABKAQSFQoNdXNlcl9sb2dpbl9pZBgCIAEoCRIRCgl1c2VyX25hbWUYAyAB",
-            "KAkqUwoITG9naW5SZXMSEQoNTE9HSU5fSU5WQUxJRBAAEhEKDUxPR0lOX1NV",
-            "Q0NFU1MQARIQCgxMT0dJTl9GQUlMRUQQAhIPCgtMT0dJTl9FUlJPUhADQgeq",
-            "AgRDaGF0YgZwcm90bzM="));
+            "bxgCIAEoCzIJLlVzZXJJbmZvIkcKEFNFZGl0VXNlck5hbWVSZXESHAoJdXNl",
+            "cl9pbmZvGAEgASgLMgkuVXNlckluZm8SFQoNbmV3X3VzZXJfbmFtZRgCIAEo",
+            "CSJIChBDRWRpdFVzZXJOYW1lUmVzEh0KA3JlcxgBIAEoDjIQLkVkaXRVc2Vy",
+            "TmFtZVJlcxIVCg1uZXdfdXNlcl9uYW1lGAIgASgJIkgKCFVzZXJJbmZvEhIK",
+            "CnVzZXJfZGJfaWQYASABKAQSFQoNdXNlcl9sb2dpbl9pZBgCIAEoCRIRCgl1",
+            "c2VyX25hbWUYAyABKAkqUwoITG9naW5SZXMSEQoNTE9HSU5fSU5WQUxJRBAA",
+            "EhEKDUxPR0lOX1NVQ0NFU1MQARIQCgxMT0dJTl9GQUlMRUQQAhIPCgtMT0dJ",
+            "Tl9FUlJPUhADKlEKD0VkaXRVc2VyTmFtZVJlcxIQCgxFRElUX0lOVkFMSUQQ",
+            "ABILCgdFRElUX09LEAESDwoLRURJVF9GQUlMRUQQAhIOCgpFRElUX0VSUk9S",
+            "EANCB6oCBENoYXRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.LoginRes), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.LoginRes), typeof(global::Chat.EditUserNameRes), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLoginReq), global::Chat.SLoginReq.Parser, new[]{ "UserInfo", "AuthToken" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CLoginRes), global::Chat.CLoginRes.Parser, new[]{ "LoginRes", "UserInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SEditUserNameReq), global::Chat.SEditUserNameReq.Parser, new[]{ "UserInfo", "NewUserName" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEditUserNameRes), global::Chat.CEditUserNameRes.Parser, new[]{ "Res", "NewUserName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserDbId", "UserLoginId", "UserName" }, null, null, null, null)
           }));
     }
@@ -49,6 +56,13 @@ namespace Chat {
     [pbr::OriginalName("LOGIN_SUCCESS")] LoginSuccess = 1,
     [pbr::OriginalName("LOGIN_FAILED")] LoginFailed = 2,
     [pbr::OriginalName("LOGIN_ERROR")] LoginError = 3,
+  }
+
+  public enum EditUserNameRes {
+    [pbr::OriginalName("EDIT_INVALID")] EditInvalid = 0,
+    [pbr::OriginalName("EDIT_OK")] EditOk = 1,
+    [pbr::OriginalName("EDIT_FAILED")] EditFailed = 2,
+    [pbr::OriginalName("EDIT_ERROR")] EditError = 3,
   }
 
   #endregion
@@ -524,6 +538,467 @@ namespace Chat {
 
   }
 
+  public sealed partial class SEditUserNameReq : pb::IMessage<SEditUserNameReq>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SEditUserNameReq> _parser = new pb::MessageParser<SEditUserNameReq>(() => new SEditUserNameReq());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SEditUserNameReq> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[2]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SEditUserNameReq() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SEditUserNameReq(SEditUserNameReq other) : this() {
+      userInfo_ = other.userInfo_ != null ? other.userInfo_.Clone() : null;
+      newUserName_ = other.newUserName_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SEditUserNameReq Clone() {
+      return new SEditUserNameReq(this);
+    }
+
+    /// <summary>Field number for the "user_info" field.</summary>
+    public const int UserInfoFieldNumber = 1;
+    private global::Chat.UserInfo userInfo_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Chat.UserInfo UserInfo {
+      get { return userInfo_; }
+      set {
+        userInfo_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_user_name" field.</summary>
+    public const int NewUserNameFieldNumber = 2;
+    private string newUserName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string NewUserName {
+      get { return newUserName_; }
+      set {
+        newUserName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SEditUserNameReq);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SEditUserNameReq other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(UserInfo, other.UserInfo)) return false;
+      if (NewUserName != other.NewUserName) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (userInfo_ != null) hash ^= UserInfo.GetHashCode();
+      if (NewUserName.Length != 0) hash ^= NewUserName.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (userInfo_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(UserInfo);
+      }
+      if (NewUserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(NewUserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (userInfo_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(UserInfo);
+      }
+      if (NewUserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(NewUserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (userInfo_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserInfo);
+      }
+      if (NewUserName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(NewUserName);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SEditUserNameReq other) {
+      if (other == null) {
+        return;
+      }
+      if (other.userInfo_ != null) {
+        if (userInfo_ == null) {
+          UserInfo = new global::Chat.UserInfo();
+        }
+        UserInfo.MergeFrom(other.UserInfo);
+      }
+      if (other.NewUserName.Length != 0) {
+        NewUserName = other.NewUserName;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (userInfo_ == null) {
+              UserInfo = new global::Chat.UserInfo();
+            }
+            input.ReadMessage(UserInfo);
+            break;
+          }
+          case 18: {
+            NewUserName = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (userInfo_ == null) {
+              UserInfo = new global::Chat.UserInfo();
+            }
+            input.ReadMessage(UserInfo);
+            break;
+          }
+          case 18: {
+            NewUserName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class CEditUserNameRes : pb::IMessage<CEditUserNameRes>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<CEditUserNameRes> _parser = new pb::MessageParser<CEditUserNameRes>(() => new CEditUserNameRes());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<CEditUserNameRes> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[3]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CEditUserNameRes() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CEditUserNameRes(CEditUserNameRes other) : this() {
+      res_ = other.res_;
+      newUserName_ = other.newUserName_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public CEditUserNameRes Clone() {
+      return new CEditUserNameRes(this);
+    }
+
+    /// <summary>Field number for the "res" field.</summary>
+    public const int ResFieldNumber = 1;
+    private global::Chat.EditUserNameRes res_ = global::Chat.EditUserNameRes.EditInvalid;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Chat.EditUserNameRes Res {
+      get { return res_; }
+      set {
+        res_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_user_name" field.</summary>
+    public const int NewUserNameFieldNumber = 2;
+    private string newUserName_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string NewUserName {
+      get { return newUserName_; }
+      set {
+        newUserName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as CEditUserNameRes);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(CEditUserNameRes other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Res != other.Res) return false;
+      if (NewUserName != other.NewUserName) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Res != global::Chat.EditUserNameRes.EditInvalid) hash ^= Res.GetHashCode();
+      if (NewUserName.Length != 0) hash ^= NewUserName.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Res != global::Chat.EditUserNameRes.EditInvalid) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Res);
+      }
+      if (NewUserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(NewUserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Res != global::Chat.EditUserNameRes.EditInvalid) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Res);
+      }
+      if (NewUserName.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(NewUserName);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Res != global::Chat.EditUserNameRes.EditInvalid) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
+      }
+      if (NewUserName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(NewUserName);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(CEditUserNameRes other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Res != global::Chat.EditUserNameRes.EditInvalid) {
+        Res = other.Res;
+      }
+      if (other.NewUserName.Length != 0) {
+        NewUserName = other.NewUserName;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Res = (global::Chat.EditUserNameRes) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            NewUserName = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Res = (global::Chat.EditUserNameRes) input.ReadEnum();
+            break;
+          }
+          case 18: {
+            NewUserName = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class UserInfo : pb::IMessage<UserInfo>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -538,7 +1013,7 @@ namespace Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Chat.UserReflection.Descriptor.MessageTypes[2]; }
+      get { return global::Chat.UserReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

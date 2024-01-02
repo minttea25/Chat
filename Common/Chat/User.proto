@@ -10,6 +10,12 @@ enum LoginRes {
 	LOGIN_ERROR = 3;
 }
 
+enum EditUserNameRes {
+	EDIT_INVALID = 0;
+	EDIT_OK = 1;
+	EDIT_FAILED = 2;
+	EDIT_ERROR = 3;
+}
 
 
 message SLoginReq {
@@ -22,7 +28,15 @@ message CLoginRes {
 	UserInfo user_info = 2;
 }
 
+message SEditUserNameReq {
+	UserInfo user_info = 1;
+	string new_user_name = 2;
+}
 
+message CEditUserNameRes {
+	EditUserNameRes res = 1;
+	string new_user_name = 2;
+}
 
 message UserInfo {
 	uint64 user_db_id = 1;

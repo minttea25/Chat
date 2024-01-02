@@ -27,12 +27,19 @@ public partial class NetworkManager : IManager, IUpdate
         }
     }
 
+    public void ResEditUserName(CEditUserNameRes res)
+    {
+        ConnectingUI.Hide();
+
+        // TODO
+        Debug.Log("TODO : ResEditUserName");
+    }
+
     public void ResRoomList(CRoomListRes res)
     {
         ConnectingUI.Hide();
 
-        Debug.Log(res.LoadTime);
-        Debug.Log($"ResRoomList: {res.Rooms.Count}");
+        Debug.Log(res);
 
         ManagerCore.Scene.GetScene<MainScene>().RefreshRoomList(res.LoadTime, res.Rooms);
         
@@ -43,6 +50,7 @@ public partial class NetworkManager : IManager, IUpdate
         LoadingUI.Hide();
 
         Debug.Log(res);
+        NotificationUI.Show($"The new room is created! [{res.RoomInfo.RoomNumber}]");
     }
 
     public void ReqEnterRoom(CEnterRoomRes res)
@@ -50,5 +58,9 @@ public partial class NetworkManager : IManager, IUpdate
         LoadingUI.Hide();
 
         Debug.Log(res);
+        NotificationUI.Show($"You entered the room [{res.RoomInfo.RoomNumber}]");
+
+        // add ui at room list
+        ManagerCore.Scene.GetScene<MainScene>().AddRoom(res.RoomInfo);
     }
 }

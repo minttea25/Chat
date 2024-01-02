@@ -52,7 +52,7 @@ public partial class NetworkManager : IManager, IUpdate
     /// </summary>
     public void StartService(Action<SocketError> failedCallback = null)
     {
-        Utils.AssertCrash(endPoint != null);
+        Core.Utils.AssertCrash(endPoint != null);
 
         ClientServiceConfig config = ClientServiceConfig.GetDefault();
 
@@ -95,7 +95,7 @@ public partial class NetworkManager : IManager, IUpdate
         session?.Disconnect();
         client?.Stop();
         Connected = ConnectState.Disconnected;
-        CoroutineManager.StopCoroutineEx(pingTask);
+        //CoroutineManager.StopCoroutineEx(pingTask);
     }
 
     public void LogoutAndQuit()

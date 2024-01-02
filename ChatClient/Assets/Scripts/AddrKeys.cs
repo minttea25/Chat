@@ -20,7 +20,11 @@ public class AddrKeys
 
     // items
     public const string RoomListItemUI = "RoomListItemUI";
-    
+    public const string ChatPanelItemUI = "ChatPanelItemUI";
+    public const string ChatLeftItemUI = "ChatLeftItemUI";
+    public const string ChatRightItemUI = "ChatRightItemUI";
+    public const string ChatContentEtcItemUI = "ChatContentEtcItemUI";
+
 
     #endregion
 }

@@ -30,14 +30,17 @@ namespace Core
         // add custom managers...
         readonly static NetworkManager _network = new();
         readonly static UnityManager _unity = new();
+        readonly static RoomManager _room = new();
 
         public static NetworkManager Network => _network;
         public static UnityManager Unity => _unity;
+        public static RoomManager Room => _room;
+
 
         readonly static List<IManager> _managers = new()
         {
             _resource, _ui, _scene, _sound, _data, // add customs...
-            _network, _unity
+            _network, _unity, _room
         };
 
         private void Update()
