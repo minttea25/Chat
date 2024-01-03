@@ -12,6 +12,7 @@ class ChatRightItemUIContext : UIContext
     public UIObject<Image> ContentBackground = new();
     public UIObject<TextMeshProUGUI> ContentText = new();
     public UIObject<TextMeshProUGUI> TimeText = new();
+    public UIObject<Image> CheckImage = new();
 }
 
 public class ChatRightItemUI : BaseUIItem
@@ -49,6 +50,12 @@ public class ChatRightItemUI : BaseUIItem
     public void SetYesterDayTime()
     {
         Context.TimeText.Component.text = "Yesterday";
+    }
+
+    public void SetSuccess(bool success)
+    {
+        Debug.Log($"SetSuccess: {success}");
+        // TODO
     }
 
     void FitConent()

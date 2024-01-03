@@ -174,7 +174,7 @@ namespace Core
             if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
 
             GameObject p = result as GameObject; if (p == null) return null;
-            GameObject go = UnityEngine.Object.Instantiate(p);
+            GameObject go = UnityEngine.Object.Instantiate(p, parent);
 
             go.name = name ?? p.name;
             go.transform.localPosition = p.transform.position;

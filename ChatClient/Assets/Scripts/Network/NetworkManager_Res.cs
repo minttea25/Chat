@@ -1,8 +1,6 @@
 using Chat;
 using Core;
 using ServerCoreTCP.Utils;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class NetworkManager : IManager, IUpdate
@@ -11,7 +9,7 @@ public partial class NetworkManager : IManager, IUpdate
     {
         ConnectingUI.Hide();
 
-        Debug.Log($"LoginRes: {res.LoginRes}");
+        Debug.Log($"LoginRes: {res.LoginRes}"); // TEMP
         UserInfo.UserDbId = res.UserInfo.UserDbId;
         switch (res.LoginRes)
         {
@@ -32,35 +30,68 @@ public partial class NetworkManager : IManager, IUpdate
         ConnectingUI.Hide();
 
         // TODO
-        Debug.Log("TODO : ResEditUserName");
+        Debug.Log("TODO : ResEditUserName"); 
     }
 
     public void ResRoomList(CRoomListRes res)
     {
         ConnectingUI.Hide();
 
-        Debug.Log(res);
+        Debug.Log(res); // TEMP
 
-        ManagerCore.Scene.GetScene<MainScene>().RefreshRoomList(res.LoadTime, res.Rooms);
-        
+        ManagerCore.Room.Refresh(res);
     }
 
     public void ResCreateRoom(CCreateRoomRes res)
     {
         LoadingUI.Hide();
+        Debug.Log(res); // TEMP
 
-        Debug.Log(res);
-        NotificationUI.Show($"The new room is created! [{res.RoomInfo.RoomNumber}]");
+        // Note: if res is not ok, the roominfo is null.
+        if (res.Res != CreateRoomRes.CreateRoomOk)
+        {
+            UnityJobQueue.Instance.Push(() => NotificationUI.Show($"Entering the room [{res.RoomNumber}] is failed: {res}."));
+            return;
+        }
+
+        Utils.AssertCrash(res.RoomInfo != null);
+
+        UnityJobQueue.Instance.Push(() => NotificationUI.Show($"The new room is created! [{res.RoomInfo.RoomNumber}]"));
     }
 
-    public void ReqEnterRoom(CEnterRoomRes res)
+    public void ResEnterRoom(CEnterRoomRes res)
     {
         LoadingUI.Hide();
+        Debug.Log(res); // TEMP
 
+        // Note: if res is not ok, the roominfo is null.
+        if (res.Res != EnterRoomRes.EnterRoomOk)
+        {
+            UnityJobQueue.Instance.Push(() => NotificationUI.Show($"Entering the room [{res.RoomNumber}] is failed: {res}."));
+            return;
+        }
+
+        Utils.AssertCrash(res.RoomInfo != null);
+
+        UnityJobQueue.Instance.Push(() => NotificationUI.Show($"You entered the room [{res.RoomInfo.RoomNumber}]"));
+        ManagerCore.Room.AddRoom(res.RoomInfo);
+    }
+
+    public void ResSendChat(CSendChat res)
+    {
+        // no hidng ui
+
+        // TEMP
         Debug.Log(res);
-        NotificationUI.Show($"You entered the room [{res.RoomInfo.RoomNumber}]");
 
-        // add ui at room list
-        ManagerCore.Scene.GetScene<MainScene>().AddRoom(res.RoomInfo);
+        if (res.Error != SendChatError.Success)
+        {
+            UnityJobQueue.Instance.Push(() => NotificationUI.Show($"Failed to send message: {res.Error}"));
+
+            ManagerCore.Room.CheckSend(res.ChatId, res.RoomNumber, success: false);
+            return;
+        }
+
+        ManagerCore.Room.CheckSend(res.ChatId, res.RoomNumber, success: true);
     }
 }

@@ -85,12 +85,12 @@ namespace Chat
         public void HandleChatText(SSendChatText chat)
         {
             // db 처리
-            DbProcess.SaveChatText(UserInfo.UserDbId, chat);
+            // 전송 성공 여부는 SaveChatText에 포함
+            DbProcess.SaveChatText(UserInfo.UserDbId, chat, this);
 
             // 빠른 응답을 위해 성공 여부 상관 없이 바로 broad cast
             // db 저장과 동시 진행 가능
-
-            // 전송 성공 여부는 broadcasting 시에 하기 in RoomManager
+            
 
             // broadcast
             RoomManager.Instance.HandleChatText(chat, this);
@@ -99,12 +99,11 @@ namespace Chat
         public void HandleChatIcon(SSendChatIcon chat)
         {
             // db 처리
-            DbProcess.SaveChatIcon(UserInfo.UserDbId, chat);
+            // 전송 성공 여부는 SaveChatIcon 포함
+            DbProcess.SaveChatIcon(UserInfo.UserDbId, chat, this);
 
             // 빠른 응답을 위해 성공 여부 상관 없이 바로 broad cast
             // db 저장과 동시 진행 가능
-
-            // 전송 성공 여부는 broadcasting 시에 하기 in RoomManager
 
             // broadcast
             RoomManager.Instance.HandleChatIcon(chat, this);

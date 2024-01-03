@@ -25,33 +25,35 @@ namespace Chat {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Cg9DaGF0L0NoYXQucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAu",
-            "cHJvdG8aD0NoYXQvVXNlci5wcm90byJdCg1TU2VuZENoYXRUZXh0Eh4KC3Nl",
+            "cHJvdG8aD0NoYXQvVXNlci5wcm90byJuCg1TU2VuZENoYXRUZXh0Eh4KC3Nl",
             "bmRlcl9pbmZvGAEgASgLMgkuVXNlckluZm8SFwoEY2hhdBgCIAEoCzIJLkNo",
-            "YXRUZXh0EhMKC3Jvb21fbnVtYmVyGAMgASgEIl0KDVNTZW5kQ2hhdEljb24S",
-            "HgoLc2VuZGVyX2luZm8YASABKAsyCS5Vc2VySW5mbxIXCgRjaGF0GAIgASgL",
-            "MgkuQ2hhdEljb24SEwoLcm9vbV9udW1iZXIYAyABKAQiKgoJQ1NlbmRDaGF0",
-            "Eh0KBWVycm9yGAEgASgOMg4uU2VuZENoYXRFcnJvciJZCglDQ2hhdFRleHQS",
-            "HgoLc2VuZGVyX2luZm8YASABKAsyCS5Vc2VySW5mbxIXCgRjaGF0GAIgASgL",
-            "MgkuQ2hhdFRleHQSEwoLcm9vbV9udW1iZXIYAyABKAQiWQoJQ0NoYXRJY29u",
-            "Eh4KC3NlbmRlcl9pbmZvGAEgASgLMgkuVXNlckluZm8SFwoEY2hhdBgCIAEo",
-            "CzIJLkNoYXRJY29uEhMKC3Jvb21fbnVtYmVyGAMgASgEImsKCENoYXRCYXNl",
-            "EhIKCmNoYXRfZGJfaWQYASABKAQSHAoJY2hhdF90eXBlGAIgASgOMgkuQ2hh",
-            "dFR5cGUSLQoJdGltZXN0YW1wGAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRp",
-            "bWVzdGFtcCI1CghDaGF0VGV4dBIcCgljaGF0X2Jhc2UYASABKAsyCS5DaGF0",
-            "QmFzZRILCgNtc2cYAiABKAkiOQoIQ2hhdEljb24SHAoJY2hhdF9iYXNlGAEg",
-            "ASgLMgkuQ2hhdEJhc2USDwoHaWNvbl9pZBgCIAEoDSpJCghDaGF0VHlwZRIV",
-            "ChFDSEFUX1RZUEVfSU5WQUxJRBAAEhIKDkNIQVRfVFlQRV9URVhUEAESEgoO",
-            "Q0hBVF9UWVBFX0lDT04QAiqoAQoNU2VuZENoYXRFcnJvchIbChdTRU5EX0NI",
-            "QVRfRVJST1JfSU5WQUxJRBAAEhsKF1NFTkRfQ0hBVF9FUlJPUl9TVUNDRVNT",
-            "EAESIAocU0VORF9DSEFUX0VSUk9SX05PX1NVQ0hfUk9PTRACEiAKHFNFTkRf",
-            "Q0hBVF9FUlJPUl9ST09NX1JFTU9WRUQQAxIZChVTRU5EX0NIQVRfRVJST1Jf",
-            "T1RIRVIQBEIHqgIEQ2hhdGIGcHJvdG8z"));
+            "YXRUZXh0EhMKC3Jvb21fbnVtYmVyGAMgASgEEg8KB2NoYXRfaWQYBCABKAUi",
+            "bgoNU1NlbmRDaGF0SWNvbhIeCgtzZW5kZXJfaW5mbxgBIAEoCzIJLlVzZXJJ",
+            "bmZvEhcKBGNoYXQYAiABKAsyCS5DaGF0SWNvbhITCgtyb29tX251bWJlchgD",
+            "IAEoBBIPCgdjaGF0X2lkGAQgASgFIlAKCUNTZW5kQ2hhdBIdCgVlcnJvchgB",
+            "IAEoDjIOLlNlbmRDaGF0RXJyb3ISEwoLcm9vbV9udW1iZXIYAiABKAQSDwoH",
+            "Y2hhdF9pZBgDIAEoBSJZCglDQ2hhdFRleHQSHgoLc2VuZGVyX2luZm8YASAB",
+            "KAsyCS5Vc2VySW5mbxIXCgRjaGF0GAIgASgLMgkuQ2hhdFRleHQSEwoLcm9v",
+            "bV9udW1iZXIYAyABKAQiWQoJQ0NoYXRJY29uEh4KC3NlbmRlcl9pbmZvGAEg",
+            "ASgLMgkuVXNlckluZm8SFwoEY2hhdBgCIAEoCzIJLkNoYXRJY29uEhMKC3Jv",
+            "b21fbnVtYmVyGAMgASgEImsKCENoYXRCYXNlEhIKCmNoYXRfZGJfaWQYASAB",
+            "KAQSHAoJY2hhdF90eXBlGAIgASgOMgkuQ2hhdFR5cGUSLQoJdGltZXN0YW1w",
+            "GAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCI1CghDaGF0VGV4",
+            "dBIcCgljaGF0X2Jhc2UYASABKAsyCS5DaGF0QmFzZRILCgNtc2cYAiABKAki",
+            "OQoIQ2hhdEljb24SHAoJY2hhdF9iYXNlGAEgASgLMgkuQ2hhdEJhc2USDwoH",
+            "aWNvbl9pZBgCIAEoDSpJCghDaGF0VHlwZRIVChFDSEFUX1RZUEVfSU5WQUxJ",
+            "RBAAEhIKDkNIQVRfVFlQRV9URVhUEAESEgoOQ0hBVF9UWVBFX0lDT04QAiqo",
+            "AQoNU2VuZENoYXRFcnJvchIbChdTRU5EX0NIQVRfRVJST1JfSU5WQUxJRBAA",
+            "EhsKF1NFTkRfQ0hBVF9FUlJPUl9TVUNDRVNTEAESIAocU0VORF9DSEFUX0VS",
+            "Uk9SX05PX1NVQ0hfUk9PTRACEiAKHFNFTkRfQ0hBVF9FUlJPUl9ST09NX1JF",
+            "TU9WRUQQAxIZChVTRU5EX0NIQVRfRVJST1JfT1RIRVIQBEIHqgIEQ2hhdGIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Chat.UserReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.ChatType), typeof(global::Chat.SendChatError), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatText), global::Chat.SSendChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatIcon), global::Chat.SSendChatIcon.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CSendChat), global::Chat.CSendChat.Parser, new[]{ "Error" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatText), global::Chat.SSendChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber", "ChatId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SSendChatIcon), global::Chat.SSendChatIcon.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber", "ChatId" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CSendChat), global::Chat.CSendChat.Parser, new[]{ "Error", "RoomNumber", "ChatId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CChatText), global::Chat.CChatText.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CChatIcon), global::Chat.CChatIcon.Parser, new[]{ "SenderInfo", "Chat", "RoomNumber" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.ChatBase), global::Chat.ChatBase.Parser, new[]{ "ChatDbId", "ChatType", "Timestamp" }, null, null, null, null),
@@ -117,6 +119,7 @@ namespace Chat {
       senderInfo_ = other.senderInfo_ != null ? other.senderInfo_.Clone() : null;
       chat_ = other.chat_ != null ? other.chat_.Clone() : null;
       roomNumber_ = other.roomNumber_;
+      chatId_ = other.chatId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -162,6 +165,18 @@ namespace Chat {
       }
     }
 
+    /// <summary>Field number for the "chat_id" field.</summary>
+    public const int ChatIdFieldNumber = 4;
+    private int chatId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChatId {
+      get { return chatId_; }
+      set {
+        chatId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -180,6 +195,7 @@ namespace Chat {
       if (!object.Equals(SenderInfo, other.SenderInfo)) return false;
       if (!object.Equals(Chat, other.Chat)) return false;
       if (RoomNumber != other.RoomNumber) return false;
+      if (ChatId != other.ChatId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -190,6 +206,7 @@ namespace Chat {
       if (senderInfo_ != null) hash ^= SenderInfo.GetHashCode();
       if (chat_ != null) hash ^= Chat.GetHashCode();
       if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (ChatId != 0) hash ^= ChatId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -220,6 +237,10 @@ namespace Chat {
         output.WriteRawTag(24);
         output.WriteUInt64(RoomNumber);
       }
+      if (ChatId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -242,6 +263,10 @@ namespace Chat {
         output.WriteRawTag(24);
         output.WriteUInt64(RoomNumber);
       }
+      if (ChatId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -260,6 +285,9 @@ namespace Chat {
       }
       if (RoomNumber != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      }
+      if (ChatId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChatId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -287,6 +315,9 @@ namespace Chat {
       }
       if (other.RoomNumber != 0UL) {
         RoomNumber = other.RoomNumber;
+      }
+      if (other.ChatId != 0) {
+        ChatId = other.ChatId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -321,6 +352,10 @@ namespace Chat {
             RoomNumber = input.ReadUInt64();
             break;
           }
+          case 32: {
+            ChatId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -352,6 +387,10 @@ namespace Chat {
           }
           case 24: {
             RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 32: {
+            ChatId = input.ReadInt32();
             break;
           }
         }
@@ -398,6 +437,7 @@ namespace Chat {
       senderInfo_ = other.senderInfo_ != null ? other.senderInfo_.Clone() : null;
       chat_ = other.chat_ != null ? other.chat_.Clone() : null;
       roomNumber_ = other.roomNumber_;
+      chatId_ = other.chatId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -443,6 +483,18 @@ namespace Chat {
       }
     }
 
+    /// <summary>Field number for the "chat_id" field.</summary>
+    public const int ChatIdFieldNumber = 4;
+    private int chatId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChatId {
+      get { return chatId_; }
+      set {
+        chatId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -461,6 +513,7 @@ namespace Chat {
       if (!object.Equals(SenderInfo, other.SenderInfo)) return false;
       if (!object.Equals(Chat, other.Chat)) return false;
       if (RoomNumber != other.RoomNumber) return false;
+      if (ChatId != other.ChatId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -471,6 +524,7 @@ namespace Chat {
       if (senderInfo_ != null) hash ^= SenderInfo.GetHashCode();
       if (chat_ != null) hash ^= Chat.GetHashCode();
       if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (ChatId != 0) hash ^= ChatId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -501,6 +555,10 @@ namespace Chat {
         output.WriteRawTag(24);
         output.WriteUInt64(RoomNumber);
       }
+      if (ChatId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -523,6 +581,10 @@ namespace Chat {
         output.WriteRawTag(24);
         output.WriteUInt64(RoomNumber);
       }
+      if (ChatId != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -541,6 +603,9 @@ namespace Chat {
       }
       if (RoomNumber != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      }
+      if (ChatId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChatId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -568,6 +633,9 @@ namespace Chat {
       }
       if (other.RoomNumber != 0UL) {
         RoomNumber = other.RoomNumber;
+      }
+      if (other.ChatId != 0) {
+        ChatId = other.ChatId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -602,6 +670,10 @@ namespace Chat {
             RoomNumber = input.ReadUInt64();
             break;
           }
+          case 32: {
+            ChatId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -633,6 +705,10 @@ namespace Chat {
           }
           case 24: {
             RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 32: {
+            ChatId = input.ReadInt32();
             break;
           }
         }
@@ -680,6 +756,8 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CSendChat(CSendChat other) : this() {
       error_ = other.error_;
+      roomNumber_ = other.roomNumber_;
+      chatId_ = other.chatId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -701,6 +779,30 @@ namespace Chat {
       }
     }
 
+    /// <summary>Field number for the "room_number" field.</summary>
+    public const int RoomNumberFieldNumber = 2;
+    private ulong roomNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong RoomNumber {
+      get { return roomNumber_; }
+      set {
+        roomNumber_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "chat_id" field.</summary>
+    public const int ChatIdFieldNumber = 3;
+    private int chatId_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int ChatId {
+      get { return chatId_; }
+      set {
+        chatId_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -717,6 +819,8 @@ namespace Chat {
         return true;
       }
       if (Error != other.Error) return false;
+      if (RoomNumber != other.RoomNumber) return false;
+      if (ChatId != other.ChatId) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -725,6 +829,8 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (Error != global::Chat.SendChatError.Invalid) hash ^= Error.GetHashCode();
+      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (ChatId != 0) hash ^= ChatId.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -747,6 +853,14 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Error);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
+      if (ChatId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -761,6 +875,14 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Error);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
+      if (ChatId != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(ChatId);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -773,6 +895,12 @@ namespace Chat {
       int size = 0;
       if (Error != global::Chat.SendChatError.Invalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Error);
+      }
+      if (RoomNumber != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      }
+      if (ChatId != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(ChatId);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -788,6 +916,12 @@ namespace Chat {
       }
       if (other.Error != global::Chat.SendChatError.Invalid) {
         Error = other.Error;
+      }
+      if (other.RoomNumber != 0UL) {
+        RoomNumber = other.RoomNumber;
+      }
+      if (other.ChatId != 0) {
+        ChatId = other.ChatId;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -808,6 +942,14 @@ namespace Chat {
             Error = (global::Chat.SendChatError) input.ReadEnum();
             break;
           }
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 24: {
+            ChatId = input.ReadInt32();
+            break;
+          }
         }
       }
     #endif
@@ -825,6 +967,14 @@ namespace Chat {
             break;
           case 8: {
             Error = (global::Chat.SendChatError) input.ReadEnum();
+            break;
+          }
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 24: {
+            ChatId = input.ReadInt32();
             break;
           }
         }

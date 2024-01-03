@@ -12,14 +12,16 @@ public class Room
 
     public ICollection<UserInfo> Users => Info.Users;
     public ulong RoomDbId => Info.RoomDbId;
-    public ulong RoomNuber => Info.RoomNumber;
+    public ulong RoomNumber => Info.RoomNumber;
     public string RoomName => Info.RoomName;
 
     public bool Activated => ui != null && ui.gameObject.activeSelf;
     public ChatPanelItem UI => ui != null ? ui : throw new NullReferenceException();
 
-    readonly object _lock = new object();
-    readonly List<ChatData> _pendingChats = new List<ChatData>();
+    readonly object chatLock = new object();
+    readonly object actionLock = new object();
+    readonly List<ChatData> pendingChats = new List<ChatData>();
+    readonly List<Action> pendingJobs = new List<Action>();
     ChatPanelItem ui = null;
 
     public Room(RoomInfo info)
@@ -40,19 +42,44 @@ public class Room
         }
         else
         {
-            lock (_lock)
+            lock (chatLock)
             {
-                _pendingChats.Add(chat);
+                pendingChats.Add(chat);
+            }
+        }
+    }
+
+    public void DoAction(Action action)
+    {
+        if (Activated == true)
+        {
+            action?.Invoke();
+        }
+        else
+        {
+            lock (actionLock)
+            {
+                pendingJobs.Add(action);
             }
         }
     }
 
     public List<ChatData> GetPendingChats()
     {
-        lock ( _lock)
+        lock (chatLock)
         {
-            var result = _pendingChats;
-            _pendingChats.Clear();
+            var result = pendingChats;
+            pendingChats.Clear();
+            return result;
+        }
+    }
+
+    public List<Action> GetPendingJobs()
+    {
+        lock (actionLock)
+        {
+            var result = pendingJobs;
+            pendingJobs.Clear();
             return result;
         }
     }

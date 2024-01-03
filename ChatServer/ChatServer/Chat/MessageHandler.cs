@@ -96,9 +96,6 @@ namespace Chat
             SPingPacket msg = message as SPingPacket;
             ClientSession cs = session as ClientSession;
 
-            // TEMP
-            Console.WriteLine("ping");
-
             cs?.Send(new CPongPacket());
         }
     }

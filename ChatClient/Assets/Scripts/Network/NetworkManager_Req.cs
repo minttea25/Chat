@@ -1,5 +1,6 @@
 using Chat;
 using Core;
+using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.Utils;
 using System;
 using System.Collections;
@@ -60,5 +61,31 @@ public partial class NetworkManager : IManager, IUpdate
         LoadingUI.Show();
 
         Debug.Log($"Enter room {roomNumber}");
+        SEnterRoomReq req = new()
+        {
+            RoomNumber = roomNumber,
+        };
+        Send(req);
+    }
+
+    public void ReqSendChatText(string message, ulong roomNumber, int chatId)
+    {
+        SSendChatText req = new()
+        {
+            RoomNumber = roomNumber,
+            Chat = new Chat.ChatText()
+            {
+                Msg = message,
+                ChatBase = new Chat.ChatBase()
+                {
+                    ChatType = ChatType.Text,
+                    Timestamp = Timestamp.FromDateTime(DateTime.Now),
+                    // it has no db id
+                }
+            },
+            SenderInfo = UserInfo,
+            ChatId = chatId,
+        };
+        Send(req);
     }
 }

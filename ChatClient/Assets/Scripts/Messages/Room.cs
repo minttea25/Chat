@@ -26,38 +26,39 @@ namespace Chat {
           string.Concat(
             "Cg9DaGF0L1Jvb20ucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAu",
             "cHJvdG8aD0NoYXQvVXNlci5wcm90byI4Cg5TQ3JlYXRlUm9vbVJlcRITCgty",
-            "b29tX251bWJlchgBIAEoBBIRCglyb29tX25hbWUYAiABKAkiSwoOQ0NyZWF0",
-            "ZVJvb21SZXMSGwoDcmVzGAEgASgOMg4uQ3JlYXRlUm9vbVJlcxIcCglyb29t",
-            "X2luZm8YAiABKAsyCS5Sb29tSW5mbyIkCg1TRW50ZXJSb29tUmVxEhMKC3Jv",
-            "b21fbnVtYmVyGAEgASgEIkkKDUNFbnRlclJvb21SZXMSGgoDcmVzGAEgASgO",
-            "Mg0uRW50ZXJSb29tUmVzEhwKCXJvb21faW5mbxgCIAEoCzIJLlJvb21JbmZv",
-            "IiwKDFNSb29tTGlzdFJlcRIcCgl1c2VyX2luZm8YASABKAsyCS5Vc2VySW5m",
-            "byJXCgxDUm9vbUxpc3RSZXMSLQoJbG9hZF90aW1lGAEgASgLMhouZ29vZ2xl",
-            "LnByb3RvYnVmLlRpbWVzdGFtcBIYCgVyb29tcxgCIAMoCzIJLlJvb21JbmZv",
-            "IkIKDVNMZWF2ZVJvb21SZXESHAoJdXNlcl9pbmZvGAEgASgLMgkuVXNlcklu",
-            "Zm8SEwoLcm9vbV9udW1iZXIYAiABKAQidgoOQ1VzZXJFbnRlclJvb20SHQoK",
-            "ZW50ZXJfdXNlchgBIAEoCzIJLlVzZXJJbmZvEhMKC3Jvb21fbnVtYmVyGAIg",
-            "ASgEEjAKDGVudGVyZWRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
-            "aW1lc3RhbXAicQoNQ1VzZXJMZWZ0Um9vbRIcCglsZWZ0X3VzZXIYASABKAsy",
-            "CS5Vc2VySW5mbxITCgtyb29tX251bWJlchgCIAEoBBItCglsZWZ0X3RpbWUY",
-            "AyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wImAKCFJvb21JbmZv",
-            "EhIKCnJvb21fZGJfaWQYASABKAQSEwoLcm9vbV9udW1iZXIYAiABKAQSEQoJ",
-            "cm9vbV9uYW1lGAMgASgJEhgKBXVzZXJzGAQgAygLMgkuVXNlckluZm8qmAEK",
-            "DUNyZWF0ZVJvb21SZXMSFwoTQ1JFQVRFX1JPT01fSU5WQUxJRBAAEhIKDkNS",
-            "RUFURV9ST09NX09LEAESIgoeQ1JFQVRFX1JPT01fRFVQTElDQVRFRF9ST09N",
-            "X0lEEAISHwobQ1JFQVRFX1JPT01fSU5WQUxJRF9ST09NX0lEEAMSFQoRQ1JF",
-            "QVRFX1JPT01fRVJST1IQBCqgAQoMRW50ZXJSb29tUmVzEhYKEkVOVEVSX1JP",
-            "T01fSU5WQUxJRBAAEhEKDUVOVEVSX1JPT01fT0sQARIZChVFTlRFUl9ST09N",
-            "X0FMUkVBRFlfSU4QAhIbChdFTlRFUl9ST09NX05PX1NVQ0hfUk9PTRADEhcK",
-            "E0VOVEVSX1JPT01fUkVKRUNURUQQBBIUChBFTlRFUl9ST09NX0VSUk9SEAVC",
-            "B6oCBENoYXRiBnByb3RvMw=="));
+            "b29tX251bWJlchgBIAEoBBIRCglyb29tX25hbWUYAiABKAkiYAoOQ0NyZWF0",
+            "ZVJvb21SZXMSGwoDcmVzGAEgASgOMg4uQ3JlYXRlUm9vbVJlcxITCgtyb29t",
+            "X251bWJlchgCIAEoBBIcCglyb29tX2luZm8YAyABKAsyCS5Sb29tSW5mbyIk",
+            "Cg1TRW50ZXJSb29tUmVxEhMKC3Jvb21fbnVtYmVyGAEgASgEIl4KDUNFbnRl",
+            "clJvb21SZXMSGgoDcmVzGAEgASgOMg0uRW50ZXJSb29tUmVzEhMKC3Jvb21f",
+            "bnVtYmVyGAIgASgEEhwKCXJvb21faW5mbxgDIAEoCzIJLlJvb21JbmZvIiwK",
+            "DFNSb29tTGlzdFJlcRIcCgl1c2VyX2luZm8YASABKAsyCS5Vc2VySW5mbyJX",
+            "CgxDUm9vbUxpc3RSZXMSLQoJbG9hZF90aW1lGAEgASgLMhouZ29vZ2xlLnBy",
+            "b3RvYnVmLlRpbWVzdGFtcBIYCgVyb29tcxgCIAMoCzIJLlJvb21JbmZvIkIK",
+            "DVNMZWF2ZVJvb21SZXESHAoJdXNlcl9pbmZvGAEgASgLMgkuVXNlckluZm8S",
+            "EwoLcm9vbV9udW1iZXIYAiABKAQidgoOQ1VzZXJFbnRlclJvb20SHQoKZW50",
+            "ZXJfdXNlchgBIAEoCzIJLlVzZXJJbmZvEhMKC3Jvb21fbnVtYmVyGAIgASgE",
+            "EjAKDGVudGVyZWRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXAicQoNQ1VzZXJMZWZ0Um9vbRIcCglsZWZ0X3VzZXIYASABKAsyCS5V",
+            "c2VySW5mbxITCgtyb29tX251bWJlchgCIAEoBBItCglsZWZ0X3RpbWUYAyAB",
+            "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wImAKCFJvb21JbmZvEhIK",
+            "CnJvb21fZGJfaWQYASABKAQSEwoLcm9vbV9udW1iZXIYAiABKAQSEQoJcm9v",
+            "bV9uYW1lGAMgASgJEhgKBXVzZXJzGAQgAygLMgkuVXNlckluZm8qmAEKDUNy",
+            "ZWF0ZVJvb21SZXMSFwoTQ1JFQVRFX1JPT01fSU5WQUxJRBAAEhIKDkNSRUFU",
+            "RV9ST09NX09LEAESIgoeQ1JFQVRFX1JPT01fRFVQTElDQVRFRF9ST09NX0lE",
+            "EAISHwobQ1JFQVRFX1JPT01fSU5WQUxJRF9ST09NX0lEEAMSFQoRQ1JFQVRF",
+            "X1JPT01fRVJST1IQBCqgAQoMRW50ZXJSb29tUmVzEhYKEkVOVEVSX1JPT01f",
+            "SU5WQUxJRBAAEhEKDUVOVEVSX1JPT01fT0sQARIZChVFTlRFUl9ST09NX0FM",
+            "UkVBRFlfSU4QAhIbChdFTlRFUl9ST09NX05PX1NVQ0hfUk9PTRADEhcKE0VO",
+            "VEVSX1JPT01fUkVKRUNURUQQBBIUChBFTlRFUl9ST09NX0VSUk9SEAVCB6oC",
+            "BENoYXRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Chat.UserReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.CreateRoomRes), typeof(global::Chat.EnterRoomRes), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SCreateRoomReq), global::Chat.SCreateRoomReq.Parser, new[]{ "RoomNumber", "RoomName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CCreateRoomRes), global::Chat.CCreateRoomRes.Parser, new[]{ "Res", "RoomInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CCreateRoomRes), global::Chat.CCreateRoomRes.Parser, new[]{ "Res", "RoomNumber", "RoomInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SEnterRoomReq), global::Chat.SEnterRoomReq.Parser, new[]{ "RoomNumber" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEnterRoomRes), global::Chat.CEnterRoomRes.Parser, new[]{ "Res", "RoomInfo" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEnterRoomRes), global::Chat.CEnterRoomRes.Parser, new[]{ "Res", "RoomNumber", "RoomInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SRoomListReq), global::Chat.SRoomListReq.Parser, new[]{ "UserInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CRoomListRes), global::Chat.CRoomListRes.Parser, new[]{ "LoadTime", "Rooms" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLeaveRoomReq), global::Chat.SLeaveRoomReq.Parser, new[]{ "UserInfo", "RoomNumber" }, null, null, null, null),
@@ -357,6 +358,7 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CCreateRoomRes(CCreateRoomRes other) : this() {
       res_ = other.res_;
+      roomNumber_ = other.roomNumber_;
       roomInfo_ = other.roomInfo_ != null ? other.roomInfo_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -379,8 +381,20 @@ namespace Chat {
       }
     }
 
+    /// <summary>Field number for the "room_number" field.</summary>
+    public const int RoomNumberFieldNumber = 2;
+    private ulong roomNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong RoomNumber {
+      get { return roomNumber_; }
+      set {
+        roomNumber_ = value;
+      }
+    }
+
     /// <summary>Field number for the "room_info" field.</summary>
-    public const int RoomInfoFieldNumber = 2;
+    public const int RoomInfoFieldNumber = 3;
     private global::Chat.RoomInfo roomInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -407,6 +421,7 @@ namespace Chat {
         return true;
       }
       if (Res != other.Res) return false;
+      if (RoomNumber != other.RoomNumber) return false;
       if (!object.Equals(RoomInfo, other.RoomInfo)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -416,6 +431,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) hash ^= Res.GetHashCode();
+      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
       if (roomInfo_ != null) hash ^= RoomInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -439,8 +455,12 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
       if (roomInfo_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
@@ -457,8 +477,12 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
       if (roomInfo_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
@@ -473,6 +497,9 @@ namespace Chat {
       int size = 0;
       if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
+      }
+      if (RoomNumber != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
       }
       if (roomInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
@@ -491,6 +518,9 @@ namespace Chat {
       }
       if (other.Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         Res = other.Res;
+      }
+      if (other.RoomNumber != 0UL) {
+        RoomNumber = other.RoomNumber;
       }
       if (other.roomInfo_ != null) {
         if (roomInfo_ == null) {
@@ -517,7 +547,11 @@ namespace Chat {
             Res = (global::Chat.CreateRoomRes) input.ReadEnum();
             break;
           }
-          case 18: {
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 26: {
             if (roomInfo_ == null) {
               RoomInfo = new global::Chat.RoomInfo();
             }
@@ -543,7 +577,11 @@ namespace Chat {
             Res = (global::Chat.CreateRoomRes) input.ReadEnum();
             break;
           }
-          case 18: {
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 26: {
             if (roomInfo_ == null) {
               RoomInfo = new global::Chat.RoomInfo();
             }
@@ -787,6 +825,7 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CEnterRoomRes(CEnterRoomRes other) : this() {
       res_ = other.res_;
+      roomNumber_ = other.roomNumber_;
       roomInfo_ = other.roomInfo_ != null ? other.roomInfo_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -809,8 +848,20 @@ namespace Chat {
       }
     }
 
+    /// <summary>Field number for the "room_number" field.</summary>
+    public const int RoomNumberFieldNumber = 2;
+    private ulong roomNumber_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ulong RoomNumber {
+      get { return roomNumber_; }
+      set {
+        roomNumber_ = value;
+      }
+    }
+
     /// <summary>Field number for the "room_info" field.</summary>
-    public const int RoomInfoFieldNumber = 2;
+    public const int RoomInfoFieldNumber = 3;
     private global::Chat.RoomInfo roomInfo_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -837,6 +888,7 @@ namespace Chat {
         return true;
       }
       if (Res != other.Res) return false;
+      if (RoomNumber != other.RoomNumber) return false;
       if (!object.Equals(RoomInfo, other.RoomInfo)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -846,6 +898,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) hash ^= Res.GetHashCode();
+      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
       if (roomInfo_ != null) hash ^= RoomInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -869,8 +922,12 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
       if (roomInfo_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
@@ -887,8 +944,12 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
+      if (RoomNumber != 0UL) {
+        output.WriteRawTag(16);
+        output.WriteUInt64(RoomNumber);
+      }
       if (roomInfo_ != null) {
-        output.WriteRawTag(18);
+        output.WriteRawTag(26);
         output.WriteMessage(RoomInfo);
       }
       if (_unknownFields != null) {
@@ -903,6 +964,9 @@ namespace Chat {
       int size = 0;
       if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
+      }
+      if (RoomNumber != 0UL) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
       }
       if (roomInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
@@ -921,6 +985,9 @@ namespace Chat {
       }
       if (other.Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         Res = other.Res;
+      }
+      if (other.RoomNumber != 0UL) {
+        RoomNumber = other.RoomNumber;
       }
       if (other.roomInfo_ != null) {
         if (roomInfo_ == null) {
@@ -947,7 +1014,11 @@ namespace Chat {
             Res = (global::Chat.EnterRoomRes) input.ReadEnum();
             break;
           }
-          case 18: {
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 26: {
             if (roomInfo_ == null) {
               RoomInfo = new global::Chat.RoomInfo();
             }
@@ -973,7 +1044,11 @@ namespace Chat {
             Res = (global::Chat.EnterRoomRes) input.ReadEnum();
             break;
           }
-          case 18: {
+          case 16: {
+            RoomNumber = input.ReadUInt64();
+            break;
+          }
+          case 26: {
             if (roomInfo_ == null) {
               RoomInfo = new global::Chat.RoomInfo();
             }

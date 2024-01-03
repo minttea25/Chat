@@ -1,18 +1,11 @@
-using DG.Tweening;
-using TMPro;
 using UnityEngine;
 
 public class NotificationUI : MonoBehaviour
 {
-    [SerializeField]
-    CanvasGroup CanvasGroup;
-
-    [SerializeField]
-    TextMeshProUGUI Content;
+    [SerializeField] GameObject NotiPrefab;
+    [SerializeField] Transform NotiPanel;
 
     static NotificationUI instance;
-
-    const float FadeOutDuration = 1.5f;
 
     private void Awake()
     {
@@ -21,24 +14,15 @@ public class NotificationUI : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
 
-        instance.CanvasGroup.alpha = 0f;
+        foreach (Transform item in NotiPanel)
+        {
+            Destroy(item.gameObject);
+        }
     }
 
-    public static void Show(string text, float timeAFter = 1.5f)
+    public static void Show(string text, float timeAfter = 1.5f)
     {
-        instance.Content.text = text;
-        instance.CanvasGroup.alpha = 1f;
-
-        instance.Hide(timeAFter);
-    }
-
-    void Hide(float timeAfter)
-    {
-        Invoke(nameof(FadeOut), timeAfter);
-    }
-
-    void FadeOut()
-    {
-        CanvasGroup.DOFade(0, FadeOutDuration);
+        var noti = Instantiate(instance.NotiPrefab, instance.NotiPanel);
+        noti.GetComponent<NotiItem>().Init(text, timeAfter);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Chat;
+using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System;
@@ -15,27 +16,15 @@ namespace Chat
         {
             Add(() =>
             {
-                // TODO 
-                if (_users.ContainsKey(session.UserInfo.UserDbId) == true)
+                // broadcast
+                CUserEnterRoom msg = new CUserEnterRoom()
                 {
-                    CEnterRoomRes res = new()
-                    {
-                        Res = EnterRoomRes.EnterRoomAlreadyIn,
-                    };
-                    res.RoomInfo.MergeFrom(RoomInfo);
-                    session.Send(res);
-                }
-                else
-                {
-                    // enter room
-                    UserEnterRoom(session);
-                    CEnterRoomRes res = new()
-                    {
-                        Res = EnterRoomRes.EnterRoomOk,
-                    };
-                    res.RoomInfo.MergeFrom(RoomInfo);
-                    session.Send(res);
-                }
+                    RoomNumber = Number,
+                    EnteredTime = Timestamp.FromDateTime(DateTime.UtcNow),
+                };
+                msg.EnterUser.MergeFrom(session.UserInfo);
+                Broadcast(msg);
+
             });
         }
 
@@ -81,9 +70,6 @@ namespace Chat
         {
             Add(() =>
             {
-                // TODO : 여기서 호출...?
-                senderSession?.Send(new CSendChat() { Error = SendChatError.Success });
-
                 // 방에 있는 유저들 broadcast
                 CChatText sChat = new()
                 {

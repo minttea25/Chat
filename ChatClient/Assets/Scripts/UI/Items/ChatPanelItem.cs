@@ -24,7 +24,10 @@ public class ChatPanelItem : BaseUIItem
 
     Transform ChatListTransform => Context.ChatList.BindObject.transform;
 
-    public ulong RoomId { get; private set; } = default;
+    public ulong RoomNumber { get; private set; } = default;
+
+    int chatId = 0; // for checking successful sending
+    Dictionary<int, ChatRightItemUI> pendingChats = new Dictionary<int, ChatRightItemUI>();
 
     public override void Init()
     {
@@ -38,11 +41,13 @@ public class ChatPanelItem : BaseUIItem
 
     private void OnEnable()
     {
-        if (RoomId == default) return;
+        ChatListTransform.DestroyAllItems();
 
-        if (ManagerCore.Room.TryGetRoom(RoomId, out Room room) == false)
+        if (RoomNumber == default) return;
+
+        if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
         {
-            Utils.AssertCrash(false, $"The room[{RoomId}] is not in RoomManager");
+            Utils.AssertCrash(false, $"The room[{RoomNumber}] is not in RoomManager");
             return;
         }
 
@@ -57,10 +62,10 @@ public class ChatPanelItem : BaseUIItem
 
     public void SetRoom(ulong  roomId)
     {
-        RoomId = roomId;
-        if (ManagerCore.Room.TryGetRoom(RoomId, out Room room) == false)
+        RoomNumber = roomId;
+        if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
         {
-            Utils.AssertCrash(false, $"The room[{RoomId}] is not in RoomManager");
+            Utils.AssertCrash(false, $"The room[{RoomNumber}] is not in RoomManager");
             return;
         }
         room.AttachUI(this);
@@ -88,6 +93,19 @@ public class ChatPanelItem : BaseUIItem
             case ChatDataType.Leave:
                 AddChatLeave(chat as ChatUserLeave);
                 break;
+        }
+    }
+
+    public void CheckPendingChat(int chatId, bool success = true)
+    {
+        if (pendingChats.TryGetValue(chatId, out var chat))
+        {
+            chat.SetSuccess(success);
+        }
+        else
+        {
+            // TODO : error handling in DEBUG
+            Debug.LogWarning($"Can not find the chat [id={chatId}].");
         }
     }
 
@@ -143,9 +161,20 @@ public class ChatPanelItem : BaseUIItem
 
     void SendText()
     {
-        string text = Context.ChatTextInput.Component.text;
+        string message = Context.ChatTextInput.Component.text;
 
-        Debug.Log($"SendText: {text}");
+        if (ValidateMessage(message) == false) return;
+
+        ManagerCore.Network.ReqSendChatText(message, RoomNumber, chatId);
+        chatId++;
+    }
+
+    bool ValidateMessage(string message)
+    {
+        if (string.IsNullOrEmpty(message) == true) return false;
+
+        // TODO
+        return true;
     }
 
 

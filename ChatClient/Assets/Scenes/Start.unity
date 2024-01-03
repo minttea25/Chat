@@ -471,9 +471,69 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2617797253327116814, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617797253327116814, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617797253327116814, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617797253327116814, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2617797253327116814, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065001094962535043, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065001094962535043, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065001094962535043, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065001094962535043, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065001094962535043, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5341704656673832484, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
       propertyPath: m_Name
       value: NotificationUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530365210118118539, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530365210118118539, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530365210118118539, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530365210118118539, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5530365210118118539, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7119206571543484282, guid: 9e3c1573baa8c16489d1edeae1bd5639, type: 3}
       propertyPath: m_Pivot.x

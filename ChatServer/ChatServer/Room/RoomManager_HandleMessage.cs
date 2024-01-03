@@ -1,14 +1,6 @@
-﻿using Chat;
-using Chat.DB;
-using Microsoft.EntityFrameworkCore;
-using ServerCoreTCP;
+﻿using Chat.DB;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat
 {
@@ -19,9 +11,25 @@ namespace Chat
             DbProcess.CreateRoom(req.RoomNumber, req.RoomName, session);
         }
 
-        public void HandleEnterRoom(ClientSession session, ulong roomId)
+        public void HandleEnterRoom(ClientSession session, ulong roomNumber)
         {
-            DbProcess.EnterRoom(roomId, session);
+            DbProcess.EnterRoom(roomNumber, session);
+
+            // 방에 있는 다른 유저 broadcast
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(roomNumber) == false)
+                {
+                    // wrong request
+                    // TODO : error
+                    return;
+                }
+                else
+                {
+                    Rooms[roomNumber].HandleEnterRoom(session);
+                }
+
+            });
         }
 
         public void HandleLeaveRoom(ClientSession session, ulong roomNumber)

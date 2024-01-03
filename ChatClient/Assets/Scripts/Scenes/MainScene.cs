@@ -13,7 +13,7 @@ public class MainScene : BaseScene
 {
     public MainSceneUI UI => ui != null ? ui : throw new System.NullReferenceException();
 
-    List<RoomInfo> rooms = new List<RoomInfo>();
+    //List<RoomInfo> rooms = new List<RoomInfo>();
     MainSceneUI ui = null;
     DateTime roomRefreshTime;
 
@@ -37,6 +37,7 @@ public class MainScene : BaseScene
             });
     }
 
+    // TEMP
     public void TryLogin()
     {
         int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
@@ -54,28 +55,29 @@ public class MainScene : BaseScene
         ManagerCore.Network.LogoutAndQuit();
     }
 
-    public void AddRoom(RoomInfo roomInfo)
+    public void CloseRoomPopup()
     {
-        if (rooms.Contains(roomInfo)) { return; }
-
-        rooms.Add(roomInfo);
-        ui.AddRoomList(roomInfo);
+        UI.CloseRoomPopups();
     }
 
-    public void RefreshRoomList(Timestamp time, RepeatedField<RoomInfo> rooms)
+    public void AddRoomUI(RoomInfo roomInfo)
     {
-        this.rooms.Clear();
+        UI.AddRoomList(roomInfo);
+    }
 
+    public void RemoveRoomUI(ulong roomNumber)
+    {
+        UI.RemoveRoom(roomNumber);
+    }
+
+    public void RefreshRoomList(Timestamp time)
+    {
         DateTime now = time.ToDateTime().ToLocalTime();
 
         roomRefreshTime = now;
         ui.SetRefreshTime(now);
-        foreach(var room in rooms)
-        {
-            this.rooms.Add(room);
-        }
 
-        ui.RefreshRoomList(this.rooms);
+        ui.RefreshRoomList(now);
     }
 
     void ConnectionFailed(SocketError error)

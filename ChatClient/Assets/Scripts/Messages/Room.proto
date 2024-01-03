@@ -31,7 +31,8 @@ message SCreateRoomReq {
 // Response the result of SCreateRoomReq.
 message CCreateRoomRes {
     CreateRoomRes res = 1;
-    RoomInfo room_info = 2;
+    uint64 room_number = 2;
+    RoomInfo room_info = 3;
 }
 
 // Request entering the room with number=room_number
@@ -42,7 +43,8 @@ message SEnterRoomReq {
 // Response the result of SEnterRoomReq
 message CEnterRoomRes {
     EnterRoomRes res = 1;
-    RoomInfo room_info = 2;
+    uint64 room_number = 2;
+    RoomInfo room_info = 3;
 }
 
 // Request the list of the rooms that the user is in.

@@ -2,6 +2,8 @@
 using ChatServer.Utils;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using ServerCoreTCP;
 using ServerCoreTCP.Job;
 using System;
 using System.Linq;
@@ -78,16 +80,12 @@ namespace Chat.DB
                         CCreateRoomRes res = new CCreateRoomRes()
                         {
                             Res = CreateRoomRes.CreateRoomDuplicatedRoomId,
-                            RoomInfo = new RoomInfo()
-                            {
-                                RoomDbId = chatRoom.ChatRoomDbId,
-                                RoomName = roomName,
-                                RoomNumber = roomNumber
-                            }
+                            RoomNumber = roomNumber,
+                            RoomInfo = null,
                         };
                         session.Send(res);
                     }
-                    // not found => create the room
+                    // not found => create new room
                     else
                     {
                         // create new room
@@ -103,6 +101,13 @@ namespace Chat.DB
                         // if the room is created successfully
                         if (saved == true)
                         {
+                            CCreateRoomRes res = new()
+                            {
+                                Res = CreateRoomRes.CreateRoomOk,
+                                RoomNumber = roomNumber,
+                                RoomInfo = RoomInfo.FromChatRoomDb(newChatRoom),
+                            };
+                            session.Send(res);
                             // let the user enter the room
                             EnterRoom_(newChatRoom, session, db);
                         }
@@ -114,6 +119,8 @@ namespace Chat.DB
                             CCreateRoomRes res = new()
                             {
                                 Res = CreateRoomRes.CreateRoomError,
+                                RoomNumber = roomNumber,
+                                RoomInfo = null,
                             };
                             session.Send(res);
                         }
@@ -133,7 +140,8 @@ namespace Chat.DB
             {
                 // find room
                 ChatRoomDb chatRoom = db.ChatRooms
-                    .Include(c => c.ChatRoomNumber == roomNumber).FirstOrDefault();
+                    .Include(c => c.Users) // include users
+                    .FirstOrDefault(c => c.ChatRoomNumber == roomNumber);
 
                 // if there is no such room with roomNumber
                 if (chatRoom == null)
@@ -142,6 +150,8 @@ namespace Chat.DB
                     CEnterRoomRes res = new CEnterRoomRes()
                     {
                         Res = EnterRoomRes.EnterRoomNoSuchRoom,
+                        RoomNumber = roomNumber,
+                        RoomInfo = null,
                     };
                     session.Send(res);
                 }
@@ -157,6 +167,8 @@ namespace Chat.DB
                         CEnterRoomRes res = new()
                         {
                             Res = EnterRoomRes.EnterRoomAlreadyIn,
+                            RoomNumber = roomNumber,
+                            RoomInfo = null,
                         };
                         session.Send(res);
                     }
@@ -198,6 +210,8 @@ namespace Chat.DB
                 CEnterRoomRes res = new()
                 {
                     Res = EnterRoomRes.EnterRoomOk,
+                    RoomNumber = roomDb.ChatRoomNumber,
+                    RoomInfo = RoomInfo.FromChatRoomDb(roomDb, containUser: true),
                 };
                 session.Send(res);
             }
@@ -208,6 +222,7 @@ namespace Chat.DB
                 CEnterRoomRes res = new()
                 {
                     Res = EnterRoomRes.EnterRoomError,
+                    RoomNumber = roomDb.ChatRoomNumber
                 };
                 session.Send(res);
             }
@@ -283,7 +298,7 @@ namespace Chat.DB
             }
         }
 
-        public static void SaveChatText(ulong userDbId, SSendChatText chat)
+        public static void SaveChatText(ulong userDbId, SSendChatText chat, ClientSession session)
         {
             using (AppDbContext db = new AppDbContext())
             {
@@ -312,17 +327,29 @@ namespace Chat.DB
                 bool saved = db.SaveChangesEx();
                 if (saved == true)
                 {
-                    ;
+                    CSendChat res = new()
+                    {
+                        Error = SendChatError.Success,
+                        RoomNumber = chat.RoomNumber,
+                        ChatId = chat.ChatId,
+                    };
+                    session.Send(res);
                 }
                 else
                 {
                     // TODO : error
-                    throw new System.Exception("DbUpdate or DbUpdateConcurrent");
+                    CSendChat res = new()
+                    {
+                        Error = SendChatError.Other,
+                        RoomNumber = chat.RoomNumber,
+                        ChatId = chat.ChatId,
+                    };
+                    session.Send(res);
                 }
             }
         }
 
-        public static void SaveChatIcon(ulong userDbId, SSendChatIcon chat)
+        public static void SaveChatIcon(ulong userDbId, SSendChatIcon chat, ClientSession session)
         {
             using (AppDbContext db = new AppDbContext())
             {
@@ -351,12 +378,24 @@ namespace Chat.DB
                 bool saved = db.SaveChangesEx();
                 if (saved == true)
                 {
-                    ;
+                    CSendChat res = new()
+                    {
+                        Error = SendChatError.Success,
+                        RoomNumber = chat.RoomNumber,
+                        ChatId = chat.ChatId,
+                    };
+                    session.Send(res);
                 }
                 else
                 {
                     // TODO : error
-                    throw new System.Exception("DbUpdate or DbUpdateConcurrent");
+                    CSendChat res = new()
+                    {
+                        Error = SendChatError.Other,
+                        RoomNumber = chat.RoomNumber,
+                        ChatId = chat.ChatId,
+                    };
+                    session.Send(res);
                 }
             }
         }

@@ -29,6 +29,8 @@ class MainSceneUIContext : UIContext
     public UIObject ChatPanel = new();
 }
 
+// Note: It is only controlled by MainScene.
+
 public class MainSceneUI : BaseUIScene
 {
     [SerializeField]
@@ -42,7 +44,8 @@ public class MainSceneUI : BaseUIScene
 
     public MainScene Scene { get; set; }
 
-    MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
+    readonly MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
+    readonly Dictionary<ulong, RoomListItemUI> roomList = new Dictionary<ulong, RoomListItemUI>();
     ulong openedChatId = 0;
 
 
@@ -106,25 +109,48 @@ public class MainSceneUI : BaseUIScene
 
     public void AddRoomList(RoomInfo room)
     {
-        RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
-        item.SetRoomName(room.RoomName);
-        item.SetRoomNumber(room.RoomNumber);
+        AddRoomList(room.RoomName, room.RoomNumber);
     }
 
-    public void RefreshRoomList(List<RoomInfo> rooms)
+    public void AddRoomList(string roomName, ulong roomNumber)
     {
-        foreach (var r in rooms)
+        RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
+        item.SetRoomName(roomName);
+        item.SetRoomNumber(roomNumber);
+        item.BindEventUnityAction(() => ShowChat(roomNumber));
+        roomList.Add(roomNumber, item);
+    }
+
+    public void RemoveRoom(ulong roomNumber)
+    {
+        if (roomList.TryGetValue(roomNumber, out var room))
         {
-            RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
-            item.SetRoomName(r.RoomName);
-            item.SetRoomNumber(r.RoomNumber);
+            Destroy(room.gameObject);
+            roomList.Remove(roomNumber);
         }
+    }
+
+    public void RefreshRoomList(DateTime time)
+    {
+        // TODO
+        List<Room> list = ManagerCore.Room.GetRooms();
+        foreach (var room in list)
+        {
+            AddRoomList(room.RoomName, room.RoomNumber);
+        }
+    }
+
+    public void CloseRoomPopups()
+    {
+        // TODO : check the dotween
+        if (enterRoomPopup != null) enterRoomPopup.Hide();
+        if (createRoomPopup != null) createRoomPopup.Hide();
     }
 
     public void SetRefreshTime(DateTime time)
     {
         // TODO : change the format const.
-        RoomListRefreshTime.Data = time.ToString("HH:mm:ss");
+        RoomListRefreshTime.Data = time.ToLocalTimeFormat();
     }
 
     public void SetPing(long ping)
@@ -140,6 +166,8 @@ public class MainSceneUI : BaseUIScene
 
     public void ShowChat(ulong roomId)
     {
+        Debug.Log($"ShowChat: {roomId}");
+
         if (openedChatId == roomId) return;
 
         if (chatPanels.TryGetValue(openedChatId, out var opened))

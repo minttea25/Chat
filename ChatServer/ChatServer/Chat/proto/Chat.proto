@@ -24,17 +24,21 @@ message SSendChatText {
     UserInfo sender_info = 1;
     ChatText chat = 2;
     uint64 room_number = 3;
+    int32 chat_id = 4;
 }
 
 message SSendChatIcon {
     UserInfo sender_info = 1;
     ChatIcon chat = 2;
     uint64 room_number = 3;
+    int32 chat_id = 4;
 }
 
 // The response of SSendChatText and SSendChatIcon
 message CSendChat {
     SendChatError error = 1;
+    uint64 room_number = 2;
+    int32 chat_id = 3;
 }
 
 // The text chat packet for broadcasting

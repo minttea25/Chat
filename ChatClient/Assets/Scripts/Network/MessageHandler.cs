@@ -42,7 +42,7 @@ namespace Chat
         {
             CEnterRoomRes msg = message as CEnterRoomRes;
 
-            ManagerCore.Network.ReqEnterRoom(msg);
+            ManagerCore.Network.ResEnterRoom(msg);
         }
 
         public static void CRoomListResMessageHandler(IMessage message, Session session)
