@@ -9,7 +9,7 @@ public partial class NetworkManager : IManager, IUpdate
     {
         ConnectingUI.Hide();
 
-        Debug.Log($"LoginRes: {res.LoginRes}"); // TEMP
+        Debug.Log($"LoginRes: {res}"); // TEMP
         UserInfo.UserDbId = res.UserInfo.UserDbId;
         switch (res.LoginRes)
         {

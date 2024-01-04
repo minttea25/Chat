@@ -36,7 +36,7 @@ public class EnterRoomPopup : BaseReusableUIPopup
             return;
         }
 
-        ManagerCore.Network.ReqEnterRoom(ulong.Parse(number));
+        ManagerCore.Network.ReqEnterRoom(uint.Parse(number));
     }
 
     void OnCloseButtonClicked()

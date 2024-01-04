@@ -1,4 +1,5 @@
 using Core;
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,7 +13,10 @@ class ChatRightItemUIContext : UIContext
     public UIObject<Image> ContentBackground = new();
     public UIObject<TextMeshProUGUI> ContentText = new();
     public UIObject<TextMeshProUGUI> TimeText = new();
-    public UIObject<Image> CheckImage = new();
+    public UIObject StatePanel = new();
+    public UIObject CheckImage = new();
+    public UIObject<Image> LoadingImage = new();
+    public UIObject FailImage = new();
 }
 
 public class ChatRightItemUI : BaseUIItem
@@ -20,15 +24,20 @@ public class ChatRightItemUI : BaseUIItem
     [SerializeField]
     ChatRightItemUIContext Context = new();
 
-    const float ContentLRPadding = 10f; // 5 each
-    const float ContentUDPadding = 10f; // 5 each
-    const float TimePosPadding = 3f; // padding value beside the contentbackground
+    Tweener sendChecking = null;
 
 
     public override void Init()
     {
         base.Init();
 
+        Context.CheckImage.BindObject.SetActive(false);
+        Context.FailImage.BindObject.SetActive(false);
+        Context.LoadingImage.BindObject.SetActive(true);
+
+        sendChecking = Context.LoadingImage.Component.rectTransform
+            .DORotate(new Vector3(0f, 0f, -360f), UIValues.SendCheckingTimeOut, RotateMode.FastBeyond360);
+        sendChecking.onComplete += () => SetSuccess(false);
     }
 
     //public void SetMessage(string msg, DateTime time)
@@ -54,20 +63,37 @@ public class ChatRightItemUI : BaseUIItem
 
     public void SetSuccess(bool success)
     {
-        Debug.Log($"SetSuccess: {success}");
-        // TODO
+        sendChecking.Pause();
+        Destroy(Context.LoadingImage.BindObject);
+
+        if (success == true) SetChecked();
+        else SetFailed();
     }
 
     void FitConent()
     {
-        float contentWidth = Context.ContentText.BindObject.GetComponent<RectTransform>().rect.width;
-        float contentHeight = Context.ContentText.BindObject.GetComponent<RectTransform>().rect.height;
+        float contentWidth = Context.ContentText.Component.preferredWidth;
+        float contentHeight = Context.ContentText.Component.preferredHeight;
 
         Context.ContentBackground.BindObject.GetComponent<RectTransform>().sizeDelta
-            = new Vector2(contentWidth + ContentLRPadding, contentHeight + ContentUDPadding);
+            = new Vector2(contentWidth + UIValues.ContentLRPadding, contentHeight + UIValues.ContentUDPadding);
 
+        Context.TimeText.BindObject.GetComponent<RectTransform>().anchoredPosition
+            = new Vector2(-1f * (contentWidth + UIValues.ContentLRPadding + UIValues.TimePosPadding), 0f);
         Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta
-            = new Vector2(contentHeight + ContentLRPadding + TimePosPadding, contentHeight + ContentUDPadding);
+            = new Vector2(Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta.x, contentHeight + UIValues.ContentUDPadding);
+    }
+
+    public void SetChecked()
+    {
+        Context.CheckImage.BindObject.SetActive(true);
+        Context.FailImage.BindObject.SetActive(false);
+    }
+
+    public void SetFailed()
+    {
+        Context.CheckImage.BindObject.SetActive(false);
+        Context.FailImage.BindObject.SetActive(true);
     }
 
     string GetTimeOrYesterday(DateTime time)

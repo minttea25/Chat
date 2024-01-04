@@ -26,23 +26,23 @@ namespace Chat {
           string.Concat(
             "Cg9DaGF0L1Jvb20ucHJvdG8aH2dvb2dsZS9wcm90b2J1Zi90aW1lc3RhbXAu",
             "cHJvdG8aD0NoYXQvVXNlci5wcm90byI4Cg5TQ3JlYXRlUm9vbVJlcRITCgty",
-            "b29tX251bWJlchgBIAEoBBIRCglyb29tX25hbWUYAiABKAkiYAoOQ0NyZWF0",
+            "b29tX251bWJlchgBIAEoDRIRCglyb29tX25hbWUYAiABKAkiYAoOQ0NyZWF0",
             "ZVJvb21SZXMSGwoDcmVzGAEgASgOMg4uQ3JlYXRlUm9vbVJlcxITCgtyb29t",
-            "X251bWJlchgCIAEoBBIcCglyb29tX2luZm8YAyABKAsyCS5Sb29tSW5mbyIk",
-            "Cg1TRW50ZXJSb29tUmVxEhMKC3Jvb21fbnVtYmVyGAEgASgEIl4KDUNFbnRl",
+            "X251bWJlchgCIAEoDRIcCglyb29tX2luZm8YAyABKAsyCS5Sb29tSW5mbyIk",
+            "Cg1TRW50ZXJSb29tUmVxEhMKC3Jvb21fbnVtYmVyGAEgASgNIl4KDUNFbnRl",
             "clJvb21SZXMSGgoDcmVzGAEgASgOMg0uRW50ZXJSb29tUmVzEhMKC3Jvb21f",
-            "bnVtYmVyGAIgASgEEhwKCXJvb21faW5mbxgDIAEoCzIJLlJvb21JbmZvIiwK",
+            "bnVtYmVyGAIgASgNEhwKCXJvb21faW5mbxgDIAEoCzIJLlJvb21JbmZvIiwK",
             "DFNSb29tTGlzdFJlcRIcCgl1c2VyX2luZm8YASABKAsyCS5Vc2VySW5mbyJX",
             "CgxDUm9vbUxpc3RSZXMSLQoJbG9hZF90aW1lGAEgASgLMhouZ29vZ2xlLnBy",
             "b3RvYnVmLlRpbWVzdGFtcBIYCgVyb29tcxgCIAMoCzIJLlJvb21JbmZvIkIK",
             "DVNMZWF2ZVJvb21SZXESHAoJdXNlcl9pbmZvGAEgASgLMgkuVXNlckluZm8S",
-            "EwoLcm9vbV9udW1iZXIYAiABKAQidgoOQ1VzZXJFbnRlclJvb20SHQoKZW50",
-            "ZXJfdXNlchgBIAEoCzIJLlVzZXJJbmZvEhMKC3Jvb21fbnVtYmVyGAIgASgE",
+            "EwoLcm9vbV9udW1iZXIYAiABKA0idgoOQ1VzZXJFbnRlclJvb20SHQoKZW50",
+            "ZXJfdXNlchgBIAEoCzIJLlVzZXJJbmZvEhMKC3Jvb21fbnVtYmVyGAIgASgN",
             "EjAKDGVudGVyZWRfdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
             "c3RhbXAicQoNQ1VzZXJMZWZ0Um9vbRIcCglsZWZ0X3VzZXIYASABKAsyCS5V",
-            "c2VySW5mbxITCgtyb29tX251bWJlchgCIAEoBBItCglsZWZ0X3RpbWUYAyAB",
+            "c2VySW5mbxITCgtyb29tX251bWJlchgCIAEoDRItCglsZWZ0X3RpbWUYAyAB",
             "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wImAKCFJvb21JbmZvEhIK",
-            "CnJvb21fZGJfaWQYASABKAQSEwoLcm9vbV9udW1iZXIYAiABKAQSEQoJcm9v",
+            "CnJvb21fZGJfaWQYASABKAQSEwoLcm9vbV9udW1iZXIYAiABKA0SEQoJcm9v",
             "bV9uYW1lGAMgASgJEhgKBXVzZXJzGAQgAygLMgkuVXNlckluZm8qmAEKDUNy",
             "ZWF0ZVJvb21SZXMSFwoTQ1JFQVRFX1JPT01fSU5WQUxJRBAAEhIKDkNSRUFU",
             "RV9ST09NX09LEAESIgoeQ1JFQVRFX1JPT01fRFVQTElDQVRFRF9ST09NX0lE",
@@ -141,10 +141,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 1;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -187,7 +187,7 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (RoomName.Length != 0) hash ^= RoomName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -207,9 +207,9 @@ namespace Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (RoomName.Length != 0) {
         output.WriteRawTag(18);
@@ -225,9 +225,9 @@ namespace Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (RoomName.Length != 0) {
         output.WriteRawTag(18);
@@ -243,8 +243,8 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (RoomName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomName);
@@ -261,7 +261,7 @@ namespace Chat {
       if (other == null) {
         return;
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.RoomName.Length != 0) {
@@ -283,7 +283,7 @@ namespace Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -306,7 +306,7 @@ namespace Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 18: {
@@ -383,10 +383,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -431,7 +431,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) hash ^= Res.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (roomInfo_ != null) hash ^= RoomInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -455,9 +455,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (roomInfo_ != null) {
         output.WriteRawTag(26);
@@ -477,9 +477,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (roomInfo_ != null) {
         output.WriteRawTag(26);
@@ -498,8 +498,8 @@ namespace Chat {
       if (Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (roomInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
@@ -519,7 +519,7 @@ namespace Chat {
       if (other.Res != global::Chat.CreateRoomRes.CreateRoomInvalid) {
         Res = other.Res;
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.roomInfo_ != null) {
@@ -548,7 +548,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -578,7 +578,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -644,10 +644,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 1;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -677,7 +677,7 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -696,9 +696,9 @@ namespace Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -710,9 +710,9 @@ namespace Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(8);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -724,8 +724,8 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -739,7 +739,7 @@ namespace Chat {
       if (other == null) {
         return;
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -758,7 +758,7 @@ namespace Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 8: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
         }
@@ -777,7 +777,7 @@ namespace Chat {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 8: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
         }
@@ -850,10 +850,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -898,7 +898,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) hash ^= Res.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (roomInfo_ != null) hash ^= RoomInfo.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -922,9 +922,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (roomInfo_ != null) {
         output.WriteRawTag(26);
@@ -944,9 +944,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteEnum((int) Res);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (roomInfo_ != null) {
         output.WriteRawTag(26);
@@ -965,8 +965,8 @@ namespace Chat {
       if (Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Res);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (roomInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(RoomInfo);
@@ -986,7 +986,7 @@ namespace Chat {
       if (other.Res != global::Chat.EnterRoomRes.EnterRoomInvalid) {
         Res = other.Res;
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.roomInfo_ != null) {
@@ -1015,7 +1015,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -1045,7 +1045,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -1552,10 +1552,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -1587,7 +1587,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (userInfo_ != null) hash ^= UserInfo.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1610,9 +1610,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(UserInfo);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1628,9 +1628,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(UserInfo);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1645,8 +1645,8 @@ namespace Chat {
       if (userInfo_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserInfo);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1666,7 +1666,7 @@ namespace Chat {
         }
         UserInfo.MergeFrom(other.UserInfo);
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1692,7 +1692,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
         }
@@ -1718,7 +1718,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
         }
@@ -1788,10 +1788,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -1836,7 +1836,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (enterUser_ != null) hash ^= EnterUser.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (enteredTime_ != null) hash ^= EnteredTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1860,9 +1860,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(EnterUser);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (enteredTime_ != null) {
         output.WriteRawTag(26);
@@ -1882,9 +1882,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(EnterUser);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (enteredTime_ != null) {
         output.WriteRawTag(26);
@@ -1903,8 +1903,8 @@ namespace Chat {
       if (enterUser_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(EnterUser);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (enteredTime_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(EnteredTime);
@@ -1927,7 +1927,7 @@ namespace Chat {
         }
         EnterUser.MergeFrom(other.EnterUser);
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.enteredTime_ != null) {
@@ -1959,7 +1959,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -1992,7 +1992,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -2072,10 +2072,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -2120,7 +2120,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (leftUser_ != null) hash ^= LeftUser.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (leftTime_ != null) hash ^= LeftTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -2144,9 +2144,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(LeftUser);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (leftTime_ != null) {
         output.WriteRawTag(26);
@@ -2166,9 +2166,9 @@ namespace Chat {
         output.WriteRawTag(10);
         output.WriteMessage(LeftUser);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (leftTime_ != null) {
         output.WriteRawTag(26);
@@ -2187,8 +2187,8 @@ namespace Chat {
       if (leftUser_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeftUser);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (leftTime_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeftTime);
@@ -2211,7 +2211,7 @@ namespace Chat {
         }
         LeftUser.MergeFrom(other.LeftUser);
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.leftTime_ != null) {
@@ -2243,7 +2243,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -2276,7 +2276,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -2354,10 +2354,10 @@ namespace Chat {
 
     /// <summary>Field number for the "room_number" field.</summary>
     public const int RoomNumberFieldNumber = 2;
-    private ulong roomNumber_;
+    private uint roomNumber_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ulong RoomNumber {
+    public uint RoomNumber {
       get { return roomNumber_; }
       set {
         roomNumber_ = value;
@@ -2414,7 +2414,7 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (RoomDbId != 0UL) hash ^= RoomDbId.GetHashCode();
-      if (RoomNumber != 0UL) hash ^= RoomNumber.GetHashCode();
+      if (RoomNumber != 0) hash ^= RoomNumber.GetHashCode();
       if (RoomName.Length != 0) hash ^= RoomName.GetHashCode();
       hash ^= users_.GetHashCode();
       if (_unknownFields != null) {
@@ -2439,9 +2439,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(RoomDbId);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (RoomName.Length != 0) {
         output.WriteRawTag(26);
@@ -2462,9 +2462,9 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(RoomDbId);
       }
-      if (RoomNumber != 0UL) {
+      if (RoomNumber != 0) {
         output.WriteRawTag(16);
-        output.WriteUInt64(RoomNumber);
+        output.WriteUInt32(RoomNumber);
       }
       if (RoomName.Length != 0) {
         output.WriteRawTag(26);
@@ -2484,8 +2484,8 @@ namespace Chat {
       if (RoomDbId != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomDbId);
       }
-      if (RoomNumber != 0UL) {
-        size += 1 + pb::CodedOutputStream.ComputeUInt64Size(RoomNumber);
+      if (RoomNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(RoomNumber);
       }
       if (RoomName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomName);
@@ -2506,7 +2506,7 @@ namespace Chat {
       if (other.RoomDbId != 0UL) {
         RoomDbId = other.RoomDbId;
       }
-      if (other.RoomNumber != 0UL) {
+      if (other.RoomNumber != 0) {
         RoomNumber = other.RoomNumber;
       }
       if (other.RoomName.Length != 0) {
@@ -2533,7 +2533,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {
@@ -2564,7 +2564,7 @@ namespace Chat {
             break;
           }
           case 16: {
-            RoomNumber = input.ReadUInt64();
+            RoomNumber = input.ReadUInt32();
             break;
           }
           case 26: {

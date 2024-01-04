@@ -12,7 +12,7 @@ public class Room
 
     public ICollection<UserInfo> Users => Info.Users;
     public ulong RoomDbId => Info.RoomDbId;
-    public ulong RoomNumber => Info.RoomNumber;
+    public uint RoomNumber => Info.RoomNumber;
     public string RoomName => Info.RoomName;
 
     public bool Activated => ui != null && ui.gameObject.activeSelf;

@@ -112,7 +112,7 @@ public class MainSceneUI : BaseUIScene
         AddRoomList(room.RoomName, room.RoomNumber);
     }
 
-    public void AddRoomList(string roomName, ulong roomNumber)
+    public void AddRoomList(string roomName, uint roomNumber)
     {
         RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
         item.SetRoomName(roomName);
@@ -164,7 +164,7 @@ public class MainSceneUI : BaseUIScene
         Context.ChatPanel.BindObject.transform.DestroyAllItems();
     }
 
-    public void ShowChat(ulong roomId)
+    public void ShowChat(uint roomId)
     {
         Debug.Log($"ShowChat: {roomId}");
 
@@ -183,6 +183,8 @@ public class MainSceneUI : BaseUIScene
         {
             var chat = ManagerCore.UI.AddItemUI<ChatPanelItem>(AddrKeys.ChatPanelItemUI, ChatPanelTransform);
             Core.Utils.AssertCrash(chat != null);
+
+            chat.SetRoom(roomId);
 
             chatPanels.Add(roomId, chat, out var removedChat);
             if(removedChat != null) ManagerCore.Resource.Destroy(removedChat.gameObject);

@@ -10,7 +10,7 @@ namespace Chat
     {
         public ulong DbId => RoomInfo?.RoomDbId ?? throw new System.NullReferenceException();
         public string Name => RoomInfo?.RoomName ?? throw new System.NullReferenceException();
-        public ulong Number => RoomInfo?.RoomNumber ?? throw new System.NullReferenceException();
+        public uint Number => RoomInfo?.RoomNumber ?? throw new System.NullReferenceException();
         public int UserCount => _users.Count;
         public RoomInfo RoomInfo { get; private set; }
 

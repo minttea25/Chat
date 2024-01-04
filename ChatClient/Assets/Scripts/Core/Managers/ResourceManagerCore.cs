@@ -17,7 +17,7 @@ namespace Core
         // Async을 사용
 
         // Number of async-loadings in progress (로딩 완료 후 _handles에서 삭제안함, _handles.Count와 의미가 다름)
-        public int HandleCount = 0;
+        public int HandleCount { get; private set; } = 0;
 
         public IReadOnlyDictionary<string, UObject> Results => _results;
 
@@ -113,6 +113,7 @@ namespace Core
             {
                 void OnHandleCompleted(AsyncOperationHandle handle)
                 {
+                    HandleCount--;
                     completedCount++;
                     if (handle.Status == AsyncOperationStatus.Succeeded)
                     {
@@ -154,6 +155,7 @@ namespace Core
                 }
 
                 AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<GameObject>(key);
+                HandleCount++;
                 loadHandle.Completed += OnHandleCompleted;
                 _handles.Add(key, loadHandle);
             }

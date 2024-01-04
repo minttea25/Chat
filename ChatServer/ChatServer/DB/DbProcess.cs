@@ -17,16 +17,15 @@ namespace Chat.DB
         /// <summary>
         /// for TEST
         /// </summary>
-        public static void CreateNewAccount(string username, ClientSession session)
+        public static void CreateNewAccount(string userId, string userName, ClientSession session)
         {
-            // TEST codes
-            AccountDb newAccount = new()
-            {
-                AccountLoginId = username,
-            };
-            
+            // TEST codes            
             using (AppDbContext db = new AppDbContext())
             {
+                AccountDb newAccount = new()
+                {
+                    AccountLoginId = userId,
+                };
                 db.Accounts.Add(newAccount);
                 bool saved = db.SaveChangesEx();
 
@@ -34,19 +33,20 @@ namespace Chat.DB
 
                 UserDb newUser = new()
                 {
-                    UserName = username,
+                    UserName = userName,
                     Account = newAccount,
                     AccountDbId = newAccount.AccountDbId,
                 };
                 db.Users.Add(newUser);
                 saved = db.SaveChangesEx();
+
                 if (saved == false) return;
 
-                UserInfo user = new()
-                {
-                    UserDbId = newUser.UserDbId, UserName = username,
-                    UserLoginId = username,
-                };
+                newAccount.UserDbId = newUser.UserDbId;
+                saved = db.SaveChangesEx();
+                if (saved == false) return;
+
+                UserInfo user = UserInfo.FromUserDb(newUser, newAccount.AccountLoginId);
 
                 session.SetInfo(newAccount, user);
 
@@ -61,7 +61,7 @@ namespace Chat.DB
         }
 
 
-        public static void CreateRoom(ulong roomNumber, string roomName, ClientSession session)
+        public static void CreateRoom(uint roomNumber, string roomName, ClientSession session)
         {
             if (session == null) return;
             // wrong req
@@ -129,7 +129,7 @@ namespace Chat.DB
             });
         }
 
-        public static void EnterRoom(ulong roomNumber, ClientSession session)
+        public static void EnterRoom(uint roomNumber, ClientSession session)
         {
             if (session == null) return;
             // wrong req
@@ -247,6 +247,7 @@ namespace Chat.DB
                 CRoomListRes res = new();
                 foreach (var room in userDb.Rooms)
                 {
+                    // 방 추가
                     RoomInfo info = new()
                     {
                         RoomDbId = room.ChatRoomDbId,
@@ -258,13 +259,9 @@ namespace Chat.DB
                     // TODO : RoomInfo의 Users 간소화
                     foreach (var user in room.Users)
                     {
-                        info.Users.Add(new UserInfo()
-                        {
-                            // 현대 user login id 빠져있음!
-                            UserDbId = user.UserDbId,
-                            UserName = user.UserName,
-                        });
+                        info.Users.Add(UserInfo.FromUserDb(user));
                     }
+                    res.Rooms.Add(info);
                 }
                 res.LoadTime = Timestamp.FromDateTime(DateTime.UtcNow);
                 session.Send(res);

@@ -24,7 +24,7 @@ public class NotiItem : MonoBehaviour
 
     void FadeOut()
     {
-        canvasGroup.DOFade(0, DefaultFadeOutDuration);
-        Destroy(gameObject, DefaultFadeOutDuration);
+        var t = canvasGroup.DOFade(0, DefaultFadeOutDuration);
+        t.onComplete += () => Destroy(gameObject, DefaultFadeOutDuration);
     }
 }

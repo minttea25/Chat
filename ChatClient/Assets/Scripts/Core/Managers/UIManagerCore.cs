@@ -11,7 +11,7 @@ namespace Core
         /// <summary>
         /// NOTE: The order of normal popup start at 10; You can open the normal popups up to 19.
         /// </summary>
-        const int TopPopupSortingLayer = 30;
+        const int TopPopupSortingLayer = 100;
 
         public BaseUIPopup TopPopupUI
         {
@@ -199,7 +199,6 @@ namespace Core
 
         public void ClosePopupUI(BaseUIPopup popup)
         {
-
             if (_popupStack.Count == 0) return;
 
             // assertion crash

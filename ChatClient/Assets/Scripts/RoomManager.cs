@@ -7,7 +7,7 @@ using System.Linq;
 public class RoomManager : IManager
 {
     readonly object _lock = new object();
-    readonly Dictionary<ulong, Room> rooms = new();
+    readonly Dictionary<uint, Room> rooms = new();
     MainScene _scene = null;
     MainScene Scene 
     {
@@ -35,7 +35,7 @@ public class RoomManager : IManager
         if (Scene != null) UnityJobQueue.Instance.Push(() => Scene.AddRoomUI(info));
     }
 
-    public void RemoveRoom(ulong roomNumber)
+    public void RemoveRoom(uint roomNumber)
     {
         lock (_lock)
         {
@@ -76,12 +76,12 @@ public class RoomManager : IManager
         }
     }
 
-    public bool TryGetRoom(ulong roomId, out Room room)
+    public bool TryGetRoom(uint roomId, out Room room)
     {
         return rooms.TryGetValue(roomId, out room);
     }
 
-    public void CheckSend(int chatId, ulong roomNumber, bool success)
+    public void CheckSend(int chatId, uint roomNumber, bool success)
     {
         if (rooms.TryGetValue(roomNumber, out Room room))
         {

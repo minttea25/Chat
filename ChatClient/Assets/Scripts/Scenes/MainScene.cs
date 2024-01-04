@@ -13,7 +13,6 @@ public class MainScene : BaseScene
 {
     public MainSceneUI UI => ui != null ? ui : throw new System.NullReferenceException();
 
-    //List<RoomInfo> rooms = new List<RoomInfo>();
     MainSceneUI ui = null;
     DateTime roomRefreshTime;
 
@@ -40,8 +39,17 @@ public class MainScene : BaseScene
     // TEMP
     public void TryLogin()
     {
-        int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
-        ManagerCore.Network.SetUserInfo("TestToken", $"TestLoginId{rand}", $"TestName{rand}");
+        //int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
+        //ManagerCore.Network.SetUserInfo("TestToken", $"TestLoginId{rand}", $"TestName{rand}");
+
+#if UNITY_EDITOR
+        var data = Resources.Load<AccountData>("Debug/AccountData");
+#else
+        var data = new AccountData();
+        data.LoadText();
+#endif
+        ManagerCore.Network.SetUserInfo("TestToken", data.LoginId, data.LoginId);
+        Debug.Log($"Trying to login with id, {ManagerCore.Network.UserInfo.UserLoginId}");
         ManagerCore.Network.ReqLogin();
     }
 
@@ -86,5 +94,6 @@ public class MainScene : BaseScene
 
         // TODO : show error popup
         // TODO : retry to connect
+        NotificationUI.Show($"Connection Failed: {error}");
     }
 }

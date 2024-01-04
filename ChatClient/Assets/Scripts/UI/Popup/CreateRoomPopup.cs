@@ -36,7 +36,7 @@ public class CreateRoomPopup : BaseReusableUIPopup
             return;
         }
 
-        ManagerCore.Network.ReqCreateRoom(ulong.Parse(number));
+        ManagerCore.Network.ReqCreateRoom(uint.Parse(number));
     }
 
     void OnCloseButtonClicked()

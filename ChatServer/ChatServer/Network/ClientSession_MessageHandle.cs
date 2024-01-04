@@ -37,23 +37,27 @@ namespace Chat
 
             using (AppDbContext db = new AppDbContext())
             {
-                //AccountDb findAccound = db.Accounts.Include(a => a.AccountLoginId == req.UserInfo.UserName).FirstOrDefault();
-
-                AccountDb findAccound = db.Accounts.FirstOrDefault(a => a.AccountLoginId == req.UserInfo.UserName);
+                AccountDb findAccound = db.Accounts
+                    .FirstOrDefault(a => a.AccountLoginId == req.UserInfo.UserLoginId);
 
                 if (findAccound != null)
                 {
                     // assign the found id for AccountDbId
                     AccountDbId = findAccound.AccountDbId;
-                    // assign the the userinfo
-                    UserInfo = new();
-                    UserInfo.MergeFrom(req.UserInfo);
 
-                    SessionStatus = SessionStatus.LOGINNED;
+                    // find user db
+                    UserDb user = db.Users.FirstOrDefault(u => u.UserDbId == findAccound.UserDbId);
+
+                    if (user == null) return;
+
+                    // assign the the userinfo
+                    UserInfo info = UserInfo.FromUserDb(user, findAccound.AccountLoginId);
+                    SetInfo(findAccound, info);
 
                     CLoginRes res = new CLoginRes()
                     {
                         LoginRes = LoginRes.LoginSuccess,
+                        UserInfo = UserInfo,
                     };
 
                     // TODO : Is anything to do more?
@@ -63,9 +67,8 @@ namespace Chat
                 else
                 {
                     // TEST
-                    DbProcess.CreateNewAccount(req.UserInfo.UserName, this);
+                    DbProcess.CreateNewAccount(req.UserInfo.UserLoginId, req.UserInfo.UserName, this);
                     return;
-
 
                     // no acoount found
                     CLoginRes res = new CLoginRes()

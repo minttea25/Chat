@@ -44,11 +44,10 @@ public partial class NetworkManager : IManager, IUpdate
         Send(roomListReq);
     }
 
-    public void ReqCreateRoom(ulong roomNumber)
+    public void ReqCreateRoom(uint roomNumber)
     {
         LoadingUI.Show();
 
-        Debug.Log("TODO : ReqCreateRoom");
         SCreateRoomReq req = new() 
         { 
             RoomNumber = roomNumber, RoomName = $"Room{roomNumber}"
@@ -56,7 +55,7 @@ public partial class NetworkManager : IManager, IUpdate
         Send(req);
     }
 
-    public void ReqEnterRoom(ulong roomNumber)
+    public void ReqEnterRoom(uint roomNumber)
     {
         LoadingUI.Show();
 
@@ -68,7 +67,7 @@ public partial class NetworkManager : IManager, IUpdate
         Send(req);
     }
 
-    public void ReqSendChatText(string message, ulong roomNumber, int chatId)
+    public void ReqSendChatText(string message, uint roomNumber, int chatId)
     {
         SSendChatText req = new()
         {
@@ -79,7 +78,7 @@ public partial class NetworkManager : IManager, IUpdate
                 ChatBase = new Chat.ChatBase()
                 {
                     ChatType = ChatType.Text,
-                    Timestamp = Timestamp.FromDateTime(DateTime.Now),
+                    Timestamp = Timestamp.FromDateTime(DateTime.UtcNow),
                     // it has no db id
                 }
             },

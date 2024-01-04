@@ -24,9 +24,9 @@ public class ChatPanelItem : BaseUIItem
 
     Transform ChatListTransform => Context.ChatList.BindObject.transform;
 
-    public ulong RoomNumber { get; private set; } = default;
+    public uint RoomNumber { get; private set; } = default;
 
-    int chatId = 0; // for checking successful sending
+    int cid = 1; // for checking successful sending
     Dictionary<int, ChatRightItemUI> pendingChats = new Dictionary<int, ChatRightItemUI>();
 
     public override void Init()
@@ -36,13 +36,11 @@ public class ChatPanelItem : BaseUIItem
         Context.SendButton.Component.onClick.AddListener(SendText);
         Context.IconButton.Component.onClick.AddListener(IconSelectButton);
 
-        
+        ChatListTransform.DestroyAllItems();
     }
 
     private void OnEnable()
     {
-        ChatListTransform.DestroyAllItems();
-
         if (RoomNumber == default) return;
 
         if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
@@ -60,7 +58,7 @@ public class ChatPanelItem : BaseUIItem
         // hide loading
     }
 
-    public void SetRoom(ulong  roomId)
+    public void SetRoom(uint roomId)
     {
         RoomNumber = roomId;
         if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
@@ -101,6 +99,10 @@ public class ChatPanelItem : BaseUIItem
         if (pendingChats.TryGetValue(chatId, out var chat))
         {
             chat.SetSuccess(success);
+            if (success)
+            {
+                pendingChats.Remove(chatId);
+            }
         }
         else
         {
@@ -109,15 +111,32 @@ public class ChatPanelItem : BaseUIItem
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns>Chat Id</returns>
+    int AddMyChat(string message)
+    {
+        int chatId = cid;
+
+        ChatRightItemUI right = ManagerCore.UI.AddItemUI<ChatRightItemUI>(AddrKeys.ChatRightItemUI, ChatListTransform);
+        Utils.Assert(right != null);
+
+        pendingChats.Add(chatId, right);
+        cid++;
+
+        right.SetMessage(message, DateTime.Now.ToLocalTimeFormat());
+
+        return chatId;
+    }
+
     void AddChatText(ChatText chat)
     {
         // my chat
         if (chat.User.UserDbId == ManagerCore.Network.UserInfo.UserDbId)
         {
-            ChatRightItemUI right = ManagerCore.UI.AddItemUI<ChatRightItemUI>(AddrKeys.ChatRightItemUI, ChatListTransform);
-            Utils.Assert(right != null);
-
-            right.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat());
+            return;
         }
         else
         {
@@ -165,8 +184,12 @@ public class ChatPanelItem : BaseUIItem
 
         if (ValidateMessage(message) == false) return;
 
+        // 미리 보여주기
+        int chatId = AddMyChat(message);
+
         ManagerCore.Network.ReqSendChatText(message, RoomNumber, chatId);
-        chatId++;
+
+        Context.ChatTextInput.Component.text = string.Empty;
     }
 
     bool ValidateMessage(string message)

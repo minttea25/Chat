@@ -1,6 +1,6 @@
-MessageWrapperFactory at 2023-12-21 11:05:42
+MessageWrapperFactory at 2024-01-04 14:05:22
 
-Namespace: ChatServer.Chat
+Namespace: Chat
 Target path: Chat
 Proto file extension: proto
 The prefix of exclude-packet in server: C
@@ -20,7 +20,7 @@ Found messages (top-level, except nested)
 - SSendChatIcon
 - CSendChat
 - CChatText
-- CSendIcon
+- CChatIcon
 - ChatBase
 - ChatText
 - ChatIcon
@@ -32,14 +32,16 @@ Found messages (top-level, except nested)
 - CCreateRoomRes
 - SEnterRoomReq
 - CEnterRoomRes
-- SAllRoomListReq
 - SRoomListReq
 - CRoomListRes
 - SLeaveRoomReq
+- CUserEnterRoom
 - CUserLeftRoom
 - RoomInfo
-### User.proto (3): 
+### User.proto (5): 
 - SLoginReq
 - CLoginRes
+- SEditUserNameReq
+- CEditUserNameRes
 - UserInfo
 

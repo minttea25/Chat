@@ -23,21 +23,21 @@ enum SendChatError {
 message SSendChatText {
     UserInfo sender_info = 1;
     ChatText chat = 2;
-    uint64 room_number = 3;
+    uint32 room_number = 3;
     int32 chat_id = 4;
 }
 
 message SSendChatIcon {
     UserInfo sender_info = 1;
     ChatIcon chat = 2;
-    uint64 room_number = 3;
+    uint32 room_number = 3;
     int32 chat_id = 4;
 }
 
 // The response of SSendChatText and SSendChatIcon
 message CSendChat {
     SendChatError error = 1;
-    uint64 room_number = 2;
+    uint32 room_number = 2;
     int32 chat_id = 3;
 }
 
@@ -45,14 +45,14 @@ message CSendChat {
 message CChatText {
     UserInfo sender_info = 1;
     ChatText chat = 2;
-    uint64 room_number = 3;
+    uint32 room_number = 3;
 }
 
 // The icon chat packet for broadcasting
 message CChatIcon {
     UserInfo sender_info = 1;
     ChatIcon chat = 2;
-    uint64 room_number = 3;
+    uint32 room_number = 3;
 }
 
 

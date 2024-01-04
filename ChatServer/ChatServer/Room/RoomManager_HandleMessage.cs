@@ -11,7 +11,7 @@ namespace Chat
             DbProcess.CreateRoom(req.RoomNumber, req.RoomName, session);
         }
 
-        public void HandleEnterRoom(ClientSession session, ulong roomNumber)
+        public void HandleEnterRoom(ClientSession session, uint roomNumber)
         {
             DbProcess.EnterRoom(roomNumber, session);
 

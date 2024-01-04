@@ -3,9 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat.DB
 {
@@ -13,9 +10,10 @@ namespace Chat.DB
     public class AccountDb
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long AccountDbId { get; set; }
         public string AccountLoginId { get; set; }
-        public ulong AccountUniqueId { get; set; }
+        public ulong UserDbId { get; set; }
 
     }
 

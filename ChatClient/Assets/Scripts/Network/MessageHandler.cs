@@ -13,7 +13,7 @@ namespace Chat
         {
             CSendChat msg = message as CSendChat;
 
-            // TODO
+            ManagerCore.Network.ResSendChat(msg);
         }
 
         public static void CChatTextMessageHandler(IMessage message, Session session)
