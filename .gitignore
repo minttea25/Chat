@@ -1,6 +1,11 @@
 # CUSTOM
+
+
+# PROTOBUF
 /Common/google/
-/Server/Common/
-/protoc.exe
-/libprotobuf.dll
-/libprotoc.dll
+/Common//protoc.exe
+/Common/libprotobuf.dll
+/Common/libprotoc.dll
+
+# DB Migration
+/ChatServer/ChatServer/Migrations/

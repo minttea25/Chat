@@ -1,0 +1,42 @@
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam ParticipantPadding 50
+
+title Login Process
+
+header Login Process
+footer Login Process
+
+actor "Client" as C order 2 #Orange
+participant "ChatServer" as S order 1
+participant "AccountServer" as A order 3
+database "AccountDataBase" as ADB order 4
+database "ChatDataBase" as CDB order 0
+
+
+autonumber
+C -> A : Login Request
+activate A #Brown
+A -> ADB : Check Account
+activate A #Orange
+||20||
+ADB -> A : Response
+deactivate A
+A -> C : Issue auth token
+deactivate A
+
+hnote left of C : SLoginReq
+C -> S : Login Request with token
+activate S #Pink
+S -> CDB : Check User
+activate S #Orange
+||20||
+CDB -> S : Response
+deactivate S
+hnote right of S : CLoginRes
+S -> C : Auth complete
+deactivate S
+
+note over C : Login Completed
+
+@enduml

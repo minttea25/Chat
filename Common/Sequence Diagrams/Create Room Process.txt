@@ -1,0 +1,53 @@
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam ParticipantPadding 120
+skinparam BoxPadding 100
+
+title Create Room Process
+
+header Create Room Process
+footer Create Room Process
+
+actor "Client" as C order 0 #Orange
+box "Chat Server" #f7e4e4
+participant "IOCP" as I order 1
+participant "DB" as DB order 2
+endbox
+database "ChatDataBase" as CDB order 3
+
+hnote right of C : SCreateRoomReq
+C -> I : Request Create Room
+activate I #Orange
+I -> DB: Check Room Number
+deactivate I
+activate DB #Pink
+DB --> CDB : Check Room Number
+||10||
+CDB --> DB : Response
+DB -> I : Response
+deactivate DB
+activate I #Orange
+
+
+hnote left of I : CCreateRoomRes
+I -> C : Response Create Room
+
+note over I : If Success
+
+group #White Enter Process
+I -> DB: Update Data
+deactivate I
+activate DB #Pink
+DB --> CDB : Update Data
+||10||
+DB-> I : Response
+deactivate DB
+activate I #Orange
+hnote left of I: CEnterRoomRes
+I -> C : Enter Room
+deactivate I
+||20||
+end
+
+
+@enduml
