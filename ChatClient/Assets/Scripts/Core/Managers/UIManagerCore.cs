@@ -142,6 +142,24 @@ namespace Core
                 );
         }
 
+        public T ShowSceneUI<T>(string key, string name = null) where T : BaseUIScene
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T ui = go.GetOrAddComponent<T>();
+            _sceneUI = ui;
+            ui.transform.SetParent(RootObject.transform);
+
+            return ui;
+        }
+
+
         public void ShowUIAsync<T>(string key, int sortingOrder, Action<T> callback = null) where T : BaseUI
         {
             ManagerCore.Resource.Instantiate(

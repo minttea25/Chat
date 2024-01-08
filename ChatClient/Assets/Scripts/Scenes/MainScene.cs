@@ -17,6 +17,18 @@ public class MainScene : BaseScene
     DateTime roomRefreshTime;
 
 
+    private void OnEnable()
+    {
+        ManagerCore.Resource.LoadAllAsync(
+            LoadCompleted,
+            AddrKeys.MainSceneUI);
+    }
+
+    private void OnDisable()
+    {
+        ManagerCore.Resource.ReleaseAll(AddrKeys.MainSceneUI);
+    }
+
 
     protected override void Init()
     {
@@ -26,14 +38,38 @@ public class MainScene : BaseScene
 
         Screen.SetResolution(800, 600, false);
 
-        ManagerCore.UI.ShowSceneUIAsync<MainSceneUI>(AddrKeys.MainSceneUI,
-            (ui) =>
-            {
-                this.ui = ui;
-                ui.Scene = this;
-                ConnectingUI.Show();
-                ManagerCore.Network.StartService(ConnectionFailed);
-            });
+        //ManagerCore.UI.ShowSceneUIAsync<MainSceneUI>(AddrKeys.MainSceneUI,
+        //    (ui) =>
+        //    {
+        //        this.ui = ui;
+        //        ui.Scene = this;
+        //        ConnectingUI.Show();
+        //        ManagerCore.Network.StartService(ConnectionFailed);
+        //    });
+    }
+
+    void LoadCompleted(List<string> failedKeys)
+    {
+        if (failedKeys.Count != 0)
+        {
+            ErrorHandling.HandleError(ErrorHandling.ErrorType.Runtime,
+                ErrorHandling.ErrorLevel.Critical,
+                "Failed to load resources");
+            return;
+        }
+
+        ui = ManagerCore.UI.ShowSceneUI<MainSceneUI>(AddrKeys.MainSceneUI);
+        if (ui == null)
+        {
+            ErrorHandling.HandleError(ErrorHandling.ErrorType.Runtime,
+                ErrorHandling.ErrorLevel.Critical,
+                "Failed to load MainSceneUI");
+            return;
+        }
+
+        ui.Scene = this;
+        ConnectingUI.Show();
+        ManagerCore.Network.StartService(ConnectionFailed);
     }
 
     // TEMP
@@ -51,21 +87,50 @@ public class MainScene : BaseScene
         ManagerCore.Network.SetUserInfo("TestToken", data.LoginId, data.LoginId);
         Debug.Log($"Trying to login with id, {ManagerCore.Network.UserInfo.UserLoginId}");
         ManagerCore.Network.ReqLogin();
+
+        StartCoroutine(CheckLoginTimeout());
+    }
+
+    IEnumerator CheckLoginTimeout()
+    {
+        yield return new WaitForSeconds(AppConst.LoginChatServerTimeoutSeconds);
+
+        if (ManagerCore.Network.Connection != NetworkManager.ConnectState.Loginned)
+        {
+            string msg = $"Failed to login: {ManagerCore.Network.Connection}";
+            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Error, msg);
+
+            // failed to connect
+            ManagerCore.Network.Logout();
+        }
+
+    }
+
+    public void ResCreateRoom()
+    {
+        UI.CloseCreateRoomPopup();
+    }
+
+    public void ResEnterRoom()
+    {
+        UI.CloseEnterRoomPopup();
+
+
     }
 
     public void ReqEditUserName(string userName)
     {
-        Debug.Log("TODO : send edit req");
+        ManagerCore.Network.ReqEditUserName(userName);
+    }
+
+    public void ResEditUserName(bool success, string username = null)
+    {
+        UI.EditUserNameRes(success, username);
     }
 
     public void Logout()
     {
         ManagerCore.Network.LogoutAndQuit();
-    }
-
-    public void CloseRoomPopup()
-    {
-        UI.CloseRoomPopups();
     }
 
     public void AddRoomUI(RoomInfo roomInfo)

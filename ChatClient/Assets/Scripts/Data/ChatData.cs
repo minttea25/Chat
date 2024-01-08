@@ -45,7 +45,6 @@ public class ChatText : ChatData
     }
 
     public ChatType ChatType { get; private set; }
-
     public string Message { get; private set; }
 }
 

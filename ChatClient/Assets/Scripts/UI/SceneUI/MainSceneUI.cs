@@ -132,7 +132,6 @@ public class MainSceneUI : BaseUIScene
 
     public void RefreshRoomList(DateTime time)
     {
-        // TODO
         List<Room> list = ManagerCore.Room.GetRooms();
         foreach (var room in list)
         {
@@ -140,11 +139,15 @@ public class MainSceneUI : BaseUIScene
         }
     }
 
-    public void CloseRoomPopups()
+    public void CloseCreateRoomPopup()
     {
-        // TODO : check the dotween
-        if (enterRoomPopup != null) enterRoomPopup.Hide();
         if (createRoomPopup != null) createRoomPopup.Hide();
+    }
+
+
+    public void CloseEnterRoomPopup()
+    {
+        if (enterRoomPopup != null) enterRoomPopup.Hide();
     }
 
     public void SetRefreshTime(DateTime time)
@@ -156,6 +159,14 @@ public class MainSceneUI : BaseUIScene
     public void SetPing(long ping)
     {
         Ping.Data = $"{ping} ms";
+    }
+
+    public void EditUserNameRes(bool success, string username = null)
+    {
+        if (infoPopup == null) return;
+
+        if (success == true) infoPopup.SuccessChangeUserName(username);
+        else infoPopup.FailChaneUserName();
     }
 
     public void Clear()
@@ -245,18 +256,18 @@ public class MainSceneUI : BaseUIScene
 
     IEnumerator CheckLoad()
     {
-        while (ManagerCore.Network.Connected == NetworkManager.ConnectState.Connecting)
+        while (ManagerCore.Network.Connection == NetworkManager.ConnectState.Connecting)
         {
             yield return null;
         }
 
-        if (ManagerCore.Network.Connected == NetworkManager.ConnectState.FailedToConnect)
+        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.FailedToConnect)
         {
             // TODO : 연결 실패
 
         }
 
-        if (ManagerCore.Network.Connected == NetworkManager.ConnectState.Disconnected)
+        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.Disconnected)
         {
             // TODO : 오류
         }

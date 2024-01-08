@@ -7,16 +7,20 @@ public partial class NetworkManager : IManager, IUpdate
 {
     public void ResLogin(CLoginRes res)
     {
-        ConnectingUI.Hide();
-
         Debug.Log($"LoginRes: {res}"); // TEMP
-        UserInfo.UserDbId = res.UserInfo.UserDbId;
+        SetLoginned(res.UserInfo);
+        UnityJobQueue.Instance.Push(() => ConnectingUI.Hide());
+        
         switch (res.LoginRes)
         {
             case LoginRes.LoginInvalid:
                 break;
             case LoginRes.LoginSuccess:
-                ReqRoomList();
+                SRoomListReq roomListReq = new SRoomListReq()
+                {
+                    UserInfo = UserInfo,
+                };
+                Send(roomListReq);
                 break;
             case LoginRes.LoginFailed:
                 break;
@@ -27,15 +31,35 @@ public partial class NetworkManager : IManager, IUpdate
 
     public void ResEditUserName(CEditUserNameRes res)
     {
-        ConnectingUI.Hide();
+        UnityJobQueue.Instance.Push(() => ConnectingUI.Hide());
 
-        // TODO
-        Debug.Log("TODO : ResEditUserName"); 
+        if (res.Res == EditUserNameRes.EditOk)
+        {
+            UnityJobQueue.Instance.Push(() =>
+            {
+                MainScene scene = ManagerCore.Scene.GetScene<MainScene>();
+                if (scene != null)
+                {
+                    scene.ResEditUserName(true, res.NewUserName);
+                }
+            });
+        }
+        else
+        {
+            UnityJobQueue.Instance.Push(() =>
+            {
+                MainScene scene = ManagerCore.Scene.GetScene<MainScene>();
+                if (scene != null)
+                {
+                    scene.ResEditUserName(false);
+                }
+            });
+        }
     }
 
     public void ResRoomList(CRoomListRes res)
     {
-        ConnectingUI.Hide();
+        UnityJobQueue.Instance.Push(() => ConnectingUI.Hide());
 
         Debug.Log(res); // TEMP
 
@@ -44,7 +68,7 @@ public partial class NetworkManager : IManager, IUpdate
 
     public void ResCreateRoom(CCreateRoomRes res)
     {
-        LoadingUI.Hide();
+        UnityJobQueue.Instance.Push(() => LoadingUI.Hide());
         Debug.Log(res); // TEMP
 
         // Note: if res is not ok, the roominfo is null.
@@ -57,11 +81,16 @@ public partial class NetworkManager : IManager, IUpdate
         Utils.AssertCrash(res.RoomInfo != null);
 
         UnityJobQueue.Instance.Push(() => NotificationUI.Show($"The new room is created! [{res.RoomInfo.RoomNumber}]"));
+        UnityJobQueue.Instance.Push(() =>
+        {
+            var scene = ManagerCore.Scene.GetScene<MainScene>();
+            if (scene != null) scene.ResCreateRoom();
+        });
     }
 
     public void ResEnterRoom(CEnterRoomRes res)
     {
-        LoadingUI.Hide();
+        UnityJobQueue.Instance.Push(() => LoadingUI.Hide());
         Debug.Log(res); // TEMP
 
         // Note: if res is not ok, the roominfo is null.
@@ -75,6 +104,11 @@ public partial class NetworkManager : IManager, IUpdate
 
         UnityJobQueue.Instance.Push(() => NotificationUI.Show($"You entered the room [{res.RoomInfo.RoomNumber}]"));
         ManagerCore.Room.AddRoom(res.RoomInfo);
+        UnityJobQueue.Instance.Push(() =>
+        {
+            var scene = ManagerCore.Scene.GetScene<MainScene>();
+            if (scene != null) scene.ResEnterRoom();
+        });
     }
 
     public void ResSendChat(CSendChat res)

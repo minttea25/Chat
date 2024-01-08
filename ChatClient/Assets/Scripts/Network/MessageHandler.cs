@@ -77,18 +77,17 @@ namespace Chat
         {
             CEditUserNameRes msg = message as CEditUserNameRes;
 
-            // TODO
+            ManagerCore.Network.ResEditUserName(msg);
         }
 
         public static void CPongPacketMessageHandler(IMessage message, Session session)
         {
-            CPongPacket msg = message as CPongPacket;
+            // CPongPacket msg = message as CPongPacket;
 
-            // TODO
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;
             var pingTick = ManagerCore.Network.PingTick;
             //UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
-            ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick);
+            UnityJobQueue.Instance.Push(() => ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick));
         }
     }
 }

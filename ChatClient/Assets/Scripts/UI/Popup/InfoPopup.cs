@@ -56,15 +56,32 @@ public class InfoPopup : BaseReusableUIPopup
         Context.BackgroundBlur_Panel.BindObject.BindEventOnUI(Hide);
     }
 
+    public void RefreshData()
+    {
+        UserName.Data = ManagerCore.Network.UserInfo.UserName;
+        UserId.Data = ManagerCore.Network.UserInfo.UserLoginId;
+    }
+
+    public void SuccessChangeUserName(string username)
+    {
+        NotificationUI.Show("Username is changed successfully!");
+        SetNameViewMode();
+        Context.UserNameEditInputField.Component.text = string.Empty;
+    }
+
+    public void FailChaneUserName()
+    {
+        NotificationUI.Show("Failed to edit user name.");
+    }
+
     void OnEditButtonClicked()
     {
         // req edit
         if (editMode == true)
         {
             string newName = Context.UserNameEditInputField.Component.text;
-            Debug.Log(newName);
 
-            if (ValidateUserName(newName) == false)
+            if (Validations.UserName(newName) == false)
             {
                 Context.EditErrorText.BindObject.SetActive(true);
                 return;
@@ -73,9 +90,6 @@ public class InfoPopup : BaseReusableUIPopup
 
             ManagerCore.Scene.GetScene<MainScene>().ReqEditUserName(newName);
 
-            // TEMP
-            SetNameViewMode();
-            Context.UserNameEditInputField.Component.text = string.Empty;
         }
         else
         {
@@ -105,13 +119,6 @@ public class InfoPopup : BaseReusableUIPopup
         Context.UserNameEditInputField.BindObject.SetActive(false);
         Context.UserNameEditCancelButton.BindObject.SetActive(false);
     }
-
-    bool ValidateUserName(string userName)
-    {
-        // TODO : validate user name
-        return true;
-    }
-
 
 
 #if UNITY_EDITOR

@@ -127,6 +127,7 @@ public class RoomManager : IManager
 
     void IManager.ClearManager()
     {
+        rooms.Clear();
     }
 
     void IManager.InitManager()

@@ -9,3 +9,4 @@
 
 # DB Migration
 /ChatServer/ChatServer/Migrations/
+Common/protoc.exe

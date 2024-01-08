@@ -106,8 +106,9 @@ public class ChatPanelItem : BaseUIItem
         }
         else
         {
-            // TODO : error handling in DEBUG
-            Debug.LogWarning($"Can not find the chat [id={chatId}].");
+            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
+                ErrorHandling.ErrorLevel.Error,
+                $"Can not find chat [id={chatId}]");
         }
     }
 

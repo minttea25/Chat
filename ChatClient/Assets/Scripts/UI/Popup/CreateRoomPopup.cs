@@ -27,16 +27,21 @@ public class CreateRoomPopup : BaseReusableUIPopup
         Context.CloseButton.Component.onClick.AddListener(OnCloseButtonClicked);
     }
 
+    private void OnDisable()
+    {
+        Context.NumberInputField.Component.text = string.Empty;
+    }
+
     void OnCreateButtonClicked()
     {
         string number = Context.NumberInputField.Component.text.Trim();
-        if (ValidateNumber(number) == false)
+        if (Validations.RoomNumber(number, out var num) == false)
         {
             // TODO : wrong popup
             return;
         }
 
-        ManagerCore.Network.ReqCreateRoom(uint.Parse(number));
+        ManagerCore.Network.ReqCreateRoom(num);
     }
 
     void OnCloseButtonClicked()
@@ -44,12 +49,6 @@ public class CreateRoomPopup : BaseReusableUIPopup
         Hide();
     }
 
-    bool ValidateNumber(string number)
-    {
-        // TODO : validate the room number
-        // ex - range and is ulong
-        return true;
-    }
 
 #if UNITY_EDITOR
     public override Type GetContextType()

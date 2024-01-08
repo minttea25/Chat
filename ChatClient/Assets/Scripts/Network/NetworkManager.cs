@@ -1,4 +1,5 @@
 using Chat;
+using Chat.Network;
 using Core;
 using Google.Protobuf;
 using ServerCoreTCP;
@@ -24,15 +25,17 @@ public partial class NetworkManager : IManager, IUpdate
         NotConnected = 0,
         Connecting = 1,
         Connected = 2,
-        FailedToConnect = 3,
-        Disconnected = 4,
+        Loginned = 3,
+        FailedToConnect = 4,
+        Disconnected = 5,
     }
 
     IPEndPoint endPoint = null;
 
     public uint ConnectedId { get; private set; } = 0;
     public string AuthToken { get; private set; } = null;
-    public ConnectState Connected { get; set; } = ConnectState.NotConnected;
+    public bool Connected => Connection == ConnectState.Connected || Connection == ConnectState.Loginned;
+    public ConnectState Connection { get; private set; } = ConnectState.NotConnected;
     public UserInfo UserInfo { get; private set; }
 
     ClientService client = null;
@@ -44,6 +47,26 @@ public partial class NetworkManager : IManager, IUpdate
     {
         AuthToken = authToken;
         UserInfo = new() { UserLoginId = userLoginId, UserName = userName };
+    }
+
+    public void SetConnected()
+    {
+        Connection = ConnectState.Connected;
+    }
+
+    /// <summary>
+    /// UserInfo must have UserDbId.
+    /// </summary>
+    /// <param name="receivedUserInfo"></param>
+    public void SetLoginned(UserInfo receivedUserInfo)
+    {
+        if (receivedUserInfo.UserDbId == 0)
+        {
+            Debug.LogError("Failed to get UserDbId from server.");
+            return;
+        }
+        Connection = ConnectState.Loginned;
+        UserInfo.MergeFrom(receivedUserInfo);
     }
 
     #region Service
@@ -60,7 +83,7 @@ public partial class NetworkManager : IManager, IUpdate
             endPoint, () => { session = new ServerSession(); return session; },
             config, failedCallback ?? ConnectFailed);
 
-        Connected = ConnectState.Connecting;
+        Connection = ConnectState.Connecting;
         client.Start();
     }
 
@@ -69,20 +92,20 @@ public partial class NetworkManager : IManager, IUpdate
     /// </summary>
     public void StopService()
     {
-        if (Connected == ConnectState.Disconnected) return;
+        if (Connection == ConnectState.Disconnected) return;
         Logout();
     }
 
     public void Send<T>(T message) where T : IMessage
     {
-        if (Connected != ConnectState.Connected) return;
+        if (Connection != ConnectState.Loginned) return;
         session?.Send(message);
     }
 
 
     void ConnectFailed(SocketError error)
     {
-        Connected = ConnectState.FailedToConnect;
+        Connection = ConnectState.FailedToConnect;
         Debug.LogError($"[{error}]Can not connect to server: {endPoint}");
 
         // TODO : 재연결 question popup
@@ -94,7 +117,7 @@ public partial class NetworkManager : IManager, IUpdate
         // disconnect
         session?.Disconnect();
         client?.Stop();
-        Connected = ConnectState.Disconnected;
+        Connection = ConnectState.Disconnected;
         //CoroutineManager.StopCoroutineEx(pingTask);
     }
 
@@ -115,19 +138,40 @@ public partial class NetworkManager : IManager, IUpdate
     {
         MessageManager.Instance.Init();
 
-        // TODO: config를 통해 endpoint 지정
-        // TEMP
-        string host = Dns.GetHostName(); // local host name of my pc
-        IPHostEntry ipHost = Dns.GetHostEntry(host);
-        IPAddress ipAddr = ipHost.AddressList[0];
-        endPoint = new IPEndPoint(address: ipAddr, port: 8888);
+        var config = Resources.Load<NetworkConfig>("NetworkConfig");
+        if (config == null)
+        {
+            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Can not find NetworkConfig in Resource directory.");
+            return;
+        }
+
+        if (config.UseLocal == true)
+        {
+            string host = Dns.GetHostName(); // local host name of my pc
+            IPHostEntry ipHost = Dns.GetHostEntry(host);
+            IPAddress ipAddr = ipHost.AddressList[0];
+            endPoint = new IPEndPoint(address: ipAddr, port: 8888);
+        }
+        
+        else
+        {
+            if (string.IsNullOrEmpty(config.EndpointIPAddress)
+                || config.Port == 0)
+            {
+                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Empty endpoint.");
+                return;
+            }
+
+            IPAddress ipHost = IPAddress.Parse(config.EndpointIPAddress);
+            endPoint = new IPEndPoint(ipHost, config.Port);
+        }
 
         CoreLogger.CreateLoggerWithFlag((uint)CoreLogger.LoggerSinks.FILE, LoggerConfig.GetDefault());
     }
 
     public void Update()
     {
-        if (Connected != ConnectState.Connected) return;
+        if (Connected == false) return;
 
         // send
         session?.FlushSend();
@@ -153,8 +197,7 @@ public partial class NetworkManager : IManager, IUpdate
 
         while (true)
         {
-            // TODO : use constant
-            yield return new WaitForSeconds(3f);
+            yield return new WaitForSeconds(AppConst.SendPingIntervaleSeconds);
 
             PingTick = Global.G_Stopwatch.ElapsedMilliseconds;
             ManagerCore.Network.session.Send(new SPingPacket());

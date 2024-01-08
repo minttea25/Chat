@@ -34,7 +34,8 @@ namespace Chat
 
             // TEMP
             Console.WriteLine(msg);
-            RoomManager.Instance.HandleCreateRoom(cs, msg);
+            cs?.HandleCreateRoomReq(msg);
+            //RoomManager.Instance.HandleCreateRoom(cs, msg);
         }
 
         public static void SEnterRoomReqMessageHandler(IMessage message, Session session)
@@ -44,8 +45,8 @@ namespace Chat
 
             // TEMP
             Console.WriteLine(msg);
-
-            RoomManager.Instance.HandleEnterRoom(cs, msg!.RoomNumber);
+            cs?.HandleEnterRoomReq(msg);
+            //RoomManager.Instance.HandleEnterRoom(cs, msg!.RoomNumber);
         }
 
         public static void SRoomListReqMessageHandler(IMessage message, Session session)
@@ -68,7 +69,8 @@ namespace Chat
 
             // TEMP
             Console.WriteLine(msg);
-            RoomManager.Instance.HandleLeaveRoom(cs, msg!.RoomNumber);
+            cs?.HandleLeaveRoomReq(msg);
+            //RoomManager.Instance.HandleLeaveRoom(cs, msg!.RoomNumber);
             
         }
 
@@ -79,7 +81,6 @@ namespace Chat
 
             // TEMP
             Console.WriteLine(msg);
-
             cs?.HandleLoginReq(msg);
         }
 
@@ -89,6 +90,8 @@ namespace Chat
             ClientSession cs = session as ClientSession;
 
             // TODO
+            Console.WriteLine(msg);
+            cs?.HandleEditUserNameReq(msg);
         }
 
         public static void SPingPacketMessageHandler(IMessage message, Session session)

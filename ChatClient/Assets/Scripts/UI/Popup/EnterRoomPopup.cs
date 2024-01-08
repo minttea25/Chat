@@ -27,28 +27,26 @@ public class EnterRoomPopup : BaseReusableUIPopup
         Context.CloseButton.Component.onClick.AddListener(OnCloseButtonClicked);
     }
 
+    private void OnDisable()
+    {
+        Context.NumberInputField.Component.text = string.Empty;
+    }
+
     void OnEnterButtonClicked()
     {
         string number = Context.NumberInputField.Component.text.Trim();
-        if (ValidateNumber(number) == false)
+        if (Validations.RoomNumber(number, out var num) == false)
         {
             // TODO : wrong popup
             return;
         }
 
-        ManagerCore.Network.ReqEnterRoom(uint.Parse(number));
+        ManagerCore.Network.ReqEnterRoom(num);
     }
 
     void OnCloseButtonClicked()
     {
         Hide();
-    }
-
-    bool ValidateNumber(string number)
-    {
-        // TODO : validate the room number
-        // ex - range and is ulong
-        return true;
     }
 
 #if UNITY_EDITOR
