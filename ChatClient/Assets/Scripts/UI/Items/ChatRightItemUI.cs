@@ -1,8 +1,6 @@
 using Core;
 using DG.Tweening;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,14 +37,6 @@ public class ChatRightItemUI : BaseUIItem
             .DORotate(new Vector3(0f, 0f, -360f), UIValues.SendCheckingTimeOut, RotateMode.FastBeyond360);
         sendChecking.onComplete += () => SetSuccess(false);
     }
-
-    //public void SetMessage(string msg, DateTime time)
-    //{
-    //    Context.ContentText.Component.text = msg;
-    //    Context.TimeText.Component.text = GetTimeOrYesterday(time);
-
-    //    FitConent();
-    //}
 
     public void SetMessage(string msg, string time)
     {

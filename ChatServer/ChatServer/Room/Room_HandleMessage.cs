@@ -1,12 +1,7 @@
-﻿using Chat;
-using Google.Protobuf.WellKnownTypes;
+﻿using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat
 {
@@ -22,6 +17,7 @@ namespace Chat
                     RoomNumber = Number,
                     EnteredTime = Timestamp.FromDateTime(DateTime.UtcNow),
                 };
+                msg.EnterUser = new();
                 msg.EnterUser.MergeFrom(session.UserInfo);
                 Broadcast(msg);
 

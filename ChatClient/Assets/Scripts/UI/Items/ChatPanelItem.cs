@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Core;
 using System;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
@@ -27,7 +26,7 @@ public class ChatPanelItem : BaseUIItem
     public uint RoomNumber { get; private set; } = default;
 
     int cid = 1; // for checking successful sending
-    Dictionary<int, ChatRightItemUI> pendingChats = new Dictionary<int, ChatRightItemUI>();
+    readonly Dictionary<int, ChatRightItemUI> sendingChats = new Dictionary<int, ChatRightItemUI>();
 
     public override void Init()
     {
@@ -41,7 +40,12 @@ public class ChatPanelItem : BaseUIItem
 
     private void OnEnable()
     {
-        if (RoomNumber == default) return;
+        LoadPendingChats();
+    }
+
+    void LoadPendingChats()
+    {
+        if (RoomNumber == 0) return;
 
         if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
         {
@@ -67,6 +71,8 @@ public class ChatPanelItem : BaseUIItem
             return;
         }
         room.AttachUI(this);
+
+        LoadPendingChats();
     }
 
     //private void Update()
@@ -74,6 +80,25 @@ public class ChatPanelItem : BaseUIItem
     //    if (RoomId == default) return;
     //    if (ManagerCore.Chat.Rooms.ContainsKey(RoomId) == false) return;
     //}
+
+    public void AddChat(ChatCacheData chat)
+    {
+        switch (chat.ChatDataType)
+        {
+            case ChatDataType.Text:
+                AddChatText(chat.ChatText);
+                break;
+            case ChatDataType.Icon:
+                AddChatIcon(chat.ChatIcon);
+                break;
+            case ChatDataType.Enter:
+                AddChatEnter(chat.ChatUserEnter);
+                break;
+            case ChatDataType.Leave:
+                AddChatLeave(chat.ChatUserLeave);
+                break;
+        }
+    }
 
     public void AddChat(ChatData chat)
     {
@@ -96,12 +121,12 @@ public class ChatPanelItem : BaseUIItem
 
     public void CheckPendingChat(int chatId, bool success = true)
     {
-        if (pendingChats.TryGetValue(chatId, out var chat))
+        if (sendingChats.TryGetValue(chatId, out var chat))
         {
             chat.SetSuccess(success);
             if (success)
             {
-                pendingChats.Remove(chatId);
+                sendingChats.Remove(chatId);
             }
         }
         else
@@ -124,7 +149,7 @@ public class ChatPanelItem : BaseUIItem
         ChatRightItemUI right = ManagerCore.UI.AddItemUI<ChatRightItemUI>(AddrKeys.ChatRightItemUI, ChatListTransform);
         Utils.Assert(right != null);
 
-        pendingChats.Add(chatId, right);
+        sendingChats.Add(chatId, right);
         cid++;
 
         right.SetMessage(message, DateTime.Now.ToLocalTimeFormat());
@@ -135,7 +160,7 @@ public class ChatPanelItem : BaseUIItem
     void AddChatText(ChatText chat)
     {
         // my chat
-        if (chat.User.UserDbId == ManagerCore.Network.UserInfo.UserDbId)
+        if (chat.IsMine)
         {
             return;
         }
@@ -144,7 +169,7 @@ public class ChatPanelItem : BaseUIItem
             ChatLeftItemUI left = ManagerCore.UI.AddItemUI<ChatLeftItemUI>(AddrKeys.ChatLeftItemUI, ChatListTransform);
             Utils.Assert(left != null);
 
-            left.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat(), chat.User.UserName);
+            left.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat(), chat.UserName);
         }
         
     }
@@ -162,7 +187,7 @@ public class ChatPanelItem : BaseUIItem
         var enter = ManagerCore.UI.AddItemUI<ChatContentEtcItemUI>(AddrKeys.ChatContentEtcItemUI, ChatListTransform);
         Utils.Assert(enter != null);
 
-        enter.SetText(chat.User.UserName, chat.Time.ToLocalTimeFormat(), enter: true);
+        enter.SetText(chat.UserName, chat.Time.ToLocalTimeFormat(), enter: true);
     }
 
     void AddChatLeave(ChatUserLeave chat)
@@ -170,7 +195,7 @@ public class ChatPanelItem : BaseUIItem
         var leave = ManagerCore.UI.AddItemUI<ChatContentEtcItemUI>(AddrKeys.ChatContentEtcItemUI, ChatListTransform);
         Utils.Assert(leave != null);
 
-        leave.SetText(chat.User.UserName, chat.Time.ToLocalTimeFormat(), enter: false);
+        leave.SetText(chat.UserName, chat.Time.ToLocalTimeFormat(), enter: false);
     }
 
 

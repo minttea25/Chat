@@ -4,6 +4,7 @@ using ServerCoreTCP;
 using Google.Protobuf;
 using ServerCoreTCP.Core;
 using Core;
+using System.Diagnostics;
 
 namespace Chat
 {
@@ -56,6 +57,7 @@ namespace Chat
         {
             CUserEnterRoom msg = message as CUserEnterRoom;
 
+            UnityEngine.Debug.Log(msg);
             ManagerCore.Network.HandleUserEnterRoom(msg);
         }
 

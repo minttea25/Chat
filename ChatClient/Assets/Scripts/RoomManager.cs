@@ -89,20 +89,20 @@ public class RoomManager : IManager
         }
     }
 
-    public void AddChat(CChatText chat)
+    public void AddChat(CChatText chat, bool isMine = false)
     {
         if (rooms.TryGetValue(chat.RoomNumber, out Room room))
         {
-            ChatText data = new ChatText(chat);
+            ChatText data = new ChatText(chat, isMine);
             room.AddChat(data);
         }
     }
 
-    public void AddChat(CChatIcon chat)
+    public void AddChat(CChatIcon chat, bool isMine = false)
     {
         if (rooms.TryGetValue(chat.RoomNumber, out Room room))
         {
-            ChatIcon data = new ChatIcon(chat);
+            ChatIcon data = new ChatIcon(chat, isMine);
             room.AddChat(data);
         }
     }

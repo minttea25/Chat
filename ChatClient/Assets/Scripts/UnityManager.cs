@@ -1,10 +1,8 @@
 using Core;
 using ServerCoreTCP.Utils;
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class UnityJobQueue
 {
@@ -20,11 +18,22 @@ public class UnityJobQueue
         queue.Enqueue(job);
     }
 
-    public Action[] PopAll()
+
+
+    // update에서 실행 => 최대 프레임 당 20건 처리로
+    public List<Action> PopAll()
     {
-        var arr = queue.ToArray();
-        queue.Clear();
-        return arr;
+        List<Action> result = new List<Action>();
+        for(int i = 0; i<AppConst.ProcessUnityJobQueuePerFrame; ++i)
+        {
+            if (queue.TryDequeue(out var action))
+            {
+                result.Add(action);
+            }
+            if (queue.IsEmpty == true) break;
+        }
+
+        return result;
     }
 }
 

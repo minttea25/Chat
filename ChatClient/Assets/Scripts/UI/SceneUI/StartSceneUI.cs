@@ -71,7 +71,12 @@ public class StartSceneUI : BaseUIScene
 
         //ManagerCore.Scene.GetScene<StartScene>().ReqLogin(id, password);
 
-        // TEMP
+
+
+        // TEST
+        string key = Context.IdInput.Component.text;
+        NetworkManager.TestUserName = key;
+
         ManagerCore.Scene.GetScene<StartScene>().TestLogin();
     }
 

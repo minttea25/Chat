@@ -6,6 +6,8 @@ public partial class NetworkManager : IManager, IUpdate
 {
     public void HandleChatText(CChatText chat)
     {
+        if (chat.SenderInfo.UserDbId == UserInfo.UserDbId) return;
+
         ManagerCore.Room.AddChat(chat);
     }
 

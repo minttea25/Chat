@@ -8,7 +8,6 @@ using ServerCoreTCP.Core;
 using ServerCoreTCP.Utils;
 using System;
 using System.Collections;
-using System.Data;
 using System.Net;
 using System.Net.Sockets;
 using UnityEngine;
@@ -42,6 +41,11 @@ public partial class NetworkManager : IManager, IUpdate
     public ServerSession session = null;
 
     Coroutine pingTask = null;
+
+
+
+    public static string TestUserName;
+
 
     public void SetUserInfo(string authToken, string userLoginId, string userName)
     {

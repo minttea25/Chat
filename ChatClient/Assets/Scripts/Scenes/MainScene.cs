@@ -77,14 +77,14 @@ public class MainScene : BaseScene
     {
         //int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
         //ManagerCore.Network.SetUserInfo("TestToken", $"TestLoginId{rand}", $"TestName{rand}");
-
 #if UNITY_EDITOR
         var data = Resources.Load<AccountData>("Debug/AccountData");
-#else
-        var data = new AccountData();
-        data.LoadText();
-#endif
         ManagerCore.Network.SetUserInfo("TestToken", data.LoginId, data.LoginId);
+#else
+        string username = NetworkManager.TestUserName;
+        ManagerCore.Network.SetUserInfo("TestToken", username, username);
+#endif
+
         Debug.Log($"Trying to login with id, {ManagerCore.Network.UserInfo.UserLoginId}");
         ManagerCore.Network.ReqLogin();
 

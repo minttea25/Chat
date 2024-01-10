@@ -15,14 +15,17 @@ public class AccountData : ScriptableObject
         Debug.LogWarning("LoadText is for debugging in built version");
 #endif
         string filename = "AccountData.txt";
-        int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
-
+        
         if (File.Exists(filename) == false)
         {
-            File.Create(filename);
+            int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
+            LoginId = $@"Test{rand}";
+            File.WriteAllText(filename, LoginId);
         }
-
-        LoginId = $@"Test{rand}";
-        File.WriteAllText(filename, LoginId);
+        else
+        {
+            var text = File.ReadAllText(filename);
+            LoginId = text;
+        }
     }
 }

@@ -68,7 +68,7 @@ public class Room
     {
         lock (chatLock)
         {
-            var result = pendingChats;
+            var result = pendingChats.ToList();
             pendingChats.Clear();
             return result;
         }

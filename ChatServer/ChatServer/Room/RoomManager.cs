@@ -21,7 +21,7 @@ namespace Chat
         /// <summary>
         /// RoomNumber / Room
         /// </summary>
-        public Dictionary<ulong, Room> Rooms = new Dictionary<ulong, Room>();
+        Dictionary<ulong, Room> Rooms = new Dictionary<ulong, Room>();
 
         public void Update()
         {
@@ -35,7 +35,8 @@ namespace Chat
 
         public RoomManager()
         {
-            AddAfter(CheckAndRemoveEmptyRoomsTimer, CheckEmptyRoomIntervalMilliseconds);
+            // 보류
+            //AddAfter(CheckAndRemoveEmptyRoomsTimer, CheckEmptyRoomIntervalMilliseconds);
         }
 
         public List<RoomInfo> GetRooms()
@@ -43,21 +44,75 @@ namespace Chat
             return Rooms.Values.Select(r => r.RoomInfo).ToList();
         }
 
-        Room CreateRoom(RoomInfo roomInfo)
+        public void AddRoom(RoomInfo roomInfo)
         {
-            if (Rooms.ContainsKey(roomInfo.RoomNumber) == true) return null;
+            // 먼저 빠르게 거르기
+            if (Rooms.ContainsKey(roomInfo.RoomNumber) == true) return;
 
-            Room room = new Room(roomInfo);
-            Rooms.Add(roomInfo.RoomNumber, room);
-            return room;
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(roomInfo.RoomNumber) == true) return;
+
+                Room room = new Room(roomInfo);
+                Rooms.Add(roomInfo.RoomNumber, room);
+            });
         }
 
+        public void EnterRoom(RoomInfo roomInfo, ClientSession session)
+        {
+            Add(() =>
+            {
+                // 없으면 먼저 만든다
+                if (Rooms.TryGetValue(roomInfo.RoomNumber, out var room) == false)
+                {
+                    room = new Room(roomInfo);
+                    Rooms.Add(roomInfo.RoomNumber, room);
+                }
+
+                // 세션 추가
+                room.AddSession(session);
+            });
+        }
+
+        public void EnterRooms(List<RoomInfo> roomInfos, ClientSession session)
+        {
+            Add(() =>
+            {
+                foreach (var roomInfo in roomInfos)
+                {
+                    // 없으면 먼저 만든다
+                    if (Rooms.TryGetValue(roomInfo.RoomNumber, out var room) == false)
+                    {
+                        room = new Room(roomInfo);
+                        Rooms.Add(roomInfo.RoomNumber, room);
+                    }
+
+                    // 세션 추가
+                    room.AddSession(session);
+                }
+            });
+        }
+
+        public void CreateRooms(List<RoomInfo> rooms)
+        {
+            Add(() =>
+            {
+                foreach (RoomInfo roomInfo in rooms)
+                {
+                    if (Rooms.ContainsKey(roomInfo.RoomNumber) == true) return;
+
+                    Room room = new Room(roomInfo);
+                    Rooms.Add(roomInfo.RoomNumber, room);
+                }
+            });
+        }
 
 
         void CheckAndRemoveEmptyRoomsTimer()
         {
-            CheckAndRemoveEmptyRooms();
-            AddAfter(CheckAndRemoveEmptyRoomsTimer, CheckEmptyRoomIntervalMilliseconds);
+            // 보류
+            //CheckAndRemoveEmptyRooms();
+            //AddAfter(CheckAndRemoveEmptyRoomsTimer, CheckEmptyRoomIntervalMilliseconds);
         }
 
         /// <summary>

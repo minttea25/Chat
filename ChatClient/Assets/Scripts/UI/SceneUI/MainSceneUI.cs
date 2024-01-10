@@ -177,8 +177,6 @@ public class MainSceneUI : BaseUIScene
 
     public void ShowChat(uint roomId)
     {
-        Debug.Log($"ShowChat: {roomId}");
-
         if (openedChatId == roomId) return;
 
         if (chatPanels.TryGetValue(openedChatId, out var opened))

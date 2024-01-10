@@ -21,27 +21,14 @@ public class ChatLeftItemUI : BaseUIItem
     [SerializeField]
     ChatLeftItemUIContext Context = new();
 
-    const float ContentLRPadding = 10f; // 5 each
-    const float ContentUDPadding = 10f; // 5 each
-    const float TimePosPadding = 3f; // padding value beside the contentbackground
 
     public UIObject<TextMeshProUGUI> UserNameText => Context.UserNameText;
-
-    // not changable
 
     public override void Init()
     {
         base.Init();
 
     }
-
-    //public void SetMessage(string msg, DateTime time)
-    //{
-    //    Context.ContentText.Component.text = msg;
-    //    Context.TimeText.Component.text = GetTimeOrYesterday(time);
-
-    //    FitConent();
-    //}
 
     public void SetMessage(string msg, string time, string userName = null)
     {
@@ -63,14 +50,16 @@ public class ChatLeftItemUI : BaseUIItem
 
     void FitConent()
     {
-        float contentWidth = Context.ContentText.BindObject.GetComponent<RectTransform>().rect.width;
-        float contentHeight = Context.ContentText.BindObject.GetComponent<RectTransform>().rect.height;
+        float contentWidth = Context.ContentText.Component.preferredWidth;
+        float contentHeight = Context.ContentText.Component.preferredHeight;
 
         Context.ContentBackground.BindObject.GetComponent<RectTransform>().sizeDelta 
-            = new Vector2 (contentWidth + ContentLRPadding, contentHeight + ContentUDPadding);
+            = new Vector2 (contentWidth + UIValues.ContentLRPadding, contentHeight + UIValues.ContentUDPadding);
 
+        Context.TimeText.BindObject.GetComponent<RectTransform>().anchoredPosition
+                    = new Vector2(contentWidth + UIValues.ContentLRPadding + UIValues.TimePosPadding, -20f);
         Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta
-            = new Vector2(contentHeight + ContentLRPadding + TimePosPadding, contentHeight + ContentUDPadding);
+            = new Vector2(Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta.x, contentHeight + UIValues.ContentUDPadding);
     }
 
     string GetTimeOrYesterday(DateTime time)

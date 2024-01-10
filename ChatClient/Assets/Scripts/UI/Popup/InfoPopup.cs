@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Core;
 using System;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 [Serializable]
@@ -54,6 +52,8 @@ public class InfoPopup : BaseReusableUIPopup
         Context.UserNameEditCancelButton.Component.onClick.AddListener(SetNameViewMode);
 
         Context.BackgroundBlur_Panel.BindObject.BindEventOnUI(Hide);
+
+        RefreshData();
     }
 
     public void RefreshData()
@@ -67,6 +67,8 @@ public class InfoPopup : BaseReusableUIPopup
         NotificationUI.Show("Username is changed successfully!");
         SetNameViewMode();
         Context.UserNameEditInputField.Component.text = string.Empty;
+
+        RefreshData();
     }
 
     public void FailChaneUserName()

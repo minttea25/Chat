@@ -4,8 +4,10 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using ServerCoreTCP;
+using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Job;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Chat.DB
@@ -247,13 +249,17 @@ namespace Chat.DB
             // if saving is successful
             if (saved == true)
             {
+                RoomInfo roominfo = RoomInfo.FromChatRoomDb(roomDb, containUser: true);
                 CEnterRoomRes res = new()
                 {
                     Res = EnterRoomRes.EnterRoomOk,
                     RoomNumber = roomDb.ChatRoomNumber,
-                    RoomInfo = RoomInfo.FromChatRoomDb(roomDb, containUser: true),
+                    RoomInfo = roominfo,
                 };
                 session.Send(res);
+
+                // 메모리 캐싱 추가
+                RoomManager.Instance.EnterRoom(roominfo, session);
             }
             else
             {
@@ -287,6 +293,7 @@ namespace Chat.DB
                     if (userDb == null) return;
 
                     CRoomListRes res = new();
+                    List<RoomInfo> rooms = new();
                     foreach (var room in userDb.Rooms)
                     {
                         // 방 추가
@@ -304,9 +311,13 @@ namespace Chat.DB
                             info.Users.Add(UserInfo.FromUserDb(user));
                         }
                         res.Rooms.Add(info);
+                        rooms.Add(info);
                     }
                     res.LoadTime = Timestamp.FromDateTime(DateTime.UtcNow);
                     session.Send(res);
+
+                    // room 정보 메모리 로드 (cache)
+                    RoomManager.Instance.EnterRooms(rooms, session);
                 }
             });
         }
@@ -448,7 +459,26 @@ namespace Chat.DB
                 }
             });
         }
-    
-    
+
+        // Note : roomNumber is not p.k
+        public static void FindRoomInfo(uint roomNumber, Action<RoomInfo> callback)
+        {
+            Instance.Add(() =>
+            {
+                using (AppDbContext db = new())
+                {
+                    ChatRoomDb room = db.ChatRooms.FirstOrDefault(r => r.ChatRoomNumber == roomNumber);
+
+                    if (room == null)
+                    {
+                        // error : 없을 수가 없음
+                        CoreLogger.LogError("DbProcess", "There is a critical error at creating and update room info logic.");
+                        return;
+                    }
+
+                    callback?.Invoke(RoomInfo.FromChatRoomDb(room));
+                }
+            });
+        }
     }
 }
