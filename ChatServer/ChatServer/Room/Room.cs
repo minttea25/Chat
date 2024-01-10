@@ -1,33 +1,31 @@
-﻿using ChatServer.Chat;
+﻿using Chat;
 using Google.Protobuf;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
 using System.Collections.Generic;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class Room : JobSerializer, IUpdate
     {
-        public ulong Id { get; private set; }
-        public string Name { get; private set; }
-        public int UserCount => _users.Count;
+        public ulong DbId => RoomInfo.RoomDbId;
+        public string Name => RoomInfo.RoomName;
+        public uint Number => RoomInfo.RoomNumber;
+        public int UserCount => sessions.Count;
         public RoomInfo RoomInfo { get; private set; }
 
-        Dictionary<ulong, ClientSession> _users = new Dictionary<ulong, ClientSession>();
+        Dictionary<ulong, ClientSession> sessions = new Dictionary<ulong, ClientSession>();
 
-        public Room(ulong roomId, string name)
+        public Room(RoomInfo roomInfo)
         {
-            Id = roomId;
-            Name = name;
-
-            RoomInfo = new RoomInfo();
-            RoomInfo.RoomId = roomId;
-            RoomInfo.RoomName = name;
+            RoomInfo = new();
+            // copy
+            RoomInfo.MergeFrom(roomInfo);
         }
 
         void Broadcast<T>(T message) where T : IMessage
         {
-            foreach (var session in  _users.Values)
+            foreach (var session in  sessions.Values)
             {
                 session.Send(message);
             }
@@ -36,13 +34,15 @@ namespace ChatServer
         public void Update()
         {
             Flush();
-
-
         }
 
-        void UserEnterRoom(ClientSession session)
+        public void AddSession(ClientSession session)
         {
-            _users.Add(session.UserInfo.UserId, session);
+            Add(() =>
+            {
+                if (sessions.ContainsKey(session.UserInfo.UserDbId) == true) return;
+                sessions.Add(session.UserInfo.UserDbId, session);
+            });
         }
     }
 }

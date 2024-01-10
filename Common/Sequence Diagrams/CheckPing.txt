@@ -1,0 +1,28 @@
+@startuml
+title ChckPing in Client
+
+header CheckPing
+footer CheckPing
+
+skinparam ParticipantPadding 50
+skinparam sequenceMessageAlign direction
+
+actor "Client" as C #Orange
+participant "Server" as S
+
+note over C
+Start to send when connected.
+end note
+
+loop 
+autonumber
+hnote right of C : SPingPacket
+C -> S: send ping
+||20||
+note over C : Client estimates\nthe interval time as ping.
+||20||
+hnote left of S : CPongPacket
+S -> C : send pong
+||30||
+end
+@enduml

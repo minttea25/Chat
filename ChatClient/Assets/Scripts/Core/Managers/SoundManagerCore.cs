@@ -94,8 +94,11 @@ namespace Core
         {
             for (int i = 0; i < _audios.Length; i++)
             {
-                _audios[i].Stop();
-                _audios[i].clip = null;
+                if (_audios[i] != null)
+                {
+                    _audios[i].Stop();
+                    _audios[i].clip = null;
+                }
             }
         }
 

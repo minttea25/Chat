@@ -13,6 +13,19 @@ namespace Core
     }
 
     [Serializable]
+    public class UIObject
+    {
+        /// <summary>
+        /// DO NOT CHANGE THE NAME; It is relevant  from the System.Reflection. See: Const.BindObjectFieldName.
+        /// </summary>
+        public GameObject BindObject = null;
+        /// <summary>
+        /// DO NOT CHANGE THE NAME; It is relevant  from the System.Reflection. See: Const.BindObjectFieldName.
+        /// </summary>
+        public ObjectType BindObjectType;
+    }
+
+    [Serializable]
     public class UIObject<Com> where Com : Component
     {
         /// <summary>

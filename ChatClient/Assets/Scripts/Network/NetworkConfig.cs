@@ -21,6 +21,7 @@ namespace Chat.Network
         public int Port => _Port;
         public bool UseLocal => _UseLocal;
 
+#if UNITY_EDITOR
         private void OnValidate()
         {
             if (_UseLocal == true) return;
@@ -41,5 +42,6 @@ namespace Chat.Network
                 }
             }
         }
+#endif
     }
 }

@@ -25,48 +25,52 @@ MonoBehaviour:
     m_Address: ConnectingUI
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: afe0a609438de2c49a48553f596f1cd1
-    m_Address: StartUI
-    m_ReadOnly: 0
-    m_SerializedLabels: []
   - m_GUID: 29328bb7a5165364181c7344c79619f2
     m_Address: SimplePopupUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 7005cbaf3600e2e4988afa791607034f
-    m_Address: EnterRoomPopup
+    m_Address: EnterRoomPopupUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: c0ec94f6f5b556b419fe8a354cbd23dc
-    m_Address: RoomListItem
+    m_Address: RoomListItemUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: cc7e2a1de6205bb4e8502844bbf2c53d
-    m_Address: CreateRoomPopup
+    m_Address: CreateRoomPopupUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: acc9269c354012f4f94abcf3474589c9
-    m_Address: ChatPanelItem
+    m_Address: ChatPanelItemUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 585eeb920f2037248a932fefaa0482f5
-    m_Address: ChatContentLeft
+    m_Address: ChatLeftItemUI
     m_ReadOnly: 0
     m_SerializedLabels: []
-  - m_GUID: e23c4bd02507eb949addbf2a8042405f
-    m_Address: ChatContentRight
+  - m_GUID: 2d8d0f0da07d95545b39b91d5f46f992
+    m_Address: ChatRightItemUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: db9824e292390c24aac3c94f65392ad8
-    m_Address: MainUI
+    m_Address: MainSceneUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: 8cee4055facdbfa4b8ffe6b81bb51919
-    m_Address: InfoPopup
+    m_Address: InfoPopupUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   - m_GUID: aeb5f7652af1d4e4793211b3d8a96577
-    m_Address: ChatContentEtc
+    m_Address: ChatContentEtcItemUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: 0b12046d495ffd44c9b9d02f0d22f047
+    m_Address: StartSceneUI
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  - m_GUID: d9a4b6bb3d8f16846884739eb7d66050
+    m_Address: LogoutPopupUI
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

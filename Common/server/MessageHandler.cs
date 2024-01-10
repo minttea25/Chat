@@ -3,7 +3,7 @@ using System;
 using ServerCoreTCP;
 using Google.Protobuf;
 
-namespace ChatServer.Chat
+namespace Chat
 {
     public class MessageHandler
     {
@@ -42,13 +42,6 @@ namespace ChatServer.Chat
             // TODO
         }
 
-        public static void SAllRoomListReqMessageHandler(IMessage message, Session session)
-        {
-            SAllRoomListReq msg = message as SAllRoomListReq;
-
-            // TODO
-        }
-
         public static void SRoomListReqMessageHandler(IMessage message, Session session)
         {
             SRoomListReq msg = message as SRoomListReq;
@@ -66,6 +59,13 @@ namespace ChatServer.Chat
         public static void SLoginReqMessageHandler(IMessage message, Session session)
         {
             SLoginReq msg = message as SLoginReq;
+
+            // TODO
+        }
+
+        public static void SEditUserNameReqMessageHandler(IMessage message, Session session)
+        {
+            SEditUserNameReq msg = message as SEditUserNameReq;
 
             // TODO
         }

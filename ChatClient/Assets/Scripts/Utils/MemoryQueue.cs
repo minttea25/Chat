@@ -5,108 +5,91 @@ using UnityEngine;
 
 namespace Chat.Utils
 {
-    public class MemoryQueue<Key, T>
+    struct MemoryObject<T> where T : class
     {
-        public int Capacity => _capacity;
+        public int priority;
+        public T target;
+    }
 
-        private readonly int _capacity;
-        private readonly Queue<Key> queue;
-        private readonly Dictionary<Key, T> map;
+    public class MemoryQueue<Key, T> where T : class
+    {
+        public int Capacity => m_capacity;
+
+        private readonly int m_capacity;
+        private readonly Dictionary<Key, MemoryObject<T>> map;
+        private int p = 1;
 
         public MemoryQueue(int capacity)
         {
-            _capacity = capacity;
-            queue = new(capacity);
-            map = new Dictionary<Key, T>(capacity);
+            m_capacity = capacity;
+            map = new Dictionary<Key, MemoryObject<T>>();
         }
 
-        public bool AddAndGetRemoved(Key key, T value, out T removed)
+        public void Add(Key key, T value, out T removed)
         {
             if (map.ContainsKey(key))
             {
-                removed = default;
-
-                return false;
+                removed = null;
+                return; 
             }
 
-            if (queue.Count >= _capacity)
+            if (map.Count >= m_capacity)
             {
-                // 용량을 초과하는 경우 가장 오래된 오브젝트를 제거
-                Key oldestKey = queue.Dequeue();
-                removed = map[oldestKey];
-                map.Remove(oldestKey);
-                map.Add(key, value);
-                queue.Enqueue(key);
-
-                return true;
+                Remove(out T r);
+                removed = r;
             }
             else
             {
-                map.Add(key, value);
-                queue.Enqueue(key);
-                removed = default;
+                removed = null;
+            }
 
+            MemoryObject<T> memoryObject = new()
+            {
+                priority = p,
+                target = value,
+            };
+            p++;
+            map.Add(key, memoryObject);
+        }
+
+
+        bool Remove(out T removed)
+        {
+            if (map.Count == 0)
+            {
+                removed = null;
                 return false;
             }
-        }
 
-        public void Add(Key key, T value)
-        {
-            if (map.ContainsKey(key))
+            int lowest = int.MaxValue;
+            Key key = map.Keys.GetEnumerator().Current;
+            removed = null;
+            foreach (var kv  in map)
             {
-                return;
-            }
-
-            if (queue.Count >= _capacity)
-            {
-                // 용량을 초과하는 경우 가장 오래된 오브젝트를 제거
-                Key oldestKey = queue.Dequeue();
-                map.Remove(oldestKey);
-            }
-
-            // 새 오브젝트 추가
-            map.Add(key, value);
-            queue.Enqueue(key);
-        }
-
-        public bool Remove(Key key, out T removed)
-        {
-            if (map.TryGetValue(key, out T value))
-            {
-                map.Remove(key);
-
-                // queue에서 해당 아이템을 제거
-                int count = queue.Count;
-                for (int i = 0; i < count; i++)
+                if (lowest > kv.Value.priority)
                 {
-                    Key item = queue.Dequeue();
-                    if (!EqualityComparer<Key>.Default.Equals(item, key))
-                    {
-                        queue.Enqueue(item);
-                    }
+                    lowest = kv.Value.priority;
+                    removed = kv.Value.target;
+                    key = kv.Key;
                 }
+            }
 
-                removed = value;
-                return true;
-            }
-            else
-            {
-                removed = default;
-                return false;
-            }
+            map.Remove(key);
+            return true;
         }
 
         public bool Contains(Key key) => map.ContainsKey(key);
 
-        public bool TryGetValue(Key key, out T value) => map.TryGetValue(key, out value);
-
-        public T Get(Key key)
+        public bool TryGetValue(Key key, out T value)
         {
-            if (map.TryGetValue(key, out T obj))
+            if (map.Count == 0 || map.ContainsKey(key) == false)
             {
-                return obj;
+                value = null;
+                return false;
             }
-            return default; // 또는 null (참조 타입일 때)
+
+            value = map[key].target;
+            return true;
         }
     }
 }

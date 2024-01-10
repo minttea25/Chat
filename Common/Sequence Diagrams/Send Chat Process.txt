@@ -1,0 +1,47 @@
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam ParticipantPadding 70
+skinparam BoxPadding 50
+
+title Send Chat Process
+
+header Send Chat Process
+footer Send Chat Process
+
+actor "Client" as C order 0 #Orange
+box "Chat Server" #LightBlue
+participant "IOCP" as I order 1
+participant "Room" as R order 2
+participant "DB" as DB order 3
+endbox
+database "Chat Database" as CDB order 4
+actor "Other Clients" as OC order 5
+
+hnote over C : SSendChat
+/rnote over OC : Users in the room
+C -> I : Send Chat
+activate I #Pink
+I -> R : Broadcast Chat
+activate R #Cyan
+hnote right of R : CChat
+R -> OC : Broadcast Chat
+deactivate R
+I -> DB : Save Chat
+deactivate I
+activate DB #Orange
+DB --> CDB : Add Chat
+
+
+DB -> I : Complete
+deactivate DB
+activate I #Pink
+||20||
+hnote left of I : CSendChat
+I -> C : Send Response
+deactivate I
+||20||
+note over C : show sending completed
+
+
+
+@enduml

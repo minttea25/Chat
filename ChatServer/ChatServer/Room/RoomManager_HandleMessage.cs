@@ -1,63 +1,49 @@
-﻿using ChatServer.Chat;
+﻿using Chat.DB;
 using ServerCoreTCP.Job;
 using ServerCoreTCP.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Chat
 {
     public partial class RoomManager : JobSerializerWithTimer, IUpdate
     {
         public void HandleCreateRoom(ClientSession session, SCreateRoomReq req)
         {
+            DbProcess.CreateRoom(req.RoomNumber, req.RoomName, session);
+        }
+
+        public void HandleEnterRoom(ClientSession session, uint roomNumber)
+        {
+            DbProcess.EnterRoom(roomNumber, session);
+
+            // 방에 있는 다른 유저 broadcast
             Add(() =>
             {
-                if (Rooms.ContainsKey(req.RoomId) == true)
+                if (Rooms.ContainsKey(roomNumber) == false)
                 {
-                    CCreateRoomRes res = new()
-                    {
-                        Res = CreateRoomRes.CreateRoomDuplicatedRoomId
-                    };
-                    session.Send(res);
+                    // wrong request
+                    // TODO : error
+                    return;
                 }
                 else
                 {
-                    // 방 생성 및 입장 한번에 하기 (한번에 안하면 비어있는 방으로 간주될 수 있음)
-                    // TODO : 방 생성 요청에 이름추가하기
-                    CreateRoom(req.RoomId, req.RoomName);
-
-                    // 로직이 방체크(timer) -> RoomManager.Update -> Room.Update 
-                    // 방생성 후에 비어있는 방체크하지 않음
-                    HandleEnterRoom(session, req.RoomId);
+                    Rooms[roomNumber].HandleEnterRoom(session);
                 }
+
             });
         }
 
-        public void HandleEnterRoom(ClientSession session, ulong roomId)
+        public void HandleLeaveRoom(ClientSession session, ulong roomNumber)
         {
-            Add(() =>
-            {
-                if (Rooms.ContainsKey(roomId) == false)
-                {
-                    CEnterRoomRes res = new()
-                    {
-                        Res = EnterRoomRes.EnterRoomNoSuchRoom,
-                        RoomInfo = null,
-                    };
-                    session.Send(res);
-                }
-                else Rooms[roomId].HandleEnterRoom(session);
-            });
-        }
+            // TODO : RoomManager 에서 Room 캐싱 추가
+            // 현재 Db에서 일일히 확인중...
 
-        public void HandleLeaveRoom(ClientSession session, ulong roomId)
-        {
+            // db 처리 (room에서 user 삭제)
+            DbProcess.LeaveRoom(session.UserInfo.UserDbId, roomNumber);
+
+            // 방에 있는 다른 유저 broadcast
             Add(() =>
             {
-                if (Rooms.ContainsKey(roomId) == false)
+                if (Rooms.ContainsKey(roomNumber) == false)
                 {
                     // wrong request
 
@@ -66,7 +52,44 @@ namespace ChatServer
                 }
                 else
                 {
-                    Rooms[roomId].HandleLeaveRoom(session.UserInfo);
+                    Rooms[roomNumber].HandleLeaveRoom(session.UserInfo);
+                }
+            });
+        }
+
+        public void HandleChatText(SSendChatText chat, ClientSession session)
+        {
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(chat.RoomNumber) == false)
+                {
+
+                    return;
+                }
+                else
+                {
+                    Rooms[chat.RoomNumber].HandleSendChatText(chat, session);
+                }
+            });
+        }
+
+        public void HandleChatIcon(SSendChatIcon chat, ClientSession session)
+        {
+            Add(() =>
+            {
+                if (Rooms.ContainsKey(chat.RoomNumber) == false)
+                {
+                    // wrong request
+
+                    // TODO : Error Handling
+                    return;
+                }
+                else
+                {
+                    // 전송 확인 패킷 전송
+
+
+                    Rooms[chat.RoomNumber].HandleSendChatIcon(chat, session);
                 }
             });
         }

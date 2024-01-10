@@ -3,8 +3,8 @@ using System;
 using ServerCoreTCP;
 using Google.Protobuf;
 using ServerCoreTCP.Core;
-using System.Diagnostics;
 using Core;
+using System.Diagnostics;
 
 namespace Chat
 {
@@ -14,67 +14,82 @@ namespace Chat
         {
             CSendChat msg = message as CSendChat;
 
-            // TODO
+            ManagerCore.Network.ResSendChat(msg);
         }
 
         public static void CChatTextMessageHandler(IMessage message, Session session)
         {
             CChatText msg = message as CChatText;
 
-            // TODO
+            ManagerCore.Network.HandleChatText(msg);
         }
 
-        public static void CSendIconMessageHandler(IMessage message, Session session)
-        {
-            CSendIcon msg = message as CSendIcon;
 
-            // TODO
+        public static void CChatIconMessageHandler(IMessage message, Session session)
+        {
+            CChatIcon msg = message as CChatIcon;
+
+            ManagerCore.Network.HandleChatIcon(msg);
         }
 
         public static void CCreateRoomResMessageHandler(IMessage message, Session session)
         {
             CCreateRoomRes msg = message as CCreateRoomRes;
 
-            // TODO
+            ManagerCore.Network.ResCreateRoom(msg);
         }
 
         public static void CEnterRoomResMessageHandler(IMessage message, Session session)
         {
             CEnterRoomRes msg = message as CEnterRoomRes;
 
-            // TODO
+            ManagerCore.Network.ResEnterRoom(msg);
         }
 
         public static void CRoomListResMessageHandler(IMessage message, Session session)
         {
             CRoomListRes msg = message as CRoomListRes;
 
-            // TODO
+            ManagerCore.Network.ResRoomList(msg);
+        }
+
+        public static void CUserEnterRoomMessageHandler(IMessage message, Session session)
+        {
+            CUserEnterRoom msg = message as CUserEnterRoom;
+
+            UnityEngine.Debug.Log(msg);
+            ManagerCore.Network.HandleUserEnterRoom(msg);
         }
 
         public static void CUserLeftRoomMessageHandler(IMessage message, Session session)
         {
             CUserLeftRoom msg = message as CUserLeftRoom;
 
-            // TODO
+            ManagerCore.Network.HandleUserLeftRoom(msg);
         }
 
         public static void CLoginResMessageHandler(IMessage message, Session session)
         {
             CLoginRes msg = message as CLoginRes;
 
-            // TODO
+            ManagerCore.Network.ResLogin(msg);
+        }
+
+        public static void CEditUserNameResMessageHandler(IMessage message, Session session)
+        {
+            CEditUserNameRes msg = message as CEditUserNameRes;
+
+            ManagerCore.Network.ResEditUserName(msg);
         }
 
         public static void CPongPacketMessageHandler(IMessage message, Session session)
         {
-            CPongPacket msg = message as CPongPacket;
-            ServerSession s = session as ServerSession;
+            // CPongPacket msg = message as CPongPacket;
 
-            // TODO
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;
-            var pingTick = ManagerCore.Scene.GetScene<MainScene>().PingTick;
-            UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
+            var pingTick = ManagerCore.Network.PingTick;
+            //UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
+            UnityJobQueue.Instance.Push(() => ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick));
         }
     }
 }

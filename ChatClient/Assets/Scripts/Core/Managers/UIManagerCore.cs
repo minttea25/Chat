@@ -11,7 +11,7 @@ namespace Core
         /// <summary>
         /// NOTE: The order of normal popup start at 10; You can open the normal popups up to 19.
         /// </summary>
-        const int TopPopupSortingLayer = 30;
+        const int TopPopupSortingLayer = 100;
 
         public BaseUIPopup TopPopupUI
         {
@@ -101,6 +101,33 @@ namespace Core
                 );
         }
 
+        public T ShowPopupUI<T>(string key, bool alwaysShowOnTop = false, string name = null) where T : BaseUIPopup
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T popup = go.GetComponent<T>();
+            if (alwaysShowOnTop == true)
+            {
+                _onTopPopup = popup;
+                popup.gameObject.GetOrAddComponent<Canvas>().sortingOrder = TopPopupSortingLayer;
+            }
+            else
+            {
+                _popupStack.Push(popup);
+            }
+
+            popup.transform.SetParent(RootObject.transform);
+            popup.Show();
+
+            return popup;
+        }
+
         public void ShowSceneUIAsync<T>(string key, Action<T> callback = null) where T : BaseUIScene
         {
             ManagerCore.Resource.Instantiate(
@@ -114,6 +141,24 @@ namespace Core
                 }
                 );
         }
+
+        public T ShowSceneUI<T>(string key, string name = null) where T : BaseUIScene
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T ui = go.GetOrAddComponent<T>();
+            _sceneUI = ui;
+            ui.transform.SetParent(RootObject.transform);
+
+            return ui;
+        }
+
 
         public void ShowUIAsync<T>(string key, int sortingOrder, Action<T> callback = null) where T : BaseUI
         {
@@ -142,6 +187,20 @@ namespace Core
                 );
         }
 
+        public T AddItemUI<T>(string key, Transform parent, string name = null) where T : BaseUIItem
+        {
+            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+
+            GameObject p = result as GameObject; if (p == null) return null;
+            GameObject go = UnityEngine.Object.Instantiate(p, parent);
+
+            go.name = name ?? p.name;
+            go.transform.localPosition = p.transform.position;
+
+            T item = go.GetComponent<T>();
+            return item;
+        }
+
         public void CloseTopPopupUI()
         {
             if (_onTopPopup != null)
@@ -158,7 +217,6 @@ namespace Core
 
         public void ClosePopupUI(BaseUIPopup popup)
         {
-
             if (_popupStack.Count == 0) return;
 
             // assertion crash
@@ -196,7 +254,7 @@ namespace Core
 
         void IManager.ClearManager()
         {
-            ClosePopupUI();
+            //ClosePopupUI();
 
             if (_sceneUI != null)
             {

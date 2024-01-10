@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "ChatServer.Chat";
+option csharp_namespace = "Chat";
 
 
 enum LoginRes {
@@ -10,6 +10,12 @@ enum LoginRes {
 	LOGIN_ERROR = 3;
 }
 
+enum EditUserNameRes {
+	EDIT_INVALID = 0;
+	EDIT_OK = 1;
+	EDIT_FAILED = 2;
+	EDIT_ERROR = 3;
+}
 
 
 message SLoginReq {
@@ -19,11 +25,21 @@ message SLoginReq {
 
 message CLoginRes {
 	LoginRes login_res = 1;
+	UserInfo user_info = 2;
 }
 
+message SEditUserNameReq {
+	UserInfo user_info = 1;
+	string new_user_name = 2;
+}
 
+message CEditUserNameRes {
+	EditUserNameRes res = 1;
+	string new_user_name = 2;
+}
 
 message UserInfo {
-	uint64 user_id = 1;
-	string user_name = 2;
+	uint64 user_db_id = 1;
+	string user_login_id = 2;
+	string user_name = 3;
 }

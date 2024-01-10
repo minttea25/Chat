@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net;
-using ChatServer.Chat;
+﻿using Chat.DB;
+using Chat.Network;
 using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
-using ServerCoreTCP.Core;
-using ServerCoreTCP.Utils;
+using System;
+using System.Net;
+using System.Threading.Tasks;
 
-namespace ChatServer
+namespace Chat
 {
     class Program
     {
@@ -21,6 +21,11 @@ namespace ChatServer
             {
                 session.FlushSend();
             }
+        }
+
+        static void DbTask()
+        {
+            DbProcess.Instance.Flush();
         }
 
         static void Main(string[] args)
@@ -51,10 +56,36 @@ namespace ChatServer
             ServerService service = new ServerService(endPoint, SessionManager.Instance.CreateNewSession, serverConfig);
             service.Start();
 
-            TaskManager taskManager = new TaskManager();
-            taskManager.AddTask(RoomManagerTask);
-            taskManager.AddTask(SessionTask);
-            taskManager.StartTasks();
+            //TaskManager taskManager = new TaskManager();
+            //taskManager.AddTask(RoomManagerTask);
+            //taskManager.AddTask(SessionTask);
+            //taskManager.AddTask(DbTask);
+            //taskManager.StartTasks();
+
+            Task roomTask = new Task(() =>
+            {
+                while (true) { RoomManager.Instance.Update(); }
+            }, TaskCreationOptions.LongRunning);
+
+            Task sessionTask = new Task(() =>
+            {
+                while (true)
+                {
+                    foreach (var session in SessionManager.Instance.GetSessions())
+                    {
+                        session.FlushSend();
+                    }
+                }
+            }, TaskCreationOptions.LongRunning);
+
+            Task dbTask = new Task(() =>
+            {
+                while (true) { DbProcess.Instance.Flush(); }
+            }, TaskCreationOptions.LongRunning);
+
+            roomTask.Start();
+            sessionTask.Start();
+            dbTask.Start();
 
 
             Console.ReadLine();
