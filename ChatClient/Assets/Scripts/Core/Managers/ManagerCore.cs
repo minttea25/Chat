@@ -43,6 +43,11 @@ namespace Core
             _network, _unity, _room
         };
 
+        private void OnEnable()
+        {
+            LoadBaseResource();
+        }
+
         private void Update()
         {
             _network.Update();
@@ -51,11 +56,30 @@ namespace Core
 
         public void OnDisable()
         {
+            ReleaseBaseResource();
             _network.StopService();
             Clear();
         }
 
         // Game Contents
+        void LoadBaseResource()
+        {
+            Resource.LoadAllAsync(
+                (failed) =>
+                {
+                    Core.Utils.AssertCrash(failed.Count == 0);
+                },
+                AddrKeys.SimplePopupUI);
+        }
+
+        void ReleaseBaseResource()
+        {
+            Resource.ReleaseAll(
+                AddrKeys.SimplePopupUI);
+        }
+
+
+
 
 
         internal static void Init()

@@ -75,11 +75,6 @@ public class ChatPanelItem : BaseUIItem
         LoadPendingChats();
     }
 
-    //private void Update()
-    //{
-    //    if (RoomId == default) return;
-    //    if (ManagerCore.Chat.Rooms.ContainsKey(RoomId) == false) return;
-    //}
 
     public void AddChat(ChatCacheData chat)
     {

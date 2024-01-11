@@ -329,10 +329,14 @@ namespace Chat.DB
                 using (AppDbContext db = new AppDbContext())
                 {
                     // find the userinfo
-                    UserDb userDb = db.Users.FirstOrDefault(u => u.UserDbId == userDbId);
+                    UserDb userDb = db.Users
+                        .Include(u => u.Rooms)
+                        .FirstOrDefault(u => u.UserDbId == userDbId);
                     if (userDb == null) return;
 
-                    ChatRoomDb roomDb = db.ChatRooms.FirstOrDefault(r => r.ChatRoomNumber == roomNumber);
+                    ChatRoomDb roomDb = db.ChatRooms
+                        .Include(r => r.Users)
+                        .FirstOrDefault(r => r.ChatRoomNumber == roomNumber);
                     if (roomDb == null) return;
 
                     userDb.Rooms.Remove(roomDb);

@@ -67,6 +67,12 @@ public partial class NetworkManager : IManager, IUpdate
         Send(req);
     }
 
+    public void ReqLeaveRoom(uint roomNunber)
+    {
+        SLeaveRoomReq req = new() { RoomNumber = roomNunber, UserInfo = UserInfo, };
+        Send(req);
+    }
+
     public void ReqSendChatText(string message, uint roomNumber, int chatId)
     {
         SSendChatText req = new()

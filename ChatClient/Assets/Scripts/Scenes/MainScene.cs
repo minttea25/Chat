@@ -138,7 +138,7 @@ public class MainScene : BaseScene
         UI.AddRoomList(roomInfo);
     }
 
-    public void RemoveRoomUI(ulong roomNumber)
+    public void RemoveRoomUI(uint roomNumber)
     {
         UI.RemoveRoom(roomNumber);
     }
