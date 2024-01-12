@@ -20,7 +20,7 @@ public class MainScene : BaseScene
     private void OnEnable()
     {
         ManagerCore.Resource.LoadAllAsync(
-            LoadCompleted,
+            ResourceLoadCompleted,
             AddrKeys.MainSceneUI);
     }
 
@@ -48,7 +48,7 @@ public class MainScene : BaseScene
         //    });
     }
 
-    void LoadCompleted(List<string> failedKeys)
+    void ResourceLoadCompleted(List<string> failedKeys)
     {
         if (failedKeys.Count != 0)
         {
@@ -68,43 +68,36 @@ public class MainScene : BaseScene
         }
 
         ui.Scene = this;
-        ConnectingUI.Show();
-        ManagerCore.Network.StartService(ConnectionFailed);
     }
 
-    // TEMP
-    public void TryLogin()
+    public void CheckLoadAllCompleted()
     {
-        //int rand = int.Parse(DateTime.Now.ToString("HHmmss"));
-        //ManagerCore.Network.SetUserInfo("TestToken", $"TestLoginId{rand}", $"TestName{rand}");
-#if UNITY_EDITOR
-        var data = Resources.Load<AccountData>("Debug/AccountData");
-        ManagerCore.Network.SetUserInfo("TestToken", data.LoginId, data.LoginId);
-#else
-        string username = NetworkManager.TestUserName;
-        ManagerCore.Network.SetUserInfo("TestToken", username, username);
-#endif
-
-        Debug.Log($"Trying to login with id, {ManagerCore.Network.UserInfo.UserLoginId}");
-        ManagerCore.Network.ReqLogin();
-
-        StartCoroutine(CheckLoginTimeout());
+        StartCoroutine(AllLoadCompleted());
     }
 
-    IEnumerator CheckLoginTimeout()
+    IEnumerator AllLoadCompleted()
     {
-        yield return new WaitForSeconds(AppConst.LoginChatServerTimeoutSeconds);
-
-        if (ManagerCore.Network.Connection != NetworkManager.ConnectState.Loginned)
+        while (ManagerCore.Network.Connection == NetworkManager.ConnectState.Connecting)
         {
-            string msg = $"Failed to login: {ManagerCore.Network.Connection}";
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Error, msg);
-
-            // failed to connect
-            ManagerCore.Network.Logout();
+            yield return null;
         }
 
+        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.FailedToConnect)
+        {
+            // TODO : 연결 실패
+
+        }
+
+        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.Disconnected)
+        {
+            // TODO : 오류
+        }
+
+        // req room list
+        ManagerCore.Network.ReqRoomList();
+
     }
+    
 
     public void ResCreateRoom()
     {
@@ -153,12 +146,5 @@ public class MainScene : BaseScene
         ui.RefreshRoomList(now);
     }
 
-    void ConnectionFailed(SocketError error)
-    {
-        Debug.Log($"connection failed: {error}");
-
-        // TODO : show error popup
-        // TODO : retry to connect
-        NotificationUI.Show($"Connection Failed: {error}");
-    }
+    
 }

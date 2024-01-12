@@ -31,16 +31,18 @@ namespace Core
         readonly static NetworkManager _network = new();
         readonly static UnityManager _unity = new();
         readonly static RoomManager _room = new();
+        readonly static WebManager _web = new();
 
         public static NetworkManager Network => _network;
         public static UnityManager Unity => _unity;
         public static RoomManager Room => _room;
+        public static WebManager Web => _web;
 
 
-        readonly static List<IManager> _managers = new()
+        readonly static IManager[] _managers = new IManager[]
         {
             _resource, _ui, _scene, _sound, _data, // add customs...
-            _network, _unity, _room
+            _network, _unity, _room, _web
         };
 
         private void OnEnable()

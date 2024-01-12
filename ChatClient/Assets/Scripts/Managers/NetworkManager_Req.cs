@@ -3,8 +3,6 @@ using Core;
 using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.Utils;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class NetworkManager : IManager, IUpdate
@@ -12,12 +10,34 @@ public partial class NetworkManager : IManager, IUpdate
     public void ReqLogin()
     {
         ConnectingUI.Show();
-        
+
         SLoginReq loginReq = new SLoginReq()
         {
+            AccountDbId = AccountDbId,
             AuthToken = AuthToken,
-            UserInfo = UserInfo
+            Ipv4Address = NetworkUtils.GetIPv4Address(),
         };
+
+        // TEST
+        Debug.Log($"Trying to login with [{loginReq}]");
+
+        session.Send(loginReq);
+    }
+
+    public void ReqLogin_()
+    {
+        UnityJobQueue.Instance.Push(ConnectingUI.Show);
+
+        SLoginReq loginReq = new SLoginReq()
+        {
+            AccountDbId = AccountDbId,
+            AuthToken = AuthToken,
+            Ipv4Address = NetworkUtils.GetIPv4Address(),
+        };
+
+        // TEST
+        Debug.Log($"Trying to login with [{loginReq}]");
+
         session.Send(loginReq);
     }
 

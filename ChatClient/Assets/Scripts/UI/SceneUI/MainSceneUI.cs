@@ -283,29 +283,7 @@ public class MainSceneUI : BaseUIScene
     void OnLoaded()
     {
         LoadingUI.Hide();
-        StartCoroutine(nameof(CheckLoad));
-    }
-
-    IEnumerator CheckLoad()
-    {
-        while (ManagerCore.Network.Connection == NetworkManager.ConnectState.Connecting)
-        {
-            yield return null;
-        }
-
-        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.FailedToConnect)
-        {
-            // TODO : 연결 실패
-
-        }
-
-        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.Disconnected)
-        {
-            // TODO : 오류
-        }
-
-        // UI 로드 완료 시 로그인 요청
-        Scene.TryLogin();
+        Scene.CheckLoadAllCompleted();
     }
 
 

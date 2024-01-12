@@ -19,8 +19,9 @@ enum EditUserNameRes {
 
 
 message SLoginReq {
-	UserInfo user_info = 1;
+	int64 account_db_id = 1;
 	string auth_token = 2;
+	string ipv4_address = 3;
 }
 
 message CLoginRes {

@@ -29,7 +29,7 @@ public class ServerSession : PacketSession
         ManagerCore.Network.SetConnected();
         Debug.Log($"Connected to server: {endPoint}");
 
-        UnityJobQueue.Instance.Push(ConnectingUI.Hide);
+        UnityJobQueue.Instance.Push(ManagerCore.Scene.GetScene<StartScene>().OnChatServerConnected);
         UnityJobQueue.Instance.Push(ManagerCore.Network.PingPong);
     }
 

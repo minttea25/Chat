@@ -31,6 +31,7 @@ public partial class NetworkManager : IManager, IUpdate
 
     IPEndPoint endPoint = null;
 
+    public long AccountDbId { get; private set; } = 0;
     public uint ConnectedId { get; private set; } = 0;
     public string AuthToken { get; private set; } = null;
     public bool Connected => Connection == ConnectState.Connected || Connection == ConnectState.Loginned;
@@ -43,9 +44,14 @@ public partial class NetworkManager : IManager, IUpdate
     Coroutine pingTask = null;
 
 
-
+    // TEST
     public static string TestUserName;
 
+    public void AccountServerConnected(long accountDbId, string authToken)
+    {
+        AuthToken = authToken;
+        AccountDbId = accountDbId;
+    }
 
     public void SetUserInfo(string authToken, string userLoginId, string userName)
     {
@@ -79,6 +85,7 @@ public partial class NetworkManager : IManager, IUpdate
     /// </summary>
     public void StartService(Action<SocketError> failedCallback = null)
     {
+        ConnectingUI.Show();
         Core.Utils.AssertCrash(endPoint != null);
 
         ClientServiceConfig config = ClientServiceConfig.GetDefault();
@@ -140,9 +147,10 @@ public partial class NetworkManager : IManager, IUpdate
 
     void IManager.InitManager()
     {
+        // Essential
         MessageManager.Instance.Init();
 
-        var config = Resources.Load<NetworkConfig>("NetworkConfig");
+        var config = Resources.Load<NetworkConfig>(ResourcePath.NetworkConfig);
         if (config == null)
         {
             ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Can not find NetworkConfig in Resource directory.");
@@ -151,12 +159,15 @@ public partial class NetworkManager : IManager, IUpdate
 
         if (config.UseLocal == true)
         {
-            string host = Dns.GetHostName(); // local host name of my pc
-            IPHostEntry ipHost = Dns.GetHostEntry(host);
-            IPAddress ipAddr = ipHost.AddressList[0];
-            endPoint = new IPEndPoint(address: ipAddr, port: 8888);
+            if (config.Port == 0)
+            {
+                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Port is 0.");
+                return;
+            }
+
+            IPAddress ipAddr = NetworkUtils.GetLocalIPAddress();
+            endPoint = new IPEndPoint(address: ipAddr, port: config.Port);
         }
-        
         else
         {
             if (string.IsNullOrEmpty(config.EndpointIPAddress)
@@ -171,6 +182,8 @@ public partial class NetworkManager : IManager, IUpdate
         }
 
         CoreLogger.CreateLoggerWithFlag((uint)CoreLogger.LoggerSinks.FILE, LoggerConfig.GetDefault());
+
+        Debug.Log($"Loaded: EndPoint: {endPoint}");
     }
 
     public void Update()

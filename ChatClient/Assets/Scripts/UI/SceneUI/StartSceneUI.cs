@@ -25,6 +25,9 @@ public class StartSceneUI : BaseUIScene
     [SerializeField]
     StartUIContext Context = new();
 
+    string Id => Context.IdInput.Component.text;
+    string Password => Context.PasswordInput.Component.text;
+
     public override void Init()
     {
         base.Init();
@@ -61,35 +64,45 @@ public class StartSceneUI : BaseUIScene
             return;
         }
 
-        ManagerCore.Scene.GetScene<StartScene>().ReqRegister();
+        ManagerCore.Scene.GetScene<StartScene>().ReqAccountRegister(Id, Password);
     }
 
     void LoginReq()
     {
-        string id = Context.IdInput.Component.text;
-        string password = Context.PasswordInput.Component.text;
-
-        //ManagerCore.Scene.GetScene<StartScene>().ReqLogin(id, password);
+        Debug.Log("Login Req");
 
 
+        if (ValidateId() == false)
+        {
+            // TODO : Show Popup
+            Debug.Log("Invalid Id");
+            return;
+        }
 
-        // TEST
-        string key = Context.IdInput.Component.text;
-        NetworkManager.TestUserName = key;
+        if (ValidatePassword() == false)
+        {
+            // TODO : Show Popup
+            Debug.Log("Invalid Password");
+            return;
+        }
 
-        ManagerCore.Scene.GetScene<StartScene>().TestLogin();
+        ManagerCore.Scene.GetScene<StartScene>().ReqAccountLogin(Id, Password);
     }
 
     bool ValidateId()
     {
+        if (string.IsNullOrEmpty(Id)) return false;
+
         // TODO : check the string with regex
-        return false;
+        return true;
     }
 
     bool ValidatePassword()
     {
+        if (string.IsNullOrEmpty(Password)) return false;
+
         // TODO : check the string with regex
-        return false;
+        return true;
     }
 
 #if UNITY_EDITOR
