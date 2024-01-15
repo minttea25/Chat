@@ -17,56 +17,6 @@ namespace Chat.DB
         public static DbProcess Instance { get; } = new DbProcess();
 
 
-        /// <summary>
-        /// for TEST
-        /// </summary>
-        public static void CreateNewAccount(string userId, string userName, ClientSession session)
-        {
-            // 생성은 DB 스레드에서 하기
-            Instance.Add(() =>
-            {
-                // TEST codes            
-                using (AppDbContext db = new AppDbContext())
-                {
-                    AccountDb newAccount = new()
-                    {
-                        AccountLoginId = userId,
-                    };
-                    db.Accounts.Add(newAccount);
-                    bool saved = db.SaveChangesEx();
-
-                    if (saved == false) return;
-
-                    UserDb newUser = new()
-                    {
-                        UserName = userName,
-                        Account = newAccount,
-                        AccountDbId = newAccount.AccountDbId,
-                    };
-                    db.Users.Add(newUser);
-                    saved = db.SaveChangesEx();
-
-                    if (saved == false) return;
-
-                    newAccount.UserDbId = newUser.UserDbId;
-                    saved = db.SaveChangesEx();
-                    if (saved == false) return;
-
-                    UserInfo user = UserInfo.FromUserDb(newUser, newAccount.AccountLoginId);
-
-                    session.SetLoginned(newAccount, user);
-
-                    CLoginRes res = new CLoginRes()
-                    {
-                        LoginRes = LoginRes.LoginSuccess,
-                        UserInfo = session.UserInfo,
-                    };
-
-                    session.Send(res); // send directly OK.
-                }
-            });
-        }
-
         public static void EditUserName(ClientSession session, ulong userDbId, string newUserName)
         {
             // 바로 접근

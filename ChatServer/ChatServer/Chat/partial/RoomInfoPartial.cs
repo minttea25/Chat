@@ -32,13 +32,12 @@ namespace Chat
 
     public sealed partial class UserInfo
     {
-        public static UserInfo FromUserDb(UserDb user, string loginId = null)
+        public static UserInfo FromUserDb(UserDb user)
         {
             return new UserInfo()
             {
                 UserDbId = user.UserDbId,
                 UserName = user.UserName,
-                UserLoginId = loginId ?? string.Empty,
             };
         }
     }

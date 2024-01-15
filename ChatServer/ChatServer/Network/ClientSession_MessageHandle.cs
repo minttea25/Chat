@@ -1,5 +1,9 @@
 ﻿using Chat.DB;
+using ChatServer.Utils;
+using ChatSharedDb;
+using Microsoft.EntityFrameworkCore;
 using ServerCoreTCP.MessageWrapper;
+using System;
 using System.Linq;
 
 namespace Chat
@@ -16,7 +20,6 @@ namespace Chat
         public long AccountDbId { get; private set; }
         public SessionStatus SessionStatus { get; private set; } = SessionStatus.NOT_LOGINNED;
 
-        #region Authentication
         public void SetLoginned(AccountDb account, UserInfo info)
         {
             UserInfo = info;
@@ -24,54 +27,110 @@ namespace Chat
             SessionStatus = SessionStatus.LOGINNED;
         }
 
+
+        #region Authentication
+
         public void HandleLoginReq(SLoginReq req)
         {
             if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
-            using (AppDbContext db = new AppDbContext())
+            CLoginRes res = new CLoginRes();
+
+            // TODO : decrpyt
+            string req_decrypted_token = req.AuthToken;
+            
+
+            using (SharedDbContext db = new SharedDbContext())
             {
-                // 나중에 ulong id로 바꾸기 (일단 string 비교)
-                AccountDb foundAccount = db.Accounts
-                    .FirstOrDefault(a => a.AccountLoginId == req.UserInfo.UserLoginId);
+                AuthTokenDb token = db.Tokens?
+                    .AsNoTracking() // read-only
+                    .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
 
-                if (foundAccount != null)
+                if (token != null)
                 {
-                    // assign the found id for AccountDbId
-                    AccountDbId = foundAccount.AccountDbId;
+                    // TODO : decrpyt
+                    string db_decrypted_token = req.AuthToken;
 
-                    // find user db
-                    UserDb user = db.Users.FirstOrDefault(u => u.UserDbId == foundAccount.UserDbId);
-
-                    if (user == null) return;
-
-                    // assign the the userinfo
-                    UserInfo info = UserInfo.FromUserDb(user, foundAccount.AccountLoginId);
-                    SetLoginned(foundAccount, info);
-
-                    CLoginRes res = new CLoginRes()
+                    // TODO : auth token
+                    if (db_decrypted_token == req_decrypted_token
+                        && token.RecentIpAddress == req.Ipv4Address
+                        && token.Expired > DateTime.UtcNow)
                     {
-                        LoginRes = LoginRes.LoginSuccess,
-                        UserInfo = UserInfo,
-                    };
-
-                    // TODO : Is anything to do more?
-
-                    Send(res); // send directly OK.
+                        res.LoginRes = LoginRes.LoginSuccess; // success auth.
+                    }
+                    else if (token.Expired <= DateTime.UtcNow)
+                    {
+                        res.LoginRes = LoginRes.LoginExpired;
+                    }
+                    else
+                    {
+                        res.LoginRes = LoginRes.LoginFailed;
+                    }
                 }
                 else
                 {
-                    // TEST
-                    DbProcess.CreateNewAccount(req.UserInfo.UserLoginId, req.UserInfo.UserName, this);
-                    return;
-
-                    // no acoount found
-                    CLoginRes res = new CLoginRes()
-                    {
-                        LoginRes = LoginRes.LoginFailed,
-                    };
-                    Send(res); // send directly OK.
+                    res.LoginRes = LoginRes.LoginInvalid;
                 }
             }
+
+            if (res.LoginRes == LoginRes.LoginSuccess)
+            {
+                using (AppDbContext db = new AppDbContext())
+                {
+                    AccountDb account = db.Accounts
+                        .Include(a => a.User)
+                        .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
+
+                    // check account exist
+                    if (account == null)
+                    {
+                        // create new user data and account
+                        UserDb user = new UserDb()
+                        {
+                            // default name
+                            UserName = $"user{req.AccountDbId:00000000}",
+                        };
+                        db.Users.Add(user);
+                        var suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            res.LoginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                            // TODO : error
+                        }
+
+                        account = new AccountDb()
+                        {
+                            AccountDbId = req.AccountDbId,
+                            UserDbId = user.UserDbId,
+                            User = user
+                        };
+                        suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            res.LoginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                            // TODO : error
+                        }
+
+                        // assign the the userinfo
+                        UserInfo info = UserInfo.FromUserDb(user);
+                        SetLoginned(account, info);
+                    }
+                    // account and user exist
+                    else
+                    {
+                        UserInfo info = UserInfo.FromUserDb(account.User);
+                        SetLoginned(account, info);
+                    }
+
+                    // check again
+                    res.LoginRes = LoginRes.LoginSuccess;
+                    res.UserInfo.MergeFrom(this.UserInfo);
+                }
+            }
+
+            Send(res);
         }
         #endregion
 

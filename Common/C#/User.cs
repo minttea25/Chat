@@ -31,12 +31,12 @@ namespace Chat {
             "ck5hbWVSZXESHAoJdXNlcl9pbmZvGAEgASgLMgkuVXNlckluZm8SFQoNbmV3",
             "X3VzZXJfbmFtZRgCIAEoCSJIChBDRWRpdFVzZXJOYW1lUmVzEh0KA3JlcxgB",
             "IAEoDjIQLkVkaXRVc2VyTmFtZVJlcxIVCg1uZXdfdXNlcl9uYW1lGAIgASgJ",
-            "IkgKCFVzZXJJbmZvEhIKCnVzZXJfZGJfaWQYASABKAQSFQoNdXNlcl9sb2dp",
-            "bl9pZBgCIAEoCRIRCgl1c2VyX25hbWUYAyABKAkqUwoITG9naW5SZXMSEQoN",
-            "TE9HSU5fSU5WQUxJRBAAEhEKDUxPR0lOX1NVQ0NFU1MQARIQCgxMT0dJTl9G",
-            "QUlMRUQQAhIPCgtMT0dJTl9FUlJPUhADKlEKD0VkaXRVc2VyTmFtZVJlcxIQ",
-            "CgxFRElUX0lOVkFMSUQQABILCgdFRElUX09LEAESDwoLRURJVF9GQUlMRUQQ",
-            "AhIOCgpFRElUX0VSUk9SEANCB6oCBENoYXRiBnByb3RvMw=="));
+            "IjEKCFVzZXJJbmZvEhIKCnVzZXJfZGJfaWQYASABKAQSEQoJdXNlcl9uYW1l",
+            "GAIgASgJKmYKCExvZ2luUmVzEhEKDUxPR0lOX0lOVkFMSUQQABIRCg1MT0dJ",
+            "Tl9TVUNDRVNTEAESEAoMTE9HSU5fRkFJTEVEEAISEQoNTE9HSU5fRVhQSVJF",
+            "RBADEg8KC0xPR0lOX0VSUk9SEAQqUQoPRWRpdFVzZXJOYW1lUmVzEhAKDEVE",
+            "SVRfSU5WQUxJRBAAEgsKB0VESVRfT0sQARIPCgtFRElUX0ZBSUxFRBACEg4K",
+            "CkVESVRfRVJST1IQA0IHqgIEQ2hhdGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.LoginRes), typeof(global::Chat.EditUserNameRes), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -44,7 +44,7 @@ namespace Chat {
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CLoginRes), global::Chat.CLoginRes.Parser, new[]{ "LoginRes", "UserInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SEditUserNameReq), global::Chat.SEditUserNameReq.Parser, new[]{ "UserInfo", "NewUserName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEditUserNameRes), global::Chat.CEditUserNameRes.Parser, new[]{ "Res", "NewUserName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserDbId", "UserLoginId", "UserName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserDbId", "UserName" }, null, null, null, null)
           }));
     }
     #endregion
@@ -55,7 +55,8 @@ namespace Chat {
     [pbr::OriginalName("LOGIN_INVALID")] LoginInvalid = 0,
     [pbr::OriginalName("LOGIN_SUCCESS")] LoginSuccess = 1,
     [pbr::OriginalName("LOGIN_FAILED")] LoginFailed = 2,
-    [pbr::OriginalName("LOGIN_ERROR")] LoginError = 3,
+    [pbr::OriginalName("LOGIN_EXPIRED")] LoginExpired = 3,
+    [pbr::OriginalName("LOGIN_ERROR")] LoginError = 4,
   }
 
   public enum EditUserNameRes {
@@ -1062,7 +1063,6 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public UserInfo(UserInfo other) : this() {
       userDbId_ = other.userDbId_;
-      userLoginId_ = other.userLoginId_;
       userName_ = other.userName_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1085,20 +1085,8 @@ namespace Chat {
       }
     }
 
-    /// <summary>Field number for the "user_login_id" field.</summary>
-    public const int UserLoginIdFieldNumber = 2;
-    private string userLoginId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string UserLoginId {
-      get { return userLoginId_; }
-      set {
-        userLoginId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "user_name" field.</summary>
-    public const int UserNameFieldNumber = 3;
+    public const int UserNameFieldNumber = 2;
     private string userName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1125,7 +1113,6 @@ namespace Chat {
         return true;
       }
       if (UserDbId != other.UserDbId) return false;
-      if (UserLoginId != other.UserLoginId) return false;
       if (UserName != other.UserName) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1135,7 +1122,6 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (UserDbId != 0UL) hash ^= UserDbId.GetHashCode();
-      if (UserLoginId.Length != 0) hash ^= UserLoginId.GetHashCode();
       if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1159,12 +1145,8 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(UserDbId);
       }
-      if (UserLoginId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserLoginId);
-      }
       if (UserName.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(UserName);
       }
       if (_unknownFields != null) {
@@ -1181,12 +1163,8 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(UserDbId);
       }
-      if (UserLoginId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserLoginId);
-      }
       if (UserName.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(UserName);
       }
       if (_unknownFields != null) {
@@ -1201,9 +1179,6 @@ namespace Chat {
       int size = 0;
       if (UserDbId != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UserDbId);
-      }
-      if (UserLoginId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserLoginId);
       }
       if (UserName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
@@ -1222,9 +1197,6 @@ namespace Chat {
       }
       if (other.UserDbId != 0UL) {
         UserDbId = other.UserDbId;
-      }
-      if (other.UserLoginId.Length != 0) {
-        UserLoginId = other.UserLoginId;
       }
       if (other.UserName.Length != 0) {
         UserName = other.UserName;
@@ -1249,10 +1221,6 @@ namespace Chat {
             break;
           }
           case 18: {
-            UserLoginId = input.ReadString();
-            break;
-          }
-          case 26: {
             UserName = input.ReadString();
             break;
           }
@@ -1276,10 +1244,6 @@ namespace Chat {
             break;
           }
           case 18: {
-            UserLoginId = input.ReadString();
-            break;
-          }
-          case 26: {
             UserName = input.ReadString();
             break;
           }
