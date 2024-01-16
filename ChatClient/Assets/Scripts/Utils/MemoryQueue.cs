@@ -35,7 +35,7 @@ namespace Chat.Utils
 
             if (map.Count >= m_capacity)
             {
-                Remove(out T r);
+                Remove_(out T r);
                 removed = r;
             }
             else
@@ -52,8 +52,16 @@ namespace Chat.Utils
             map.Add(key, memoryObject);
         }
 
+        public T Remove(Key key)
+        {
+            if (map.ContainsKey(key) == false) return null;
 
-        bool Remove(out T removed)
+            MemoryObject<T> removed = map[key];
+            _ = map.Remove(key);
+            return removed.target;
+        }
+
+        bool Remove_(out T removed)
         {
             if (map.Count == 0)
             {

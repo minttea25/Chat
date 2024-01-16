@@ -24,27 +24,27 @@ namespace Chat {
     static UserReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Cg9DaGF0L1VzZXIucHJvdG8iPQoJU0xvZ2luUmVxEhwKCXVzZXJfaW5mbxgB",
-            "IAEoCzIJLlVzZXJJbmZvEhIKCmF1dGhfdG9rZW4YAiABKAkiRwoJQ0xvZ2lu",
-            "UmVzEhwKCWxvZ2luX3JlcxgBIAEoDjIJLkxvZ2luUmVzEhwKCXVzZXJfaW5m",
-            "bxgCIAEoCzIJLlVzZXJJbmZvIkcKEFNFZGl0VXNlck5hbWVSZXESHAoJdXNl",
-            "cl9pbmZvGAEgASgLMgkuVXNlckluZm8SFQoNbmV3X3VzZXJfbmFtZRgCIAEo",
-            "CSJIChBDRWRpdFVzZXJOYW1lUmVzEh0KA3JlcxgBIAEoDjIQLkVkaXRVc2Vy",
-            "TmFtZVJlcxIVCg1uZXdfdXNlcl9uYW1lGAIgASgJIkgKCFVzZXJJbmZvEhIK",
-            "CnVzZXJfZGJfaWQYASABKAQSFQoNdXNlcl9sb2dpbl9pZBgCIAEoCRIRCgl1",
-            "c2VyX25hbWUYAyABKAkqUwoITG9naW5SZXMSEQoNTE9HSU5fSU5WQUxJRBAA",
-            "EhEKDUxPR0lOX1NVQ0NFU1MQARIQCgxMT0dJTl9GQUlMRUQQAhIPCgtMT0dJ",
-            "Tl9FUlJPUhADKlEKD0VkaXRVc2VyTmFtZVJlcxIQCgxFRElUX0lOVkFMSUQQ",
-            "ABILCgdFRElUX09LEAESDwoLRURJVF9GQUlMRUQQAhIOCgpFRElUX0VSUk9S",
-            "EANCB6oCBENoYXRiBnByb3RvMw=="));
+            "Cg9DaGF0L1VzZXIucHJvdG8iTAoJU0xvZ2luUmVxEhUKDWFjY291bnRfZGJf",
+            "aWQYASABKAMSEgoKYXV0aF90b2tlbhgCIAEoCRIUCgxpcHY0X2FkZHJlc3MY",
+            "AyABKAkiRwoJQ0xvZ2luUmVzEhwKCWxvZ2luX3JlcxgBIAEoDjIJLkxvZ2lu",
+            "UmVzEhwKCXVzZXJfaW5mbxgCIAEoCzIJLlVzZXJJbmZvIkcKEFNFZGl0VXNl",
+            "ck5hbWVSZXESHAoJdXNlcl9pbmZvGAEgASgLMgkuVXNlckluZm8SFQoNbmV3",
+            "X3VzZXJfbmFtZRgCIAEoCSJIChBDRWRpdFVzZXJOYW1lUmVzEh0KA3JlcxgB",
+            "IAEoDjIQLkVkaXRVc2VyTmFtZVJlcxIVCg1uZXdfdXNlcl9uYW1lGAIgASgJ",
+            "IjEKCFVzZXJJbmZvEhIKCnVzZXJfZGJfaWQYASABKAQSEQoJdXNlcl9uYW1l",
+            "GAIgASgJKmYKCExvZ2luUmVzEhEKDUxPR0lOX0lOVkFMSUQQABIRCg1MT0dJ",
+            "Tl9TVUNDRVNTEAESEAoMTE9HSU5fRkFJTEVEEAISEQoNTE9HSU5fRVhQSVJF",
+            "RBADEg8KC0xPR0lOX0VSUk9SEAQqUQoPRWRpdFVzZXJOYW1lUmVzEhAKDEVE",
+            "SVRfSU5WQUxJRBAAEgsKB0VESVRfT0sQARIPCgtFRElUX0ZBSUxFRBACEg4K",
+            "CkVESVRfRVJST1IQA0IHqgIEQ2hhdGIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Chat.LoginRes), typeof(global::Chat.EditUserNameRes), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLoginReq), global::Chat.SLoginReq.Parser, new[]{ "UserInfo", "AuthToken" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SLoginReq), global::Chat.SLoginReq.Parser, new[]{ "AccountDbId", "AuthToken", "Ipv4Address" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CLoginRes), global::Chat.CLoginRes.Parser, new[]{ "LoginRes", "UserInfo" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.SEditUserNameReq), global::Chat.SEditUserNameReq.Parser, new[]{ "UserInfo", "NewUserName" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::Chat.CEditUserNameRes), global::Chat.CEditUserNameRes.Parser, new[]{ "Res", "NewUserName" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserDbId", "UserLoginId", "UserName" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::Chat.UserInfo), global::Chat.UserInfo.Parser, new[]{ "UserDbId", "UserName" }, null, null, null, null)
           }));
     }
     #endregion
@@ -55,7 +55,8 @@ namespace Chat {
     [pbr::OriginalName("LOGIN_INVALID")] LoginInvalid = 0,
     [pbr::OriginalName("LOGIN_SUCCESS")] LoginSuccess = 1,
     [pbr::OriginalName("LOGIN_FAILED")] LoginFailed = 2,
-    [pbr::OriginalName("LOGIN_ERROR")] LoginError = 3,
+    [pbr::OriginalName("LOGIN_EXPIRED")] LoginExpired = 3,
+    [pbr::OriginalName("LOGIN_ERROR")] LoginError = 4,
   }
 
   public enum EditUserNameRes {
@@ -102,8 +103,9 @@ namespace Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public SLoginReq(SLoginReq other) : this() {
-      userInfo_ = other.userInfo_ != null ? other.userInfo_.Clone() : null;
+      accountDbId_ = other.accountDbId_;
       authToken_ = other.authToken_;
+      ipv4Address_ = other.ipv4Address_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -113,15 +115,15 @@ namespace Chat {
       return new SLoginReq(this);
     }
 
-    /// <summary>Field number for the "user_info" field.</summary>
-    public const int UserInfoFieldNumber = 1;
-    private global::Chat.UserInfo userInfo_;
+    /// <summary>Field number for the "account_db_id" field.</summary>
+    public const int AccountDbIdFieldNumber = 1;
+    private long accountDbId_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Chat.UserInfo UserInfo {
-      get { return userInfo_; }
+    public long AccountDbId {
+      get { return accountDbId_; }
       set {
-        userInfo_ = value;
+        accountDbId_ = value;
       }
     }
 
@@ -134,6 +136,18 @@ namespace Chat {
       get { return authToken_; }
       set {
         authToken_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "ipv4_address" field.</summary>
+    public const int Ipv4AddressFieldNumber = 3;
+    private string ipv4Address_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Ipv4Address {
+      get { return ipv4Address_; }
+      set {
+        ipv4Address_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -152,8 +166,9 @@ namespace Chat {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(UserInfo, other.UserInfo)) return false;
+      if (AccountDbId != other.AccountDbId) return false;
       if (AuthToken != other.AuthToken) return false;
+      if (Ipv4Address != other.Ipv4Address) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -161,8 +176,9 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (userInfo_ != null) hash ^= UserInfo.GetHashCode();
+      if (AccountDbId != 0L) hash ^= AccountDbId.GetHashCode();
       if (AuthToken.Length != 0) hash ^= AuthToken.GetHashCode();
+      if (Ipv4Address.Length != 0) hash ^= Ipv4Address.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -181,13 +197,17 @@ namespace Chat {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (userInfo_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(UserInfo);
+      if (AccountDbId != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(AccountDbId);
       }
       if (AuthToken.Length != 0) {
         output.WriteRawTag(18);
         output.WriteString(AuthToken);
+      }
+      if (Ipv4Address.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Ipv4Address);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -199,13 +219,17 @@ namespace Chat {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (userInfo_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(UserInfo);
+      if (AccountDbId != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(AccountDbId);
       }
       if (AuthToken.Length != 0) {
         output.WriteRawTag(18);
         output.WriteString(AuthToken);
+      }
+      if (Ipv4Address.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Ipv4Address);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -217,11 +241,14 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (userInfo_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(UserInfo);
+      if (AccountDbId != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(AccountDbId);
       }
       if (AuthToken.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(AuthToken);
+      }
+      if (Ipv4Address.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Ipv4Address);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -235,14 +262,14 @@ namespace Chat {
       if (other == null) {
         return;
       }
-      if (other.userInfo_ != null) {
-        if (userInfo_ == null) {
-          UserInfo = new global::Chat.UserInfo();
-        }
-        UserInfo.MergeFrom(other.UserInfo);
+      if (other.AccountDbId != 0L) {
+        AccountDbId = other.AccountDbId;
       }
       if (other.AuthToken.Length != 0) {
         AuthToken = other.AuthToken;
+      }
+      if (other.Ipv4Address.Length != 0) {
+        Ipv4Address = other.Ipv4Address;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -259,15 +286,16 @@ namespace Chat {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            if (userInfo_ == null) {
-              UserInfo = new global::Chat.UserInfo();
-            }
-            input.ReadMessage(UserInfo);
+          case 8: {
+            AccountDbId = input.ReadInt64();
             break;
           }
           case 18: {
             AuthToken = input.ReadString();
+            break;
+          }
+          case 26: {
+            Ipv4Address = input.ReadString();
             break;
           }
         }
@@ -285,15 +313,16 @@ namespace Chat {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            if (userInfo_ == null) {
-              UserInfo = new global::Chat.UserInfo();
-            }
-            input.ReadMessage(UserInfo);
+          case 8: {
+            AccountDbId = input.ReadInt64();
             break;
           }
           case 18: {
             AuthToken = input.ReadString();
+            break;
+          }
+          case 26: {
+            Ipv4Address = input.ReadString();
             break;
           }
         }
@@ -1034,7 +1063,6 @@ namespace Chat {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public UserInfo(UserInfo other) : this() {
       userDbId_ = other.userDbId_;
-      userLoginId_ = other.userLoginId_;
       userName_ = other.userName_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1057,20 +1085,8 @@ namespace Chat {
       }
     }
 
-    /// <summary>Field number for the "user_login_id" field.</summary>
-    public const int UserLoginIdFieldNumber = 2;
-    private string userLoginId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string UserLoginId {
-      get { return userLoginId_; }
-      set {
-        userLoginId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "user_name" field.</summary>
-    public const int UserNameFieldNumber = 3;
+    public const int UserNameFieldNumber = 2;
     private string userName_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1097,7 +1113,6 @@ namespace Chat {
         return true;
       }
       if (UserDbId != other.UserDbId) return false;
-      if (UserLoginId != other.UserLoginId) return false;
       if (UserName != other.UserName) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -1107,7 +1122,6 @@ namespace Chat {
     public override int GetHashCode() {
       int hash = 1;
       if (UserDbId != 0UL) hash ^= UserDbId.GetHashCode();
-      if (UserLoginId.Length != 0) hash ^= UserLoginId.GetHashCode();
       if (UserName.Length != 0) hash ^= UserName.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -1131,12 +1145,8 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(UserDbId);
       }
-      if (UserLoginId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserLoginId);
-      }
       if (UserName.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(UserName);
       }
       if (_unknownFields != null) {
@@ -1153,12 +1163,8 @@ namespace Chat {
         output.WriteRawTag(8);
         output.WriteUInt64(UserDbId);
       }
-      if (UserLoginId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(UserLoginId);
-      }
       if (UserName.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(UserName);
       }
       if (_unknownFields != null) {
@@ -1173,9 +1179,6 @@ namespace Chat {
       int size = 0;
       if (UserDbId != 0UL) {
         size += 1 + pb::CodedOutputStream.ComputeUInt64Size(UserDbId);
-      }
-      if (UserLoginId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(UserLoginId);
       }
       if (UserName.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(UserName);
@@ -1194,9 +1197,6 @@ namespace Chat {
       }
       if (other.UserDbId != 0UL) {
         UserDbId = other.UserDbId;
-      }
-      if (other.UserLoginId.Length != 0) {
-        UserLoginId = other.UserLoginId;
       }
       if (other.UserName.Length != 0) {
         UserName = other.UserName;
@@ -1221,10 +1221,6 @@ namespace Chat {
             break;
           }
           case 18: {
-            UserLoginId = input.ReadString();
-            break;
-          }
-          case 26: {
             UserName = input.ReadString();
             break;
           }
@@ -1248,10 +1244,6 @@ namespace Chat {
             break;
           }
           case 18: {
-            UserLoginId = input.ReadString();
-            break;
-          }
-          case 26: {
             UserName = input.ReadString();
             break;
           }

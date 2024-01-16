@@ -88,8 +88,13 @@ namespace Chat
 
             var pongTick = Global.G_Stopwatch.ElapsedMilliseconds;
             var pingTick = ManagerCore.Network.PingTick;
-            //UnityEngine.Debug.Log($"ping: {pongTick - pingTick} ms");
-            UnityJobQueue.Instance.Push(() => ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick));
+            UnityJobQueue.Instance.Push(() =>
+            {
+                if (ManagerCore.Scene.GetScene<MainScene>() != null)
+                {
+                    ManagerCore.Scene.GetScene<MainScene>().UI.SetPing(pongTick - pingTick);
+                }
+            });
         }
     }
 }

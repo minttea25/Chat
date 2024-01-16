@@ -7,7 +7,8 @@ enum LoginRes {
 	LOGIN_INVALID = 0;
 	LOGIN_SUCCESS = 1;
 	LOGIN_FAILED = 2;
-	LOGIN_ERROR = 3;
+	LOGIN_EXPIRED = 3;
+	LOGIN_ERROR = 4;
 }
 
 enum EditUserNameRes {
@@ -19,8 +20,9 @@ enum EditUserNameRes {
 
 
 message SLoginReq {
-	UserInfo user_info = 1;
+	int64 account_db_id = 1;
 	string auth_token = 2;
+	string ipv4_address = 3;
 }
 
 message CLoginRes {
@@ -40,6 +42,5 @@ message CEditUserNameRes {
 
 message UserInfo {
 	uint64 user_db_id = 1;
-	string user_login_id = 2;
-	string user_name = 3;
+	string user_name = 2;
 }

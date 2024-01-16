@@ -1,9 +1,6 @@
-﻿using Chat;
-using ChatServer.Utils;
+﻿using ChatServer.Utils;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Job;
 using System;
@@ -16,53 +13,72 @@ namespace Chat.DB
     {
         public static DbProcess Instance { get; } = new DbProcess();
 
-
-        /// <summary>
-        /// for TEST
-        /// </summary>
-        public static void CreateNewAccount(string userId, string userName, ClientSession session)
+        public static void Login(ClientSession session, long loginDbId)
         {
-            // 생성은 DB 스레드에서 하기
             Instance.Add(() =>
             {
-                // TEST codes            
+                LoginRes loginRes = LoginRes.LoginSuccess;
                 using (AppDbContext db = new AppDbContext())
                 {
-                    AccountDb newAccount = new()
+                    AccountDb account = db.Accounts
+                        .Include(a => a.User)
+                        .FirstOrDefault(a => a.LoginDbId == loginDbId);
+
+                    // check account exist
+                    if (account == null)
                     {
-                        AccountLoginId = userId,
-                    };
-                    db.Accounts.Add(newAccount);
-                    bool saved = db.SaveChangesEx();
+                        // create new account and user
+                        UserDb user = new UserDb()
+                        {
+                            UserName = $"user{loginDbId:00000000}",
+                        };
+                        db.Users.Add(user);
+                        var suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            loginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                        }
 
-                    if (saved == false) return;
+                        account = new AccountDb()
+                        {
+                            LoginDbId = loginDbId,
+                            UserDbId = user.UserDbId,
+                            User = user
+                        };
+                        db.Accounts.Add(account);
+                        suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            loginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                            // TODO : error
+                        }
 
-                    UserDb newUser = new()
+                        // assign the the userinfo
+                        UserInfo info = UserInfo.FromUserDb(user);
+                        session.SetLoginned(account, info);
+                    }
+                    // account and user exist
+                    else
                     {
-                        UserName = userName,
-                        Account = newAccount,
-                        AccountDbId = newAccount.AccountDbId,
-                    };
-                    db.Users.Add(newUser);
-                    saved = db.SaveChangesEx();
+                        UserInfo info = UserInfo.FromUserDb(account.User);
+                        session.SetLoginned(account, info);
+                    }
 
-                    if (saved == false) return;
-
-                    newAccount.UserDbId = newUser.UserDbId;
-                    saved = db.SaveChangesEx();
-                    if (saved == false) return;
-
-                    UserInfo user = UserInfo.FromUserDb(newUser, newAccount.AccountLoginId);
-
-                    session.SetLoginned(newAccount, user);
-
-                    CLoginRes res = new CLoginRes()
+                    // check again
+                    CLoginRes res = new CLoginRes();
+                    if (loginRes == LoginRes.LoginSuccess)
                     {
-                        LoginRes = LoginRes.LoginSuccess,
-                        UserInfo = session.UserInfo,
-                    };
-
-                    session.Send(res); // send directly OK.
+                        res.LoginRes = LoginRes.LoginSuccess;
+                        res.UserInfo = new UserInfo();
+                        res.UserInfo.MergeFrom(session.UserInfo);
+                    }
+                    else
+                    {
+                        res.LoginRes = loginRes;
+                    }
+                    session.Send(res);
                 }
             });
         }
@@ -131,7 +147,7 @@ namespace Chat.DB
                         ChatRoomDb newChatRoom = new ChatRoomDb()
                         {
                             ChatRoomName = roomName,
-                            ChatRoomNumber = (uint)roomNumber,
+                            ChatRoomNumber = roomNumber,
                         };
 
                         db.ChatRooms.Add(newChatRoom);
@@ -329,10 +345,14 @@ namespace Chat.DB
                 using (AppDbContext db = new AppDbContext())
                 {
                     // find the userinfo
-                    UserDb userDb = db.Users.FirstOrDefault(u => u.UserDbId == userDbId);
+                    UserDb userDb = db.Users
+                        .Include(u => u.Rooms)
+                        .FirstOrDefault(u => u.UserDbId == userDbId);
                     if (userDb == null) return;
 
-                    ChatRoomDb roomDb = db.ChatRooms.FirstOrDefault(r => r.ChatRoomNumber == roomNumber);
+                    ChatRoomDb roomDb = db.ChatRooms
+                        .Include(r => r.Users)
+                        .FirstOrDefault(r => r.ChatRoomNumber == roomNumber);
                     if (roomDb == null) return;
 
                     userDb.Rooms.Remove(roomDb);

@@ -5,22 +5,22 @@ using UnityEngine;
 
 public partial class NetworkManager : IManager, IUpdate
 {
+
+    // Note : 일단 재연결에 대해 고려 안함
+
     public void ResLogin(CLoginRes res)
     {
         Debug.Log($"LoginRes: {res}"); // TEMP
         SetLoginned(res.UserInfo);
         UnityJobQueue.Instance.Push(() => ConnectingUI.Hide());
         
+        // TODO : failed 처리
         switch (res.LoginRes)
         {
             case LoginRes.LoginInvalid:
                 break;
             case LoginRes.LoginSuccess:
-                SRoomListReq roomListReq = new SRoomListReq()
-                {
-                    UserInfo = UserInfo,
-                };
-                Send(roomListReq);
+                UnityJobQueue.Instance.Push(() => ManagerCore.Scene.GetScene<StartScene>().ChatServerLoginSucceess());
                 break;
             case LoginRes.LoginFailed:
                 break;
@@ -35,6 +35,7 @@ public partial class NetworkManager : IManager, IUpdate
 
         if (res.Res == EditUserNameRes.EditOk)
         {
+            UserInfo.UserName = res.NewUserName;
             UnityJobQueue.Instance.Push(() =>
             {
                 MainScene scene = ManagerCore.Scene.GetScene<MainScene>();

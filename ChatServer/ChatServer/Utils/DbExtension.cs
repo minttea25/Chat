@@ -16,8 +16,11 @@ namespace ChatServer.Utils
                 _ = db.SaveChanges();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
+#if DEBUG
+                Console.WriteLine(ex);
+#endif
                 return false;
             }
         }

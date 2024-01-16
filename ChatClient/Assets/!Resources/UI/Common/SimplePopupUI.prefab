@@ -588,6 +588,7 @@ GameObject:
   - component: {fileID: 217968360157096315}
   - component: {fileID: 4682355180022257234}
   - component: {fileID: 5895561040589810999}
+  - component: {fileID: 1173806081409008957}
   m_Layer: 5
   m_Name: SimplePopupUI
   m_TagString: Untagged
@@ -678,6 +679,45 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1173806081409008957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4374899470072265264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ae479606cbcd304097ef131ea1ba02e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DBInfo:
+    IsNew: 0
+    AllFound: 0
+    NotFoundObjects: []
+  ContentObject: {fileID: 0}
+  Context:
+    TitleText:
+      BindObject: {fileID: 2222946573415395537}
+      BindObjectType: 2
+    OkText1:
+      BindObject: {fileID: 5529018718938384158}
+      BindObjectType: 2
+    OkText2:
+      BindObject: {fileID: 6749699248803701080}
+      BindObjectType: 2
+    OkText3:
+      BindObject: {fileID: 8782887694509063298}
+      BindObjectType: 2
+    OkButton1:
+      BindObject: {fileID: 531736705002585993}
+      BindObjectType: 4
+    OkButton2:
+      BindObject: {fileID: 1239521395240266393}
+      BindObjectType: 4
+    OkButton3:
+      BindObject: {fileID: 2119765410672603626}
+      BindObjectType: 4
 --- !u!1 &5529018718938384158
 GameObject:
   m_ObjectHideFlags: 0

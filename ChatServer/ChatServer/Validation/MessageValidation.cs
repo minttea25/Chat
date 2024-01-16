@@ -11,7 +11,8 @@ namespace Chat
     {
         public static bool Validate_SLoginReq(SLoginReq req)
         {
-            if (string.IsNullOrEmpty(req.UserInfo.UserLoginId)) return false;
+            if (string.IsNullOrEmpty(req.Ipv4Address)) return false;
+            if (string.IsNullOrEmpty(req.AuthToken)) return false;
             // TODO : check securities
             // TODO : Check auth token
 

@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [Serializable]
@@ -118,10 +119,11 @@ public class MainSceneUI : BaseUIScene
         item.SetRoomName(roomName);
         item.SetRoomNumber(roomNumber);
         item.BindEventUnityAction(() => ShowChat(roomNumber));
+        item.BindEventUnityAction(() => RoomListLongClicked(roomNumber), UIEvent.LongClick);
         roomList.Add(roomNumber, item);
     }
 
-    public void RemoveRoom(ulong roomNumber)
+    public void RemoveRoom(uint roomNumber)
     {
         if (roomList.TryGetValue(roomNumber, out var room))
         {
@@ -201,6 +203,38 @@ public class MainSceneUI : BaseUIScene
         openedChatId = roomId;
     }
 
+    public void RoomListLongClicked(uint roomNumber)
+    {
+        Debug.Log("RoomListLongClicked");
+
+        var popup = ManagerCore.UI.ShowPopupUI<SimplePopupUI>(
+            AddrKeys.SimplePopupUI);
+
+        popup.Setup($"Leave room, id={roomNumber}?", 2,
+            new string[] { "Leave", "Cancel" },
+            new UnityAction[]
+            {
+                // OK
+                () =>
+                {
+                    ManagerCore.Network.ReqLeaveRoom(roomNumber);
+                    if (roomList.TryGetValue(roomNumber, out var room))
+                    {
+                        room.gameObject.SetActive(false);
+                    }
+                    ManagerCore.Room.RemoveRoom(roomNumber);
+                    var panel = chatPanels.Remove(roomNumber);
+                    if (panel != null)
+                    {
+                        Destroy(panel.gameObject);
+                    }
+                    popup.Close();
+                },
+                // Cancel
+                popup.Close,
+            });
+    }
+
     public void OpenEnterRoomPopup()
     {
         if (enterRoomPopup == null)
@@ -249,29 +283,7 @@ public class MainSceneUI : BaseUIScene
     void OnLoaded()
     {
         LoadingUI.Hide();
-        StartCoroutine(nameof(CheckLoad));
-    }
-
-    IEnumerator CheckLoad()
-    {
-        while (ManagerCore.Network.Connection == NetworkManager.ConnectState.Connecting)
-        {
-            yield return null;
-        }
-
-        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.FailedToConnect)
-        {
-            // TODO : 연결 실패
-
-        }
-
-        if (ManagerCore.Network.Connection == NetworkManager.ConnectState.Disconnected)
-        {
-            // TODO : 오류
-        }
-
-        // UI 로드 완료 시 로그인 요청
-        Scene.TryLogin();
+        Scene.CheckLoadAllCompleted();
     }
 
 

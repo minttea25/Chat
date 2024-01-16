@@ -31,8 +31,10 @@ namespace Chat
                 // 방에 있는 유저들 broadcast
                 CUserLeftRoom userLeftRoomMsg = new CUserLeftRoom()
                 {
-                    RoomNumber = Number
+                    RoomNumber = Number,
+                    LeftTime = Timestamp.FromDateTime(DateTime.UtcNow),
                 };
+                userLeftRoomMsg.LeftUser = new();
                 userLeftRoomMsg.LeftUser.MergeFrom(leftUser);
                 Broadcast(userLeftRoomMsg);
             });

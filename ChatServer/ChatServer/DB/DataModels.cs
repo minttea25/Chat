@@ -12,8 +12,11 @@ namespace Chat.DB
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long AccountDbId { get; set; }
-        public string AccountLoginId { get; set; }
+        public long LoginDbId { get; set; } // AccountDbId in AccountServer
         public ulong UserDbId { get; set; }
+
+        [ForeignKey("UserDb")]
+        public virtual UserDb User { get; set; }
 
     }
 
@@ -25,11 +28,6 @@ namespace Chat.DB
         public string UserName { get; set; }
 
         public virtual ICollection<ChatDb> SentChats { get; set; } = new List<ChatDb>();
-
-
-        [ForeignKey("Account")]
-        public long AccountDbId { get; set; }
-        public AccountDb Account { get; set; }
 
         public virtual ICollection<ChatRoomDb> Rooms { get; set; } = new List<ChatRoomDb>();
 

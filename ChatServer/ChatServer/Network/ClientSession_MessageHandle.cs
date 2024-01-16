@@ -1,5 +1,9 @@
 ﻿using Chat.DB;
+using ChatServer.Utils;
+using ChatSharedDb;
+using Microsoft.EntityFrameworkCore;
 using ServerCoreTCP.MessageWrapper;
+using System;
 using System.Linq;
 
 namespace Chat
@@ -14,63 +18,67 @@ namespace Chat
     public partial class ClientSession : PacketSession
     {
         public long AccountDbId { get; private set; }
+        public long LoginDbId { get; private set; }
         public SessionStatus SessionStatus { get; private set; } = SessionStatus.NOT_LOGINNED;
 
-        #region Authentication
         public void SetLoginned(AccountDb account, UserInfo info)
         {
             UserInfo = info;
             AccountDbId = account.AccountDbId;
+            LoginDbId = account.LoginDbId;
             SessionStatus = SessionStatus.LOGINNED;
         }
+
+
+        #region Authentication
 
         public void HandleLoginReq(SLoginReq req)
         {
             if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
-            using (AppDbContext db = new AppDbContext())
+            LoginRes res;
+
+            using (SharedDbContext db = new SharedDbContext())
             {
-                // 나중에 ulong id로 바꾸기 (일단 string 비교)
-                AccountDb foundAccount = db.Accounts
-                    .FirstOrDefault(a => a.AccountLoginId == req.UserInfo.UserLoginId);
-
-                if (foundAccount != null)
+                AuthTokenDb token = db.Tokens?
+                    .AsNoTracking() // read-only
+                    .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
+                
+                if (token != null)
                 {
-                    // assign the found id for AccountDbId
-                    AccountDbId = foundAccount.AccountDbId;
+                    Console.WriteLine(token.Expired);
+                    Console.WriteLine(DateTime.UtcNow);
 
-                    // find user db
-                    UserDb user = db.Users.FirstOrDefault(u => u.UserDbId == foundAccount.UserDbId);
-
-                    if (user == null) return;
-
-                    // assign the the userinfo
-                    UserInfo info = UserInfo.FromUserDb(user, foundAccount.AccountLoginId);
-                    SetLoginned(foundAccount, info);
-
-                    CLoginRes res = new CLoginRes()
+                    if (AuthToken.Verify(token.Token, req.AuthToken)
+                        && token.RecentIpAddress == req.Ipv4Address
+                        && token.Expired > DateTime.UtcNow)
                     {
-                        LoginRes = LoginRes.LoginSuccess,
-                        UserInfo = UserInfo,
-                    };
-
-                    // TODO : Is anything to do more?
-
-                    Send(res); // send directly OK.
+                        res = LoginRes.LoginSuccess; // success auth.
+                    }
+                    else if (token.Expired <= DateTime.UtcNow)
+                    {
+                        res = LoginRes.LoginExpired;
+                    }
+                    else
+                    {
+                        res = LoginRes.LoginFailed;
+                    }
                 }
                 else
                 {
-                    // TEST
-                    DbProcess.CreateNewAccount(req.UserInfo.UserLoginId, req.UserInfo.UserName, this);
-                    return;
-
-                    // no acoount found
-                    CLoginRes res = new CLoginRes()
-                    {
-                        LoginRes = LoginRes.LoginFailed,
-                    };
-                    Send(res); // send directly OK.
+                    res = LoginRes.LoginInvalid;
                 }
+            }
+
+            if (res == LoginRes.LoginSuccess)
+            {
+                DbProcess.Login(this, req.AccountDbId);
+            }
+            else
+            {
+                CLoginRes loginRes = new CLoginRes();
+                loginRes.LoginRes = res;
+                Send(loginRes); // Note : UserInfo is null when login failed.
             }
         }
         #endregion
