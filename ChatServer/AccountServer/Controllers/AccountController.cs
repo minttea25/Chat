@@ -1,5 +1,6 @@
 ﻿using AccountServer.DB;
 using AccountServer.Packets;
+using AccountServer.Security;
 using ChatSharedDb;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,11 +46,12 @@ namespace AccountServer.Controllers
             else
             {
                 // AutoToken
-                DateTime expired = DateTime.UtcNow;
-                expired.AddMinutes(5); // 5 minutes
+                DateTime expired = DateTime.UtcNow.AddMinutes(3); // expired after 3 minutes
 
                 AuthTokenDb? token = shared.Tokens?
                     .FirstOrDefault(a => a.AccountDbId == account.AccountDbId);
+
+                string dbToken = AuthToken.GenerateAuthToken(account.AccountDbId, account.AccountName, req.IPv4Address);
 
                 if (token == null)
                 {
@@ -57,7 +59,7 @@ namespace AccountServer.Controllers
                     token = new AuthTokenDb()
                     {
                         AccountDbId = account.AccountDbId,
-                        Token = "",
+                        Token = dbToken,
                         Expired = expired,
                         RecentIpAddress = req.IPv4Address,
                     };
@@ -66,23 +68,25 @@ namespace AccountServer.Controllers
                     if (suc == false)
                     {
                         // TODO : error
+                        throw new Exception("Save Failed");
                     }
                 }
                 else
                 {
-                    token.Token = "";
+                    token.Token = dbToken;
                     token.Expired = expired;
 
                     bool suc = shared.SaveChangesEx();
                     if (suc == false)
                     {
                         // TODO : error
+                        throw new Exception("Save Failed");
                     }
                 }
 
                 res.Res = 1;
                 res.AccountDbId = account.AccountDbId;
-                res.AuthToken = token.Token;
+                res.AuthToken = AuthToken.EncryptAuthToken(dbToken);
             }
 
             return res;
@@ -102,7 +106,6 @@ namespace AccountServer.Controllers
             }
 
             AccountDb? account = context.Accounts?
-                .AsNoTracking()
                 .FirstOrDefault(a => a.AccountName == req.AccountId);
 
             if (account == null)
@@ -114,10 +117,11 @@ namespace AccountServer.Controllers
                     Password = req.AccountPassword,
                 };
                 context.Accounts?.Add(newAccount);
-                bool suc = shared.SaveChangesEx();
+                bool suc = context.SaveChangesEx();
                 if (suc == false)
                 {
                     // TODO : error
+                    throw new Exception("Save Failed");
                 }
                 res.Res = 1;
             }

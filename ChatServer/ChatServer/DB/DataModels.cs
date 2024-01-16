@@ -12,6 +12,7 @@ namespace Chat.DB
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long AccountDbId { get; set; }
+        public long LoginDbId { get; set; } // AccountDbId in AccountServer
         public ulong UserDbId { get; set; }
 
         [ForeignKey("UserDb")]

@@ -59,7 +59,7 @@ public class InfoPopup : BaseReusableUIPopup
     public void RefreshData()
     {
         UserName.Data = ManagerCore.Network.UserInfo.UserName;
-        UserId.Data = ManagerCore.Network.UserInfo.UserLoginId;
+        UserId.Data = ManagerCore.Network.UserInfo.UserDbId.ToString(UIValues.UserIdFormat);
     }
 
     public void SuccessChangeUserName(string username)

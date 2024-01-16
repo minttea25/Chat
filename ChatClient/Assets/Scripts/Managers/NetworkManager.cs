@@ -53,12 +53,6 @@ public partial class NetworkManager : IManager, IUpdate
         AccountDbId = accountDbId;
     }
 
-    public void SetUserInfo(string authToken, string userLoginId, string userName)
-    {
-        AuthToken = authToken;
-        UserInfo = new() { UserLoginId = userLoginId, UserName = userName };
-    }
-
     public void SetConnected()
     {
         Connection = ConnectState.Connected;
@@ -76,6 +70,7 @@ public partial class NetworkManager : IManager, IUpdate
             return;
         }
         Connection = ConnectState.Loginned;
+        UserInfo = new();
         UserInfo.MergeFrom(receivedUserInfo);
     }
 

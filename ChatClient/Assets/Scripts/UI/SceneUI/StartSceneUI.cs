@@ -74,7 +74,7 @@ public class StartSceneUI : BaseUIScene
 
         if (ValidateId() == false)
         {
-            // TODO : Show Popup
+            NotificationUI.Show("Invalid Id...");
             Debug.Log("Invalid Id");
             return;
         }
@@ -82,6 +82,7 @@ public class StartSceneUI : BaseUIScene
         if (ValidatePassword() == false)
         {
             // TODO : Show Popup
+            NotificationUI.Show("Invalid Password...");
             Debug.Log("Invalid Password");
             return;
         }

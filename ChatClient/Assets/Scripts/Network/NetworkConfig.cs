@@ -23,10 +23,14 @@ namespace Chat.Network
         [UnityEditor.CustomEditor(typeof(NetworkConfig))]
         class NetworkConfigEditor : UnityEditor.Editor
         {
+            NetworkConfig configs = null;
+            private void OnEnable()
+            {
+                configs = (NetworkConfig)target;
+            }
+
             public override void OnInspectorGUI()
             {
-                NetworkConfig configs = target as NetworkConfig;
-
                 configs.UseLocal = UnityEditor.EditorGUILayout.Toggle("Use Local", configs.UseLocal);
 
                 // Disable IP Address and Port fields if UseLocal is true

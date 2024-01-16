@@ -18,12 +18,14 @@ namespace Chat
     public partial class ClientSession : PacketSession
     {
         public long AccountDbId { get; private set; }
+        public long LoginDbId { get; private set; }
         public SessionStatus SessionStatus { get; private set; } = SessionStatus.NOT_LOGINNED;
 
         public void SetLoginned(AccountDb account, UserInfo info)
         {
             UserInfo = info;
             AccountDbId = account.AccountDbId;
+            LoginDbId = account.LoginDbId;
             SessionStatus = SessionStatus.LOGINNED;
         }
 
@@ -34,103 +36,50 @@ namespace Chat
         {
             if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
-            CLoginRes res = new CLoginRes();
-
-            // TODO : decrpyt
-            string req_decrypted_token = req.AuthToken;
-            
+            LoginRes res;
 
             using (SharedDbContext db = new SharedDbContext())
             {
                 AuthTokenDb token = db.Tokens?
                     .AsNoTracking() // read-only
                     .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
-
+                
                 if (token != null)
                 {
-                    // TODO : decrpyt
-                    string db_decrypted_token = req.AuthToken;
+                    Console.WriteLine(token.Expired);
+                    Console.WriteLine(DateTime.UtcNow);
 
-                    // TODO : auth token
-                    if (db_decrypted_token == req_decrypted_token
+                    if (AuthToken.Verify(token.Token, req.AuthToken)
                         && token.RecentIpAddress == req.Ipv4Address
                         && token.Expired > DateTime.UtcNow)
                     {
-                        res.LoginRes = LoginRes.LoginSuccess; // success auth.
+                        res = LoginRes.LoginSuccess; // success auth.
                     }
                     else if (token.Expired <= DateTime.UtcNow)
                     {
-                        res.LoginRes = LoginRes.LoginExpired;
+                        res = LoginRes.LoginExpired;
                     }
                     else
                     {
-                        res.LoginRes = LoginRes.LoginFailed;
+                        res = LoginRes.LoginFailed;
                     }
                 }
                 else
                 {
-                    res.LoginRes = LoginRes.LoginInvalid;
+                    res = LoginRes.LoginInvalid;
                 }
             }
 
-            if (res.LoginRes == LoginRes.LoginSuccess)
+            if (res == LoginRes.LoginSuccess)
             {
-                using (AppDbContext db = new AppDbContext())
-                {
-                    AccountDb account = db.Accounts
-                        .Include(a => a.User)
-                        .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
-
-                    // check account exist
-                    if (account == null)
-                    {
-                        // create new user data and account
-                        UserDb user = new UserDb()
-                        {
-                            // default name
-                            UserName = $"user{req.AccountDbId:00000000}",
-                        };
-                        db.Users.Add(user);
-                        var suc = db.SaveChangesEx();
-                        if (suc == false)
-                        {
-                            res.LoginRes = LoginRes.LoginError;
-                            throw new Exception("Save failed");
-                            // TODO : error
-                        }
-
-                        account = new AccountDb()
-                        {
-                            AccountDbId = req.AccountDbId,
-                            UserDbId = user.UserDbId,
-                            User = user
-                        };
-                        suc = db.SaveChangesEx();
-                        if (suc == false)
-                        {
-                            res.LoginRes = LoginRes.LoginError;
-                            throw new Exception("Save failed");
-                            // TODO : error
-                        }
-
-                        // assign the the userinfo
-                        UserInfo info = UserInfo.FromUserDb(user);
-                        SetLoginned(account, info);
-                    }
-                    // account and user exist
-                    else
-                    {
-                        UserInfo info = UserInfo.FromUserDb(account.User);
-                        SetLoginned(account, info);
-                    }
-
-                    // check again
-                    res.LoginRes = LoginRes.LoginSuccess;
-                    res.UserInfo.MergeFrom(this.UserInfo);
-                }
+                DbProcess.Login(this, req.AccountDbId);
             }
-
-            Send(res);
+            else
+            {
+                CLoginRes loginRes = new CLoginRes();
+                loginRes.LoginRes = res;
+                Send(loginRes); // Note : UserInfo is null when login failed.
+            }
         }
         #endregion
 

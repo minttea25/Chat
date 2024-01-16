@@ -1,9 +1,6 @@
-﻿using Chat;
-using ChatServer.Utils;
+﻿using ChatServer.Utils;
 using Google.Protobuf.WellKnownTypes;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using ServerCoreTCP.Job;
 using System;
@@ -16,6 +13,75 @@ namespace Chat.DB
     {
         public static DbProcess Instance { get; } = new DbProcess();
 
+        public static void Login(ClientSession session, long loginDbId)
+        {
+            Instance.Add(() =>
+            {
+                LoginRes loginRes = LoginRes.LoginSuccess;
+                using (AppDbContext db = new AppDbContext())
+                {
+                    AccountDb account = db.Accounts
+                        .Include(a => a.User)
+                        .FirstOrDefault(a => a.LoginDbId == loginDbId);
+
+                    // check account exist
+                    if (account == null)
+                    {
+                        // create new account and user
+                        UserDb user = new UserDb()
+                        {
+                            UserName = $"user{loginDbId:00000000}",
+                        };
+                        db.Users.Add(user);
+                        var suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            loginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                        }
+
+                        account = new AccountDb()
+                        {
+                            LoginDbId = loginDbId,
+                            UserDbId = user.UserDbId,
+                            User = user
+                        };
+                        db.Accounts.Add(account);
+                        suc = db.SaveChangesEx();
+                        if (suc == false)
+                        {
+                            loginRes = LoginRes.LoginError;
+                            throw new Exception("Save failed");
+                            // TODO : error
+                        }
+
+                        // assign the the userinfo
+                        UserInfo info = UserInfo.FromUserDb(user);
+                        session.SetLoginned(account, info);
+                    }
+                    // account and user exist
+                    else
+                    {
+                        UserInfo info = UserInfo.FromUserDb(account.User);
+                        session.SetLoginned(account, info);
+                    }
+
+                    // check again
+                    CLoginRes res = new CLoginRes();
+                    if (loginRes == LoginRes.LoginSuccess)
+                    {
+                        res.LoginRes = LoginRes.LoginSuccess;
+                        res.UserInfo = new UserInfo();
+                        res.UserInfo.MergeFrom(session.UserInfo);
+                    }
+                    else
+                    {
+                        res.LoginRes = loginRes;
+                    }
+                    session.Send(res);
+                }
+            });
+        }
 
         public static void EditUserName(ClientSession session, ulong userDbId, string newUserName)
         {
@@ -81,7 +147,7 @@ namespace Chat.DB
                         ChatRoomDb newChatRoom = new ChatRoomDb()
                         {
                             ChatRoomName = roomName,
-                            ChatRoomNumber = (uint)roomNumber,
+                            ChatRoomNumber = roomNumber,
                         };
 
                         db.ChatRooms.Add(newChatRoom);

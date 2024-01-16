@@ -35,6 +35,7 @@ public partial class NetworkManager : IManager, IUpdate
 
         if (res.Res == EditUserNameRes.EditOk)
         {
+            UserInfo.UserName = res.NewUserName;
             UnityJobQueue.Instance.Push(() =>
             {
                 MainScene scene = ManagerCore.Scene.GetScene<MainScene>();

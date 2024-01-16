@@ -1,10 +1,5 @@
 ﻿using Chat.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chat.DB
 {
@@ -34,10 +29,6 @@ namespace Chat.DB
         {
             modelBuilder.Entity<AccountDb>()
                 .HasIndex(a => a.UserDbId)
-                .IsUnique();
-
-            modelBuilder.Entity<UserDb>()
-                .HasIndex(u => u.UserName)
                 .IsUnique();
         }
     }

@@ -1,8 +1,8 @@
+using Chat;
 using Core;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
-using UnityEditor;
 using UnityEngine;
 
 public class StartScene : BaseScene
@@ -20,8 +20,9 @@ public class StartScene : BaseScene
 
     public void ReqAccountLogin(string id, string password)
     {
-        // TODO : encrypt password
-        AccountLoginWebReq data = new AccountLoginWebReq(id, password);
+        // TODO : Encrpytion to release
+        string encrypted_password = Encryption.CreateTestEncryption().Encrypt(password);
+        AccountLoginWebReq data = new AccountLoginWebReq(id, encrypted_password);
         // send login web request and get auth token
         var suc = ManagerCore.Web.SendLoginRequest(data, ResAccountLogin);
         if (suc == false)
@@ -36,11 +37,13 @@ public class StartScene : BaseScene
 
     public void ReqAccountRegister(string id, string password)
     {
-        // TODO : encrypt password
+        // TODO : Encrpytion to release
+        string encrypted_password = Encryption.CreateTestEncryption().Encrypt(password);
+
         CreateAccountWebReq data = new CreateAccountWebReq()
         {
             AccountId = id,
-            AccountPassword = password
+            AccountPassword = encrypted_password
         };
         // send login web request and get auth token
         var suc = ManagerCore.Web.SendRegisterRequest(data, ResAccountRegister);
@@ -63,20 +66,19 @@ public class StartScene : BaseScene
 
         switch (res.Res)
         {
-            // successful
-            case 0:
+            case AppConst.WebResOk:
+                // successful
                 ManagerCore.Network.AccountServerConnected(res.AccountDbId, res.AuthToken);
-                
+
                 // 채팅 서버 연결
-                
                 ManagerCore.Network.StartService(ConnectionFailed);
                 break;
+                
+            // TODO : failed to login
             // --------- failed -----------
-            case 1:
-                // TODO : failed to login
-                Debug.LogError("Failed to login to account server.");
-                break;
             default:
+                NotificationUI.Show($"Failed to login to account server. Code : {res}");
+                Debug.LogError($"Failed to login to account server. Code : {res}");
                 break;
         }
     }
@@ -91,10 +93,12 @@ public class StartScene : BaseScene
         switch (res.Res)
         {
             // successful
-            case 0:
+            case AppConst.WebResOk:
+                NotificationUI.Show("Registering is successful. Login please.");
                 break;
             // failed
-            case 1:
+            default:
+                NotificationUI.Show("Failed to register new account. Try again.");
                 break;
         }
     }

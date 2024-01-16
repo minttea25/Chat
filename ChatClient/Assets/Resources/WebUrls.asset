@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2094bda011d477240bb99ba713cdcc89, type: 3}
   m_Name: WebUrls
   m_EditorClassIdentifier: 
-  m_accountWebServerBaseUrl: https://localhost:8080/
-  m_loginUrl: login
-  m_registerUrl: register
+  m_accountWebServerBaseUrl: https://localhost:7108/api/
+  m_loginUrl: Account/login
+  m_registerUrl: Account/register

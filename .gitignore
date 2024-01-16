@@ -9,5 +9,8 @@
 
 # DB Migration
 /ChatServer/ChatServer/Migrations/
-Common/protoc.exe
-Common/Sequence Diagrams/plantuml-1.2023.13.jar
+/ChatServer/AccountServer/Migrations/
+/ChatServer/ChatSharedDb/Migrations/
+
+/Common/protoc.exe
+/Common/Sequence Diagrams/plantuml-1.2023.13.jar

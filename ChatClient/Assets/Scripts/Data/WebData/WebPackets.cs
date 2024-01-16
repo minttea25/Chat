@@ -30,6 +30,11 @@ public class AccountLoginWebReq : IValidateWebPacket
     {
         return !(string.IsNullOrEmpty(AccountId) || string.IsNullOrEmpty(AccountPassword) || string.IsNullOrEmpty(IPv4Address));
     }
+
+    public override string ToString()
+    {
+        return $"REQ: [{AccountId}, {AccountPassword}, {IPv4Address}]";
+    }
 }
 
 [Serializable]
@@ -47,6 +52,11 @@ public class AccountLoginWebRes : IValidateWebPacket
             return !(string.IsNullOrEmpty(AuthToken) || AccountDbId == 0); 
         }
     }
+
+    public override string ToString()
+    {
+        return $"RES: [{Res}, {AuthToken}, {AccountDbId}]";
+    }
 }
 
 [Serializable]
@@ -59,6 +69,11 @@ public class CreateAccountWebReq : IValidateWebPacket
     {
         return !(string.IsNullOrEmpty(AccountId) || string.IsNullOrEmpty(AccountPassword));
     }
+
+    public override string ToString()
+    {
+        return $"REQ: [{AccountId}, {AccountPassword}]";
+    }
 }
 
 [Serializable]
@@ -69,6 +84,11 @@ public class CreateAccountWebRes : IValidateWebPacket
     public bool Validate()
     {
         return true;
+    }
+
+    public override string ToString()
+    {
+        return $"RES: [{Res}]";
     }
 }
 

@@ -1,5 +1,7 @@
 public class UIValues
 {
+    public const string UserIdFormat = "00000000";
+
     #region ChatRightItemUI
     public const float ContentLRPadding = 15f; //
     public const float ContentUDPadding = 10f; // 5 each

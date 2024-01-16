@@ -61,6 +61,10 @@ public class WebManager : IManager
 
     IEnumerator SendWebRequestCo<T>(string reqUrl, string method, object data, Action<T> resCallback)
     {
+#if UNITY_EDITOR
+        Debug.Log(data);
+#endif
+
         byte[] json = null;
         if (data != null)
         {
@@ -86,6 +90,9 @@ public class WebManager : IManager
             else
             {
                 T resData = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
+#if UNITY_EDITOR
+                Debug.Log(resData);
+#endif
                 resCallback.Invoke(resData);
             }
         }
