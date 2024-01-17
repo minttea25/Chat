@@ -8,13 +8,14 @@ header Login Process
 footer Login Process
 
 actor "Client" as C order 2 #Orange
-participant "ChatServer" as S order 1
-participant "AccountServer" as A order 3
-database "AccountDataBase" as ADB order 4
-database "ChatDataBase" as CDB order 0
+participant "Chat Server" as S order 1
+participant "Account Server" as A order 3
+database "Account Database" as ADB order 4
+database "Chat Database" as CDB order 0
 
 
 autonumber
+hnote right of C : AccountLoginWebReq
 C -> A : Login Request
 activate A #Brown
 A -> ADB : Check Account
@@ -22,7 +23,8 @@ activate A #Orange
 ||20||
 ADB -> A : Response
 deactivate A
-A -> C : Issue auth token
+hnote left of A : AccountLoginWebRes
+A -> C : Issue Auth Token\nSend AccountDbId
 deactivate A
 
 hnote left of C : SLoginReq

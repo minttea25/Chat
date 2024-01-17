@@ -1,6 +1,7 @@
 @startuml
 skinparam sequenceMessageAlign direction
 skinparam ParticipantPadding 70
+skinparam BoxPadding 50
 
 title Enter Room Process
 
@@ -10,18 +11,28 @@ footer Enter Room Process
 actor "Client" as C order 0 #Orange
 box "Chat Server" #f7e4e4
 participant "IOCP" as I order 1
+participant "Room" as R order 3
 participant "DB" as DB order 2
 endbox
-database "ChatDataBase" as CDB order 3
+database "Chat Database" as CDB order 3
+actor "Other Clients" as OC order 5 #Orange
 
 hnote right of C: SEnterRoomReq
+/rnote over OC : Users in the Room
 C -> I : Request Enter Room
 activate I #Orange
+I -> R: Broadcast UserEnter
+activate R #Cyan
+||10||
+hnote right of R: CUserEnterRoom
+R -> OC: Broadcast UserEnter
+deactivate R
 I -> DB: Check Room Number
 deactivate I
 activate DB #Pink
-DB --> CDB : Check Room Exist
+DB --> CDB : Add User in Room\nAdd Room in User
 CDB --> DB : Response
+DB --> R: Add Session in Room
 DB -> I : Response
 deactivate DB
 activate I #Orange

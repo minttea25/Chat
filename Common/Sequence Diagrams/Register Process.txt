@@ -1,0 +1,32 @@
+@startuml
+skinparam sequenceMessageAlign direction
+skinparam ParticipantPadding 50
+
+title Register Process
+
+header Register Process
+footer Register Process
+
+actor "Client" as C order 2 #Orange
+participant "Account Server" as A order 2
+database "Account Database" as ADB order 3
+
+
+autonumber
+||10||
+hnote right of C : CreateAccountWebReq
+C -> A : Register Request
+activate A #Brown
+A -> ADB : Check Register
+activate A #Orange
+||20||
+ADB -> A : Response
+deactivate A
+hnote left of A : CreateAccountWebRes
+A -> C : Response
+deactivate A
+||10||
+
+note over C : Register Completed
+
+@enduml

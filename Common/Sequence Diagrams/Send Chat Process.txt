@@ -11,14 +11,14 @@ footer Send Chat Process
 actor "Client" as C order 0 #Orange
 box "Chat Server" #LightBlue
 participant "IOCP" as I order 1
-participant "Room" as R order 2
-participant "DB" as DB order 3
+participant "Room" as R order 3
+participant "DB" as DB order 2
 endbox
 database "Chat Database" as CDB order 4
-actor "Other Clients" as OC order 5
+actor "Other Clients" as OC order 5 #Orange
 
 hnote over C : SSendChat
-/rnote over OC : Users in the room
+/rnote over OC : Users in the Room
 C -> I : Send Chat
 activate I #Pink
 I -> R : Broadcast Chat

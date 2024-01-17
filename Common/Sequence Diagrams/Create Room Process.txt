@@ -12,8 +12,9 @@ actor "Client" as C order 0 #Orange
 box "Chat Server" #f7e4e4
 participant "IOCP" as I order 1
 participant "DB" as DB order 2
+participant "Room" as R order 3
 endbox
-database "ChatDataBase" as CDB order 3
+database "Chat Database" as CDB order 4
 
 hnote right of C : SCreateRoomReq
 C -> I : Request Create Room
@@ -25,26 +26,25 @@ DB --> CDB : Check Room Number
 ||10||
 CDB --> DB : Response
 DB -> I : Response
-deactivate DB
 activate I #Orange
 
 
 hnote left of I : CCreateRoomRes
 I -> C : Response Create Room
 
-note over I : If Success
+note over DB : If Successful
 
 group #White Enter Process
-I -> DB: Update Data
 deactivate I
-activate DB #Pink
-DB --> CDB : Update Data
+DB --> CDB : Add User in Room\nAdd Room in User
+CDB --> DB : Response
+DB --> R: Add Session in Room
 ||10||
-DB-> I : Response
+DB-> I : Send EnterUser
 deactivate DB
 activate I #Orange
 hnote left of I: CEnterRoomRes
-I -> C : Enter Room
+I -> C : Response Enter Room
 deactivate I
 ||20||
 end
