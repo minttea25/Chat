@@ -116,8 +116,7 @@ public class MainSceneUI : BaseUIScene
     public void AddRoomList(string roomName, uint roomNumber)
     {
         RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
-        item.SetRoomName(roomName);
-        item.SetRoomNumber(roomNumber);
+        item.SetData(roomNumber, roomName);
         item.BindEventUnityAction(() => ShowChat(roomNumber));
         item.BindEventUnityAction(() => RoomListLongClicked(roomNumber), UIEvent.LongClick);
         roomList.Add(roomNumber, item);
@@ -181,10 +180,16 @@ public class MainSceneUI : BaseUIScene
     {
         if (openedChatId == roomId) return;
 
+
         if (chatPanels.TryGetValue(openedChatId, out var opened))
         {
             opened.gameObject.SetActive(false);
         }
+        if (roomList.TryGetValue(openedChatId, out var roomListItem))
+        {
+            roomListItem.OnUnSelected();
+        }
+
 
         if (chatPanels.TryGetValue(roomId, out var chatPanel))
         {
@@ -199,6 +204,10 @@ public class MainSceneUI : BaseUIScene
 
             chatPanels.Add(roomId, chat, out var removedChat);
             if(removedChat != null) ManagerCore.Resource.Destroy(removedChat.gameObject);
+        }
+        if (roomList.TryGetValue(roomId, out var selectedRoomListItem))
+        {
+            selectedRoomListItem.OnSelected();
         }
         openedChatId = roomId;
     }
