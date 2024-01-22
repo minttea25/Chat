@@ -1,12 +1,9 @@
 using Chat;
 using Core;
-using Google.Protobuf.Collections;
 using Google.Protobuf.WellKnownTypes;
-using ServerCoreTCP.Core;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Sockets;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -19,14 +16,15 @@ public class MainScene : BaseScene
 
     private void OnEnable()
     {
-        ManagerCore.Resource.LoadAllAsync(
-            ResourceLoadCompleted,
-            AddrKeys.MainSceneUI);
+        LoadingUI.Show();
+        ManagerCore.Resource.LoadWithLabelAsync(
+            AddrKeys.Label_Main,
+            ResourceLoadCompleted);
     }
 
     private void OnDisable()
     {
-        ManagerCore.Resource.ReleaseAll(AddrKeys.MainSceneUI);
+        ManagerCore.Resource.ReleaseWithLabel(AddrKeys.Label_Main);
     }
 
 
@@ -37,15 +35,6 @@ public class MainScene : BaseScene
         SceneType = SceneTypes.Main;
 
         Screen.SetResolution(800, 600, false);
-
-        //ManagerCore.UI.ShowSceneUIAsync<MainSceneUI>(AddrKeys.MainSceneUI,
-        //    (ui) =>
-        //    {
-        //        this.ui = ui;
-        //        ui.Scene = this;
-        //        ConnectingUI.Show();
-        //        ManagerCore.Network.StartService(ConnectionFailed);
-        //    });
     }
 
     void ResourceLoadCompleted(List<string> failedKeys)
@@ -68,6 +57,8 @@ public class MainScene : BaseScene
         }
 
         ui.Scene = this;
+
+        LoadingUI.Hide();
     }
 
     public void CheckLoadAllCompleted()

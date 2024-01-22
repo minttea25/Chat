@@ -2,6 +2,7 @@ using Core;
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ class ChatPanelItemContext : UIContext
     public UIObject ToolPanel = new();
     public UIObject<Button> IconButton = new();
     public UIObject<Button> SendButton = new();
+
+    public UIObject<EmoticonPanel> EmoticonPanel = new();
 }
 
 public class ChatPanelItem : BaseUIItem
@@ -26,7 +29,8 @@ public class ChatPanelItem : BaseUIItem
     public uint RoomNumber { get; private set; } = default;
 
     int cid = 1; // for checking successful sending
-    readonly Dictionary<int, ChatRightItemUI> sendingChats = new Dictionary<int, ChatRightItemUI>();
+    readonly Dictionary<int, IMyChat> sendingChats = new Dictionary<int, IMyChat>();
+
 
     public override void Init()
     {
@@ -36,6 +40,7 @@ public class ChatPanelItem : BaseUIItem
         Context.IconButton.Component.onClick.AddListener(IconSelectButton);
 
         ChatListTransform.DestroyAllItems();
+        Context.EmoticonPanel.BindObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -152,6 +157,21 @@ public class ChatPanelItem : BaseUIItem
         return chatId;
     }
 
+    int AddMyChat(uint emoticonId)
+    {
+        int chatId = cid;
+
+        ChatRightIconItemUI right = ManagerCore.UI.AddItemUI<ChatRightIconItemUI>(AddrKeys.ChatRightEmoticonItemUI, ChatListTransform);
+        Utils.Assert(right != null);
+
+        sendingChats.Add(chatId, right);
+        cid++;
+
+        right.SetMessage(emoticonId, DateTime.Now.ToLocalTimeFormat());
+
+        return chatId;
+    }
+
     void AddChatText(ChatText chat)
     {
         // my chat
@@ -196,10 +216,10 @@ public class ChatPanelItem : BaseUIItem
 
     void IconSelectButton()
     {
-        Debug.Log("IconSelectButton");
+        Context.EmoticonPanel.BindObject.SetActive(true);
     }
 
-    void SendText()
+    public void SendText()
     {
         string message = Context.ChatTextInput.Component.text;
 
@@ -211,6 +231,21 @@ public class ChatPanelItem : BaseUIItem
         ManagerCore.Network.ReqSendChatText(message, RoomNumber, chatId);
 
         Context.ChatTextInput.Component.text = string.Empty;
+    }
+
+    public void SendEmoticon(uint emoticonId)
+    {
+        Debug.Log($"{emoticonId}: {ManagerCore.Data.Emoticons.GetEmoticon(emoticonId).name}");
+
+        
+        if (emoticonId == 0) return;
+
+        // 미리 보여주기
+        int chatId = AddMyChat(emoticonId);
+
+        ManagerCore.Network.ReqSendChatEmoticon(emoticonId, RoomNumber, chatId);
+
+        Context.EmoticonPanel.BindObject.SetActive(false);
     }
 
     bool ValidateMessage(string message)

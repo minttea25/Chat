@@ -45,6 +45,8 @@ public class MainSceneUI : BaseUIScene
 
     public MainScene Scene { get; set; }
 
+    public ChatPanelItem SelectedChatPanel => GetChatPanel(openedChatId);
+
     readonly MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
     readonly Dictionary<ulong, RoomListItemUI> roomList = new Dictionary<ulong, RoomListItemUI>();
     ulong openedChatId = 0;
@@ -60,35 +62,46 @@ public class MainSceneUI : BaseUIScene
         LoadingUI.Show();
 
         // pre-load
-        ManagerCore.Resource.LoadAllAsync(
+        ManagerCore.Resource.LoadWithLabelAsync(
+            AddrKeys.Label_Chat,
             (failed) =>
             {
                 Core.Utils.AssertCrash(failed.Count == 0);
                 OnLoaded(); // hide loading ui here
-            },
-            AddrKeys.RoomListItemUI,
-            AddrKeys.CreateRoomPopupUI,
-            AddrKeys.EnterRoomPopupUI,
-            AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI,
-            AddrKeys.ChatPanelItemUI,
-            AddrKeys.ChatLeftItemUI,
-            AddrKeys.ChatRightItemUI,
-            AddrKeys.ChatContentEtcItemUI);
+            });
+
+
+        //ManagerCore.Resource.LoadAllAsync(
+        //    (failed) =>
+        //    {
+        //        Core.Utils.AssertCrash(failed.Count == 0);
+        //        OnLoaded(); // hide loading ui here
+        //    },
+        //    AddrKeys.RoomListItemUI,
+        //    AddrKeys.CreateRoomPopupUI,
+        //    AddrKeys.EnterRoomPopupUI,
+        //    AddrKeys.InfoPopupUI,
+        //    AddrKeys.LogoutPopupUI,
+        //    AddrKeys.ChatPanelItemUI,
+        //    AddrKeys.ChatLeftItemUI,
+        //    AddrKeys.ChatRightItemUI,
+        //    AddrKeys.ChatContentEtcItemUI);
     }
 
     private void OnDisable()
     {
-        ManagerCore.Resource.ReleaseAll(
-            AddrKeys.RoomListItemUI,
-            AddrKeys.CreateRoomPopupUI,
-            AddrKeys.EnterRoomPopupUI,
-            AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI,
-            AddrKeys.ChatPanelItemUI,
-            AddrKeys.ChatLeftItemUI,
-            AddrKeys.ChatRightItemUI,
-            AddrKeys.ChatContentEtcItemUI);
+        ManagerCore.Resource.ReleaseWithLabel(AddrKeys.Label_Chat);
+
+        //ManagerCore.Resource.Release(
+        //    AddrKeys.RoomListItemUI,
+        //    AddrKeys.CreateRoomPopupUI,
+        //    AddrKeys.EnterRoomPopupUI,
+        //    AddrKeys.InfoPopupUI,
+        //    AddrKeys.LogoutPopupUI,
+        //    AddrKeys.ChatPanelItemUI,
+        //    AddrKeys.ChatLeftItemUI,
+        //    AddrKeys.ChatRightItemUI,
+        //    AddrKeys.ChatContentEtcItemUI);
     }
 
     public override void Init()
@@ -106,6 +119,15 @@ public class MainSceneUI : BaseUIScene
         Context.InfoButton.Component.onClick.AddListener(OpenInfoPopup);
         Context.LogoutButton.Component.onClick.AddListener(OpenLogoutPopup);
         Context.SettingButton.Component.onClick.AddListener(OpenSettingPopup);
+    }
+
+    public ChatPanelItem GetChatPanel(ulong roomId)
+    {
+        if (chatPanels.TryGetValue(roomId, out var chatpanel))
+        {
+            return chatpanel;
+        }
+        else return null;
     }
 
     public void AddRoomList(RoomInfo room)

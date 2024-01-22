@@ -187,5 +187,13 @@ namespace Core
                     break;
             }
         }
+
+        public static void DestroyAllItems(Transform parent)
+        {
+            foreach (Transform item in parent)
+            {
+                GameObject.Destroy(item.gameObject);
+            }
+        }
     }
 }

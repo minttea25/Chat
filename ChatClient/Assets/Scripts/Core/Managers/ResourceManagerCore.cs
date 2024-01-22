@@ -6,7 +6,6 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceLocations;
-
 using UObject = UnityEngine.Object;
 
 namespace Core
@@ -19,20 +18,57 @@ namespace Core
         // Number of async-loadings in progress (로딩 완료 후 _handles에서 삭제안함, _handles.Count와 의미가 다름)
         public int HandleCount { get; private set; } = 0;
 
-        public IReadOnlyDictionary<string, UObject> Results => _results;
+        internal IReadOnlyDictionary<string, UObject> Results => m_results;
 
         // for cache (pooling)
-        readonly Dictionary<string, UObject> _results = new();
-        readonly Dictionary<string, UObject> _locResources = new();
+        readonly Dictionary<string, UObject> m_results = new();
 
         // async handles with addressable asset key
         readonly Dictionary<string, AsyncOperationHandle> _handles = new();
 
-        // just for loading and caching
+
+        // label - list<string> used for release with label
+        readonly Dictionary<string, List<string>> _labels = new(); // dependent with _results
+
+        /// <summary>
+        /// Get cached UnityObject as type T. Returns null if there is no cached object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public T Get<T>(string key) where T : UObject
+        {
+            if (Results.ContainsKey(key) == true)
+            {
+                T result = Results[key] as T;
+#if DEBUG
+                if (result == null)
+                {
+                    Debug.LogError($"Can not cast UnityObject to {typeof(T)}");
+                }
+#endif
+
+                return result;
+            }
+            else
+            {
+#if DEBUG
+                Debug.LogError($"There is no cached addressable assets. [key={key}]");
+#endif
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Load addressable asset and invoke the callback with it as T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="callback"></param>
         public void LoadAsync<T>(string key, Action<T> callback = null) where T : UObject
         {
             // cached -> already done!
-            if (_results.TryGetValue(key, out UObject resource))
+            if (m_results.TryGetValue(key, out UObject resource))
             {
                 callback?.Invoke(resource as T);
                 return;
@@ -52,7 +88,7 @@ namespace Core
             {
                 if (opHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    _results.Add(key, opHandle.Result as UObject);
+                    m_results.Add(key, opHandle.Result as UObject);
                     callback?.Invoke(opHandle.Result as T);
                     HandleCount--;
                 }
@@ -66,32 +102,45 @@ namespace Core
             };
         }
 
-        public void LoadAsync<T>(IResourceLocation location, Action<T> callback = null) where T : UObject
+        public void LoadWithLabelAsync(string label, Action<List<string>> completed = null)
         {
-            // cached -> already done!
-            if (_locResources.TryGetValue(location.ToString(), out UObject resource))
+            if (_labels.ContainsKey(label))
             {
-                callback?.Invoke(resource as T);
+#if DEBUG
+                Debug.Log($"All assets are already loaded or loading now. [label={label}]");
+#endif
                 return;
             }
 
-            // if the loading is on-going, add just the callback at handle and return
-            if (_handles.ContainsKey(location.ToString()))
-            {
-                _handles[location.ToString()].Completed += (opHandle) => { callback?.Invoke(opHandle.Result as T); };
-                return;
-            }
 
-            // load async
-            _handles.Add(location.ToString(), Addressables.LoadAssetAsync<T>(location));
-            HandleCount++;
-            _handles[location.ToString()].Completed += (opHandle) =>
+            // _labels에 key가 없음
+            _labels.Add(label, new List<string>());
+            Addressables.LoadResourceLocationsAsync(label, typeof(UObject)).Completed += OnLocationsLoaded;
+
+            void OnLocationsLoaded(AsyncOperationHandle<IList<IResourceLocation>> opHandle)
             {
-                _locResources.Add(location.ToString(), opHandle.Result as UObject);
-                callback?.Invoke(opHandle.Result as T);
-                HandleCount--;
-            };
+                if (opHandle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    IList<IResourceLocation> locations = opHandle.Result;
+                    string[] foundKeys = new string[locations.Count];
+
+                    for (int i=0; i<locations.Count; ++i)
+                    {
+                        foundKeys[i] = locations[i].PrimaryKey;
+                        _labels[label].Add(locations[i].PrimaryKey);
+                    }
+                    LoadAllAsync(completed, foundKeys);
+                }
+                else
+                {
+#if DEBUG
+                    Debug.LogError($"Failed to load addressables [label={label}]");
+#endif
+                }
+            }
+            
         }
+
 
         /// <summary>
         /// 
@@ -117,7 +166,7 @@ namespace Core
                     completedCount++;
                     if (handle.Status == AsyncOperationStatus.Succeeded)
                     {
-                        _results.Add(key, handle.Result as UObject);
+                        m_results.Add(key, handle.Result as UObject);
                     }
 
                     if (completedCount >= keys.Length)
@@ -140,7 +189,7 @@ namespace Core
                 }
 
                 // 이미 로드 되어 있는지 확인
-                if (_results.ContainsKey(key) == true)
+                if (m_results.ContainsKey(key) == true)
                 {
                     completedCount++;
                     continue;
@@ -154,7 +203,7 @@ namespace Core
                     continue;
                 }
 
-                AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<GameObject>(key);
+                AsyncOperationHandle loadHandle = Addressables.LoadAssetAsync<UObject>(key);
                 HandleCount++;
                 loadHandle.Completed += OnHandleCompleted;
                 _handles.Add(key, loadHandle);
@@ -170,7 +219,7 @@ namespace Core
         /// <param name="callback"></param>
         public void LoadAsyncOnce<T>(string key, Action<T> callback = null) where T : UObject
         {
-            if (_results.TryGetValue(key, out var resource))
+            if (m_results.TryGetValue(key, out var resource))
             {
                 callback?.Invoke(resource as T);
                 return;
@@ -190,7 +239,7 @@ namespace Core
             {
                 if (opHandle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    _results.Add(key, opHandle.Result as UObject);
+                    m_results.Add(key, opHandle.Result as UObject);
                     callback?.Invoke(opHandle.Result as T);
                     HandleCount--;
                 }
@@ -256,7 +305,7 @@ namespace Core
 
         public void Clear()
         {
-            _results.Clear();
+            m_results.Clear();
 
             foreach (var handle in _handles.Values)
                 Addressables.Release(handle);
@@ -274,11 +323,11 @@ namespace Core
         public void Release(string key)
         {
             // if there is no object with the key in _resources, do nothing
-            if (_results.ContainsKey(key) == false)
+            if (m_results.ContainsKey(key) == false)
             {
                 return;
             }
-            _results.Remove(key);
+            m_results.Remove(key);
 
             if (_handles.TryGetValue(key, out AsyncOperationHandle handle))
             {
@@ -288,31 +337,20 @@ namespace Core
             _handles.Remove(key);
         }
 
-        public void ReleaseAll(params string[] keys)
+        public void Release(params string[] keys)
         {
             foreach (var key in keys) Release(key);
         }
 
-        /// <summary>
-        /// release 이후에 _locResources와 _handles에서 삭제 (캐싱 해제)
-        /// </summary>
-        /// <param name="location"></param>
-        public void Release(IResourceLocation location)
+        public void ReleaseWithLabel(string label)
         {
-            // if there is no object with the key in _resources, do nothing
-            if (_locResources.TryGetValue(location.ToString(), out UObject _) == false)
+            // Note: 성공적으로 로드 하지 못한 asset에 대한 key가 있을 수 있음
+            // 해당 에셋에 대해서는 release해도 무관.
+            if (_labels.TryGetValue(label, out var keys))
             {
-                return;
+                foreach (var key in keys) Release(key);
             }
-
-            _locResources.Remove(location.ToString());
-
-            if (_handles.TryGetValue(location.ToString(), out AsyncOperationHandle handle))
-            {
-                Addressables.Release(handle);
-            }
-
-            _handles.Remove(location.ToString());
+            _labels.Remove(label);
         }
 
         /// <summary>
@@ -321,7 +359,7 @@ namespace Core
         /// <param name="key">addressable key</param>
         /// <param name="parent">transform of parent</param>
         /// <param name="callback">action callback</param>
-        public void Instantiate(string key, Transform parent = null, Action<GameObject> callback = null)
+        public void InstantiateAsync(string key, Transform parent = null, Action<GameObject> callback = null)
         {
             LoadAsync<GameObject>(key, (prefab) =>
             {
@@ -333,7 +371,7 @@ namespace Core
             });
         }
 
-        public void InstantiateOnce(string key, Transform parent = null, Action<GameObject> callback = null)
+        public void InstantiateOnceAsync(string key, Transform parent = null, Action<GameObject> callback = null)
         {
             LoadAsyncOnce<GameObject>(key, (prefab) =>
             {
@@ -356,7 +394,7 @@ namespace Core
             }
         }
 
-        public void DestroyAllItems(Transform parent)
+        public void DestroyAllChilds(Transform parent)
         {
             foreach(Transform item in parent)
             {

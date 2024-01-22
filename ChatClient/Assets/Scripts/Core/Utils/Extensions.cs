@@ -53,7 +53,7 @@ namespace Core
 
         public static void DestroyAllItems(this Transform parent)
         {
-            ManagerCore.Resource.DestroyAllItems(parent);
+            Utils.DestroyAllItems(parent);
         }
     }
 }

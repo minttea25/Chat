@@ -26,7 +26,7 @@ namespace Core
             UnityEngine.Object obj = GameObject.FindObjectOfType(typeof(EventSystem));
             if (obj == null)
             {
-                ManagerCore.Resource.InstantiateOnce(Const.AddressableEventSystemKey, callback: obj => 
+                ManagerCore.Resource.InstantiateOnceAsync(Const.AddressableEventSystemKey, callback: obj => 
                 {
                     obj.name = Const.EventSystemsName;
                 });

@@ -43,6 +43,8 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 2f77ad7f3f5976544a289db6281f3da1, type: 2}
   - {fileID: 11400000, guid: 31cdc548d4a24774fbbff6a5d66fea85, type: 2}
+  - {fileID: 11400000, guid: 9798bbe8e7f72cf40bcc2ce183030f71, type: 2}
+  - {fileID: 11400000, guid: e3e120f193107a547918f867fe3eb184, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -84,6 +86,11 @@ MonoBehaviour:
   m_LabelTable:
     m_LabelNames:
     - default
+    - lEmoticons
+    - lBase
+    - lStart
+    - lChat
+    - lMain
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: 83028842a3b25384282829c4d6972099, type: 2}
