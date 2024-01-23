@@ -9,7 +9,7 @@ using UnityEngine.UI;
 [Serializable]
 class ChatLeftItemUIContext : UIContext
 {
-    //public UIObject UserNamePanel;
+    public UIObject UserNamePanel = new();
     public UIObject<TextMeshProUGUI> UserNameText = new();
     public UIObject<Image> ContentBackground = new();
     public UIObject<TextMeshProUGUI> ContentText = new();
@@ -57,9 +57,13 @@ public class ChatLeftItemUI : BaseUIItem
             = new Vector2 (contentWidth + UIValues.ContentLRPadding, contentHeight + UIValues.ContentUDPadding);
 
         Context.TimeText.BindObject.GetComponent<RectTransform>().anchoredPosition
-                    = new Vector2(contentWidth + UIValues.ContentLRPadding + UIValues.TimePosPadding, -20f);
+                    = new Vector2(contentWidth + UIValues.ContentLRPadding + UIValues.TimePosPadding, Context.ContentBackground.BindObject.GetComponent<RectTransform>().anchoredPosition.y);
         Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta
             = new Vector2(Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta.x, contentHeight + UIValues.ContentUDPadding);
+
+        var width = GetComponent<RectTransform>().sizeDelta.x;
+        var height = Context.ContentBackground.BindObject.GetComponent<RectTransform>().sizeDelta.y + Context.UserNamePanel.BindObject.GetComponent<RectTransform>().sizeDelta.y + UIValues.ContentHeightBottomPadding;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
     }
 
     string GetTimeOrYesterday(DateTime time)

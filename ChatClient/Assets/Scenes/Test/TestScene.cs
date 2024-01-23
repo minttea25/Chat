@@ -10,7 +10,7 @@ public class TestScene : BaseScene
     {
         base.Init();
 
-        ManagerCore.Resource.LoadWithLabelAsync(AddrKeys.EmoticonLabel, (failed) =>
+        ManagerCore.Resource.LoadWithLabelAsync<Sprite>(AddrKeys.EmoticonLabel, (failed) =>
         {
             Debug.Log(failed.Count);
         });

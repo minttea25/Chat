@@ -11,6 +11,7 @@ public class AddrKeys
 
     public const string Label_Chat = "lChat";
     public const string Label_Base = "lBase";
+    public const string Label_Emoticon = "lEmoticons";
     
     #endregion
 

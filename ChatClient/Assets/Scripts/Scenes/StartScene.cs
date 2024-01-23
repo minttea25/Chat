@@ -14,10 +14,15 @@ public class StartScene : BaseScene
     {
         base.Init();
 
-        Screen.SetResolution(300, 100, false);
+        Screen.SetResolution(UIValues.StartSceneResolutionWidth, UIValues.StartSceneResolutionHeight, UIValues.UseFullScreen);
 
         SceneType = SceneTypes.Start;
 
+        
+    }
+
+    private void Start()
+    {
         LoadingUI.Show();
 
         ManagerCore.UI.ShowSceneUIAsync<StartSceneUI>(AddrKeys.StartSceneUI, (ui) =>

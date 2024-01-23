@@ -32,6 +32,8 @@ public class EmoticonButtonItem : BaseUIItem
         //var emoticon = ManagerCore.Data.Emoticons?.GetEmoticon(iconId);
         ManagerCore.Resource.LoadImageAsync(key, (sprite) =>
         {
+            if (sprite == null) return;
+
             spriteLoading.Pause();
             Destroy(Context.LoadingImage.BindObject);
             GetComponent<Image>().sprite = sprite;

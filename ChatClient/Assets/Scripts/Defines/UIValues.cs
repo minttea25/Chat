@@ -1,5 +1,16 @@
 public class UIValues
 {
+    #region Screen Size of Scenes
+    public const bool UseFullScreen = false;
+
+    public const int StartSceneResolutionWidth = 350;
+    public const int StartSceneResolutionHeight = 600;
+
+    public const int MainSceneResolutionWidth = 800;
+    public const int MainSceneResolutionHeight = 600;
+    #endregion
+
+
     public const string UserIdFormat = "00000000";
 
     #region ChatRightItemUI

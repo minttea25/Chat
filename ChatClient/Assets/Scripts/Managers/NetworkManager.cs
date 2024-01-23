@@ -44,9 +44,6 @@ public partial class NetworkManager : IManager, IUpdate
     Coroutine pingTask = null;
 
 
-    // TEST
-    public static string TestUserName;
-
     public void AccountServerConnected(long accountDbId, string authToken)
     {
         AuthToken = authToken;
@@ -81,7 +78,7 @@ public partial class NetworkManager : IManager, IUpdate
     public void StartService(Action<SocketError> failedCallback = null)
     {
         ConnectingUI.Show();
-        Core.Utils.AssertCrash(endPoint != null);
+        Core.Utils.AssertCrash(endPoint != null, "EndPoint was null.");
 
         ClientServiceConfig config = ClientServiceConfig.GetDefault();
 
@@ -151,6 +148,8 @@ public partial class NetworkManager : IManager, IUpdate
             ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Can not find NetworkConfig in Resource directory.");
             return;
         }
+
+        Debug.Log($"network config: {config}");
 
         if (config.UseLocal == true)
         {

@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ChatEmoticonData
 {
-    // TEST
+    // TEST Code to make file
     //public Dictionary<uint, string> Emoticons = new Dictionary<uint, string>()
     //{
     //    { 1, AddrKeys.Icon_Party },

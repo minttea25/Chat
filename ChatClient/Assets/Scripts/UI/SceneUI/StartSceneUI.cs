@@ -33,10 +33,7 @@ public class StartSceneUI : BaseUIScene
 
         SetLoginCard();
 
-
         SetButtonActions();
-
-
     }
 
     void SetButtonActions()
@@ -51,8 +48,6 @@ public class StartSceneUI : BaseUIScene
 
     void RegisterReq()
     {
-        Debug.Log("RegisterReq");
-
         string id = Context.RegisterIdInput.Component.text;
         string password = Context.RegisterPwInput.Component.text;
         string passwoord2 = Context.RegisterPwInput2.Component.text;
@@ -83,8 +78,6 @@ public class StartSceneUI : BaseUIScene
 
     void LoginReq()
     {
-        Debug.Log("Login Req");
-
         string id = Context.LoginIdInput.Component.text;
         string password = Context.LoginPwInput.Component.text;
 

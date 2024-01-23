@@ -51,6 +51,8 @@ public class MainSceneUI : BaseUIScene
     readonly Dictionary<ulong, RoomListItemUI> roomList = new Dictionary<ulong, RoomListItemUI>();
     ulong openedChatId = 0;
 
+    bool LabelChatLoaded = false;
+    bool LabelEmoticonLoaded = false;
 
     CreateRoomPopup createRoomPopup = null;
     EnterRoomPopup enterRoomPopup = null;
@@ -66,6 +68,15 @@ public class MainSceneUI : BaseUIScene
             AddrKeys.Label_Chat,
             (failed) =>
             {
+                LabelChatLoaded = true;
+                Core.Utils.AssertCrash(failed.Count == 0);
+                OnLoaded(); // hide loading ui here
+            });
+
+        ManagerCore.Resource.LoadWithLabelAsync<Sprite>(
+            AddrKeys.Label_Emoticon, (failed) =>
+            {
+                LabelEmoticonLoaded = true;
                 Core.Utils.AssertCrash(failed.Count == 0);
                 OnLoaded(); // hide loading ui here
             });
@@ -90,7 +101,9 @@ public class MainSceneUI : BaseUIScene
 
     private void OnDisable()
     {
-        ManagerCore.Resource.ReleaseWithLabel(AddrKeys.Label_Chat);
+        //ManagerCore.Resource.ReleaseWithLabel(AddrKeys.Label_Chat);
+
+        ManagerCore.Resource.ReleaseWithLabels(AddrKeys.Label_Chat, AddrKeys.Label_Emoticon);
 
         //ManagerCore.Resource.Release(
         //    AddrKeys.RoomListItemUI,
@@ -181,7 +194,7 @@ public class MainSceneUI : BaseUIScene
 
     public void SetPing(long ping)
     {
-        Ping.Data = $"{ping} ms";
+        Ping.Data = ping.ToString();
     }
 
     public void EditUserNameRes(bool success, string username = null)
@@ -236,8 +249,6 @@ public class MainSceneUI : BaseUIScene
 
     public void RoomListLongClicked(uint roomNumber)
     {
-        Debug.Log("RoomListLongClicked");
-
         var popup = ManagerCore.UI.ShowPopupUI<SimplePopupUI>(
             AddrKeys.SimplePopupUI);
 
@@ -248,6 +259,8 @@ public class MainSceneUI : BaseUIScene
                 // OK
                 () =>
                 {
+                    if (openedChatId == roomNumber) openedChatId = 0;
+
                     ManagerCore.Network.ReqLeaveRoom(roomNumber);
                     if (roomList.TryGetValue(roomNumber, out var room))
                     {
@@ -313,6 +326,8 @@ public class MainSceneUI : BaseUIScene
 
     void OnLoaded()
     {
+        if (LabelChatLoaded == false || LabelEmoticonLoaded == false) return;
+
         LoadingUI.Hide();
         Scene.CheckLoadAllCompleted();
     }

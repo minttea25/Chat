@@ -2,7 +2,6 @@ using Core;
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -175,26 +174,22 @@ public class ChatPanelItem : BaseUIItem
     void AddChatText(ChatText chat)
     {
         // my chat
-        if (chat.IsMine)
-        {
-            return;
-        }
-        else
-        {
-            ChatLeftItemUI left = ManagerCore.UI.AddItemUI<ChatLeftItemUI>(AddrKeys.ChatLeftItemUI, ChatListTransform);
-            Utils.Assert(left != null);
+        if (chat.IsMine == true) return;
 
-            left.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat(), chat.UserName);
-        }
-        
+        ChatLeftItemUI left = ManagerCore.UI.AddItemUI<ChatLeftItemUI>(AddrKeys.ChatLeftItemUI, ChatListTransform);
+        Utils.Assert(left != null);
+
+        left.SetMessage(chat.Message, chat.Time.ToLocalTimeFormat(), chat.UserName);
     }
 
     void AddChatIcon(ChatIcon chat)
     {
-        // TODO : set Icon
-        Debug.Log("AddChatIcon");
+        // my chat
+        if (chat.IsMine == true) return;
+        ChatLeftIconItemUI left = ManagerCore.UI.AddItemUI<ChatLeftIconItemUI>(AddrKeys.ChatLeftEmoticonItemUI, ChatListTransform);
+        Utils.Assert(left != null);
 
-        
+        left.SetMessage(chat.IconId, chat.Time.ToLocalTimeFormat(), chat.UserName);
     }
 
     void AddChatEnter(ChatUserEnter chat)

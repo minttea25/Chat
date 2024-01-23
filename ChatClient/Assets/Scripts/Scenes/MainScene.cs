@@ -34,7 +34,7 @@ public class MainScene : BaseScene
 
         SceneType = SceneTypes.Main;
 
-        Screen.SetResolution(800, 600, false);
+        Screen.SetResolution(UIValues.MainSceneResolutionWidth, UIValues.MainSceneResolutionHeight, UIValues.UseFullScreen);
     }
 
     void ResourceLoadCompleted(List<string> failedKeys)
