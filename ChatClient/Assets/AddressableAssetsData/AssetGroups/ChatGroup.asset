@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: ChatGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: ChatGroup
+  m_Data:
+    m_SerializedData: []
+  m_GUID: d308c12d238a2f349a394d603cd4017b
+  m_SerializeEntries:
+  - m_GUID: 30877fe5c0a47ba4f867fb7fa1c2ca10
+    m_Address: icon_kirakira
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lEmoticons
+  - m_GUID: 023b0c5e002ea6a49be9e715f61a84eb
+    m_Address: icon_smile
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lEmoticons
+  - m_GUID: d58f0cc3295f18a42a8ab820efda3950
+    m_Address: icon_sad
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lEmoticons
+  - m_GUID: 270644d896ed0b4468ea9e2834db6c4d
+    m_Address: icon_laughing
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lEmoticons
+  - m_GUID: 6d8dc878d6e35144c9375e25fdd3aa9a
+    m_Address: icon_party
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lEmoticons
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ebb6c35e653131a49b4b627ed59fb469, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 361cff2e9d872944c99563f9295aea39, type: 2}
+    - {fileID: 11400000, guid: 6190421ea3fdf9542919afcaa5418b00, type: 2}

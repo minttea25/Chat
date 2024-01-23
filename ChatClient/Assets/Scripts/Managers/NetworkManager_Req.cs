@@ -113,4 +113,25 @@ public partial class NetworkManager : IManager, IUpdate
         };
         Send(req);
     }
+
+    public void ReqSendChatEmoticon(uint emoticonId, uint roomNumber, int chatId)
+    {
+        SSendChatIcon req = new()
+        {
+            RoomNumber = roomNumber,
+            Chat = new Chat.ChatIcon()
+            {
+                IconId = emoticonId,
+                ChatBase = new Chat.ChatBase()
+                {
+                    ChatType = ChatType.Icon,
+                    Timestamp = Timestamp.FromDateTime(DateTime.UtcNow),
+                    // it has no db id
+                }
+            },
+            SenderInfo = UserInfo,
+            ChatId = chatId,
+        };
+        Send(req);
+    }
 }

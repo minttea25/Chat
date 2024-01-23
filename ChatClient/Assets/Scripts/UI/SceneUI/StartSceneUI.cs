@@ -7,17 +7,18 @@ using UnityEngine.UI;
 [Serializable]
 class StartUIContext : UIContext
 {
-    public UIObject IdPanel = new();
-    public UIObject PasswordPanel = new();
-    public UIObject ButtonPanel = new();
-    
-    public UIObject<TMP_InputField> IdInput = new();
-    public UIObject<TMP_InputField> PasswordInput = new();
-
-    public UIObject<Button> RegisterButton = new();
-    public UIObject<TextMeshProUGUI> RegisterText = new();
+    public UIObject LoginCardPanel = new();
+    public UIObject<TMP_InputField> LoginIdInput = new();
+    public UIObject<TMP_InputField> LoginPwInput = new();
     public UIObject<Button> LoginButton = new();
-    public UIObject<TextMeshProUGUI> LoginText = new();
+    public UIObject<Button> LoginToRegisterButton = new();
+
+    public UIObject RegisterCardPanel = new();
+    public UIObject<TMP_InputField> RegisterIdInput = new();
+    public UIObject<TMP_InputField> RegisterPwInput = new();
+    public UIObject<TMP_InputField> RegisterPwInput2 = new();
+    public UIObject<Button> RegisterButton = new();
+    public UIObject<Button> RegisterToLoginButton = new();
 }
 
 public class StartSceneUI : BaseUIScene
@@ -25,22 +26,21 @@ public class StartSceneUI : BaseUIScene
     [SerializeField]
     StartUIContext Context = new();
 
-    string Id => Context.IdInput.Component.text;
-    string Password => Context.PasswordInput.Component.text;
 
     public override void Init()
     {
         base.Init();
 
-
+        SetLoginCard();
 
         SetButtonActions();
-
-
     }
 
     void SetButtonActions()
     {
+        Context.RegisterToLoginButton.Component.onClick.AddListener(SetLoginCard);
+        Context.LoginToRegisterButton.Component.onClick.AddListener(SetRegisterCard);
+
         Context.RegisterButton.Component.onClick.AddListener(RegisterReq);
         Context.LoginButton.Component.onClick.AddListener(LoginReq);
     }
@@ -48,38 +48,47 @@ public class StartSceneUI : BaseUIScene
 
     void RegisterReq()
     {
-        Debug.Log("RegisterReq");
+        string id = Context.RegisterIdInput.Component.text;
+        string password = Context.RegisterPwInput.Component.text;
+        string passwoord2 = Context.RegisterPwInput2.Component.text;
 
-        if (ValidateId() == false)
+        if (password.Equals(passwoord2) == false)
         {
-            // TODO : Show Popup
-            Debug.Log("Invalid Id");
+            NotificationUI.Show("The two passwords are not same.");
+            Debug.Log("The two passwords are not same.");
             return;
         }
 
-        if (ValidatePassword() == false)
-        {
-            // TODO : Show Popup
-            Debug.Log("Invalid Password");
-            return;
-        }
-
-        ManagerCore.Scene.GetScene<StartScene>().ReqAccountRegister(Id, Password);
-    }
-
-    void LoginReq()
-    {
-        Debug.Log("Login Req");
-
-
-        if (ValidateId() == false)
+        if (ValidateId(id) == false)
         {
             NotificationUI.Show("Invalid Id...");
             Debug.Log("Invalid Id");
             return;
         }
 
-        if (ValidatePassword() == false)
+        if (ValidatePassword(password) == false)
+        {
+            NotificationUI.Show("Invalid Password...");
+            Debug.Log("Invalid Password");
+            return;
+        }
+
+        ManagerCore.Scene.GetScene<StartScene>().ReqAccountRegister(id, password);
+    }
+
+    void LoginReq()
+    {
+        string id = Context.LoginIdInput.Component.text;
+        string password = Context.LoginPwInput.Component.text;
+
+        if (ValidateId(id) == false)
+        {
+            NotificationUI.Show("Invalid Id...");
+            Debug.Log("Invalid Id");
+            return;
+        }
+
+        if (ValidatePassword(password) == false)
         {
             // TODO : Show Popup
             NotificationUI.Show("Invalid Password...");
@@ -87,23 +96,36 @@ public class StartSceneUI : BaseUIScene
             return;
         }
 
-        ManagerCore.Scene.GetScene<StartScene>().ReqAccountLogin(Id, Password);
+        ManagerCore.Scene.GetScene<StartScene>().ReqAccountLogin(id, password);
     }
 
-    bool ValidateId()
+    bool ValidateId(string id)
     {
-        if (string.IsNullOrEmpty(Id)) return false;
+        if (string.IsNullOrEmpty(id)) return false;
 
         // TODO : check the string with regex
         return true;
     }
 
-    bool ValidatePassword()
+    bool ValidatePassword(string password)
     {
-        if (string.IsNullOrEmpty(Password)) return false;
+        if (string.IsNullOrEmpty(password)) return false;
 
         // TODO : check the string with regex
         return true;
+    }
+
+
+    void SetLoginCard()
+    {
+        Context.LoginCardPanel.BindObject.SetActive(true);
+        Context.RegisterCardPanel.BindObject.SetActive(false);
+    }
+
+    void SetRegisterCard()
+    {
+        Context.LoginCardPanel.BindObject.SetActive(false);
+        Context.RegisterCardPanel.BindObject.SetActive(true);
     }
 
 #if UNITY_EDITOR

@@ -99,6 +99,11 @@ namespace Chat.DB
                 if (saved == true)
                 {
                     // success to edit
+
+                    // edit username in session too
+                    session.UserInfo.UserName = newUserName;
+
+
                     CEditUserNameRes res = new()
                     {
                         Res = EditUserNameRes.EditOk,
@@ -361,6 +366,7 @@ namespace Chat.DB
                     bool saved = db.SaveChangesEx();
                     if (saved == true)
                     {
+                        // Note: There is no res message.
                         ;
                     }
                     else

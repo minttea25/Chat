@@ -7,15 +7,46 @@ using UnityEngine;
 
 public class StartScene : BaseScene
 {
+    StartSceneUI ui = null;
+    bool dataLoaded = false;
+
     protected override void Init()
     {
         base.Init();
 
-        Screen.SetResolution(300, 100, false);
+        Screen.SetResolution(UIValues.StartSceneResolutionWidth, UIValues.StartSceneResolutionHeight, UIValues.UseFullScreen);
 
         SceneType = SceneTypes.Start;
 
-        ManagerCore.UI.ShowSceneUIAsync<StartSceneUI>(AddrKeys.StartSceneUI);
+        
+    }
+
+    private void Start()
+    {
+        LoadingUI.Show();
+
+        ManagerCore.UI.ShowSceneUIAsync<StartSceneUI>(AddrKeys.StartSceneUI, (ui) =>
+        {
+            this.ui = ui;
+            OnLoaded();
+        });
+
+
+        ManagerCore.Data.SetCompleted(() =>
+        {
+            dataLoaded = true;
+            OnLoaded();
+        });
+        ManagerCore.Data.Load();
+    }
+
+    void OnLoaded()
+    {
+        if (ui != null && dataLoaded == true)
+        {
+            Debug.Log("Loaded Completed at StartScene.");
+            LoadingUI.Hide();
+        }
     }
 
     public void ReqAccountLogin(string id, string password)

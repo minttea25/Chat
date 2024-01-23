@@ -17,62 +17,81 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: f6e19af4ce0de674287def5469aeeb2c
   m_SerializeEntries:
-  - m_GUID: c4a9c9456792f2f4bbf6d86e32bb7f9d
-    m_Address: LoadingUI
+  - m_GUID: ec958bb2a89be6d4a92131e3142b9c0f
+    m_Address: ChatRightEmoticonItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
-  - m_GUID: af2694208f3ba1b40abd35fda169fb46
-    m_Address: ConnectingUI
-    m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: 29328bb7a5165364181c7344c79619f2
     m_Address: SimplePopupUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lBase
   - m_GUID: 7005cbaf3600e2e4988afa791607034f
     m_Address: EnterRoomPopupUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: c0ec94f6f5b556b419fe8a354cbd23dc
     m_Address: RoomListItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: cc7e2a1de6205bb4e8502844bbf2c53d
     m_Address: CreateRoomPopupUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: acc9269c354012f4f94abcf3474589c9
     m_Address: ChatPanelItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: 585eeb920f2037248a932fefaa0482f5
     m_Address: ChatLeftItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: 2d8d0f0da07d95545b39b91d5f46f992
     m_Address: ChatRightItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: db9824e292390c24aac3c94f65392ad8
     m_Address: MainSceneUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lMain
   - m_GUID: 8cee4055facdbfa4b8ffe6b81bb51919
     m_Address: InfoPopupUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: aeb5f7652af1d4e4793211b3d8a96577
     m_Address: ChatContentEtcItemUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
   - m_GUID: 0b12046d495ffd44c9b9d02f0d22f047
     m_Address: StartSceneUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lStart
   - m_GUID: d9a4b6bb3d8f16846884739eb7d66050
     m_Address: LogoutPopupUI
     m_ReadOnly: 0
-    m_SerializedLabels: []
+    m_SerializedLabels:
+    - lChat
+  - m_GUID: 8671a8f2690814a4db92e648aafcb593
+    m_Address: ChatLeftEmoticonItemUI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lChat
+  - m_GUID: 7639b4856c4f29a41956634e2c62f488
+    m_Address: EmoticonButtonItemUI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lChat
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ebb6c35e653131a49b4b627ed59fb469, type: 2}
   m_SchemaSet:

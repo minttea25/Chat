@@ -84,10 +84,6 @@ namespace Chat
         {
             Add(() =>
             {
-                // TODO : 여기서 호출...?
-                senderSession?.Send(new CSendChat() { Error = SendChatError.Success });
-
-
                 // 방에 있는 유저들 broadcast
                 CChatIcon sChat = new()
                 {

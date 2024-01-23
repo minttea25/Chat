@@ -1,0 +1,3 @@
+Some UI resources from game, `Kirara Fantasia` uiatlas are used.
+
+Emoticons are from: `https://www.flaticon.com/free-icons/emoticon`

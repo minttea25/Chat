@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: DataGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: DataGroup
+  m_Data:
+    m_SerializedData: []
+  m_GUID: efc9fdcc32aa68747a182fe5942564d4
+  m_SerializeEntries:
+  - m_GUID: 821f51f50f7310646ae5df9a78c8557c
+    m_Address: ChatEmoticonData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: ebb6c35e653131a49b4b627ed59fb469, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 68e2eb237e0677e459c7bbf35ad282ad, type: 2}
+    - {fileID: 11400000, guid: a6ee572002c56f34d81d62cb90468bc6, type: 2}

@@ -78,7 +78,7 @@ namespace Core
 
         public void ShowPopupUIAsync<T>(string key, bool alwaysShowOnTop = false, Action<T> callback = null) where T : BaseUIPopup
         {
-            ManagerCore.Resource.Instantiate(
+            ManagerCore.Resource.InstantiateAsync(
                 key,
                 null,
                 (result) =>
@@ -103,13 +103,14 @@ namespace Core
 
         public T ShowPopupUI<T>(string key, bool alwaysShowOnTop = false, string name = null) where T : BaseUIPopup
         {
-            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+            GameObject asset = ManagerCore.Resource.Get<GameObject>(key);
 
-            GameObject p = result as GameObject; if (p == null) return null;
-            GameObject go = UnityEngine.Object.Instantiate(p);
+            if (asset == null) return null;
 
-            go.name = name ?? p.name;
-            go.transform.localPosition = p.transform.position;
+            GameObject go = UnityEngine.Object.Instantiate(asset, RootObject.transform);
+
+            go.name = name ?? asset.name;
+            go.transform.localPosition = asset.transform.position;
 
             T popup = go.GetComponent<T>();
             if (alwaysShowOnTop == true)
@@ -130,7 +131,7 @@ namespace Core
 
         public void ShowSceneUIAsync<T>(string key, Action<T> callback = null) where T : BaseUIScene
         {
-            ManagerCore.Resource.Instantiate(
+            ManagerCore.Resource.InstantiateAsync(
                 key,
                 RootObject.transform,
                 (result) =>
@@ -144,13 +145,13 @@ namespace Core
 
         public T ShowSceneUI<T>(string key, string name = null) where T : BaseUIScene
         {
-            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+            GameObject asset = ManagerCore.Resource.Get<GameObject>(key);
+            if (asset == null) return null;
 
-            GameObject p = result as GameObject; if (p == null) return null;
-            GameObject go = UnityEngine.Object.Instantiate(p);
+            GameObject go = UnityEngine.Object.Instantiate(asset);
 
-            go.name = name ?? p.name;
-            go.transform.localPosition = p.transform.position;
+            go.name = name ?? asset.name;
+            go.transform.localPosition = asset.transform.position;
 
             T ui = go.GetOrAddComponent<T>();
             _sceneUI = ui;
@@ -162,7 +163,7 @@ namespace Core
 
         public void ShowUIAsync<T>(string key, int sortingOrder, Action<T> callback = null) where T : BaseUI
         {
-            ManagerCore.Resource.Instantiate(
+            ManagerCore.Resource.InstantiateAsync(
                 key,
                 RootObject.transform,
                 (result) =>
@@ -176,7 +177,7 @@ namespace Core
 
         public void AddItemUIAsync<T>(string key, Transform parent, Action<T> callback = null) where T : BaseUIItem
         {
-            ManagerCore.Resource.Instantiate(
+            ManagerCore.Resource.InstantiateAsync(
                 key,
                 parent,
                 (result) =>
@@ -189,13 +190,13 @@ namespace Core
 
         public T AddItemUI<T>(string key, Transform parent, string name = null) where T : BaseUIItem
         {
-            if (ManagerCore.Resource.Results.TryGetValue(key, out var result) == false) return null;
+            GameObject asset = ManagerCore.Resource.Get<GameObject>(key);
+            if (asset == null) return null;
 
-            GameObject p = result as GameObject; if (p == null) return null;
-            GameObject go = UnityEngine.Object.Instantiate(p, parent);
+            GameObject go = UnityEngine.Object.Instantiate(asset, parent);
 
-            go.name = name ?? p.name;
-            go.transform.localPosition = p.transform.position;
+            go.name = name ?? asset.name;
+            go.transform.localPosition = asset.transform.position;
 
             T item = go.GetComponent<T>();
             return item;

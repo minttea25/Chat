@@ -45,10 +45,14 @@ public class MainSceneUI : BaseUIScene
 
     public MainScene Scene { get; set; }
 
+    public ChatPanelItem SelectedChatPanel => GetChatPanel(openedChatId);
+
     readonly MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
     readonly Dictionary<ulong, RoomListItemUI> roomList = new Dictionary<ulong, RoomListItemUI>();
     ulong openedChatId = 0;
 
+    bool LabelChatLoaded = false;
+    bool LabelEmoticonLoaded = false;
 
     CreateRoomPopup createRoomPopup = null;
     EnterRoomPopup enterRoomPopup = null;
@@ -60,35 +64,57 @@ public class MainSceneUI : BaseUIScene
         LoadingUI.Show();
 
         // pre-load
-        ManagerCore.Resource.LoadAllAsync(
+        ManagerCore.Resource.LoadWithLabelAsync(
+            AddrKeys.Label_Chat,
             (failed) =>
             {
+                LabelChatLoaded = true;
                 Core.Utils.AssertCrash(failed.Count == 0);
                 OnLoaded(); // hide loading ui here
-            },
-            AddrKeys.RoomListItemUI,
-            AddrKeys.CreateRoomPopupUI,
-            AddrKeys.EnterRoomPopupUI,
-            AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI,
-            AddrKeys.ChatPanelItemUI,
-            AddrKeys.ChatLeftItemUI,
-            AddrKeys.ChatRightItemUI,
-            AddrKeys.ChatContentEtcItemUI);
+            });
+
+        ManagerCore.Resource.LoadWithLabelAsync<Sprite>(
+            AddrKeys.Label_Emoticon, (failed) =>
+            {
+                LabelEmoticonLoaded = true;
+                Core.Utils.AssertCrash(failed.Count == 0);
+                OnLoaded(); // hide loading ui here
+            });
+
+
+        //ManagerCore.Resource.LoadAllAsync(
+        //    (failed) =>
+        //    {
+        //        Core.Utils.AssertCrash(failed.Count == 0);
+        //        OnLoaded(); // hide loading ui here
+        //    },
+        //    AddrKeys.RoomListItemUI,
+        //    AddrKeys.CreateRoomPopupUI,
+        //    AddrKeys.EnterRoomPopupUI,
+        //    AddrKeys.InfoPopupUI,
+        //    AddrKeys.LogoutPopupUI,
+        //    AddrKeys.ChatPanelItemUI,
+        //    AddrKeys.ChatLeftItemUI,
+        //    AddrKeys.ChatRightItemUI,
+        //    AddrKeys.ChatContentEtcItemUI);
     }
 
     private void OnDisable()
     {
-        ManagerCore.Resource.ReleaseAll(
-            AddrKeys.RoomListItemUI,
-            AddrKeys.CreateRoomPopupUI,
-            AddrKeys.EnterRoomPopupUI,
-            AddrKeys.InfoPopupUI,
-            AddrKeys.LogoutPopupUI,
-            AddrKeys.ChatPanelItemUI,
-            AddrKeys.ChatLeftItemUI,
-            AddrKeys.ChatRightItemUI,
-            AddrKeys.ChatContentEtcItemUI);
+        //ManagerCore.Resource.ReleaseWithLabel(AddrKeys.Label_Chat);
+
+        ManagerCore.Resource.ReleaseWithLabels(AddrKeys.Label_Chat, AddrKeys.Label_Emoticon);
+
+        //ManagerCore.Resource.Release(
+        //    AddrKeys.RoomListItemUI,
+        //    AddrKeys.CreateRoomPopupUI,
+        //    AddrKeys.EnterRoomPopupUI,
+        //    AddrKeys.InfoPopupUI,
+        //    AddrKeys.LogoutPopupUI,
+        //    AddrKeys.ChatPanelItemUI,
+        //    AddrKeys.ChatLeftItemUI,
+        //    AddrKeys.ChatRightItemUI,
+        //    AddrKeys.ChatContentEtcItemUI);
     }
 
     public override void Init()
@@ -108,6 +134,15 @@ public class MainSceneUI : BaseUIScene
         Context.SettingButton.Component.onClick.AddListener(OpenSettingPopup);
     }
 
+    public ChatPanelItem GetChatPanel(ulong roomId)
+    {
+        if (chatPanels.TryGetValue(roomId, out var chatpanel))
+        {
+            return chatpanel;
+        }
+        else return null;
+    }
+
     public void AddRoomList(RoomInfo room)
     {
         AddRoomList(room.RoomName, room.RoomNumber);
@@ -116,8 +151,7 @@ public class MainSceneUI : BaseUIScene
     public void AddRoomList(string roomName, uint roomNumber)
     {
         RoomListItemUI item = ManagerCore.UI.AddItemUI<RoomListItemUI>(AddrKeys.RoomListItemUI, RoomListTransform);
-        item.SetRoomName(roomName);
-        item.SetRoomNumber(roomNumber);
+        item.SetData(roomNumber, roomName);
         item.BindEventUnityAction(() => ShowChat(roomNumber));
         item.BindEventUnityAction(() => RoomListLongClicked(roomNumber), UIEvent.LongClick);
         roomList.Add(roomNumber, item);
@@ -160,7 +194,7 @@ public class MainSceneUI : BaseUIScene
 
     public void SetPing(long ping)
     {
-        Ping.Data = $"{ping} ms";
+        Ping.Data = ping.ToString();
     }
 
     public void EditUserNameRes(bool success, string username = null)
@@ -181,10 +215,16 @@ public class MainSceneUI : BaseUIScene
     {
         if (openedChatId == roomId) return;
 
+
         if (chatPanels.TryGetValue(openedChatId, out var opened))
         {
             opened.gameObject.SetActive(false);
         }
+        if (roomList.TryGetValue(openedChatId, out var roomListItem))
+        {
+            roomListItem.OnUnSelected();
+        }
+
 
         if (chatPanels.TryGetValue(roomId, out var chatPanel))
         {
@@ -200,13 +240,15 @@ public class MainSceneUI : BaseUIScene
             chatPanels.Add(roomId, chat, out var removedChat);
             if(removedChat != null) ManagerCore.Resource.Destroy(removedChat.gameObject);
         }
+        if (roomList.TryGetValue(roomId, out var selectedRoomListItem))
+        {
+            selectedRoomListItem.OnSelected();
+        }
         openedChatId = roomId;
     }
 
     public void RoomListLongClicked(uint roomNumber)
     {
-        Debug.Log("RoomListLongClicked");
-
         var popup = ManagerCore.UI.ShowPopupUI<SimplePopupUI>(
             AddrKeys.SimplePopupUI);
 
@@ -217,6 +259,8 @@ public class MainSceneUI : BaseUIScene
                 // OK
                 () =>
                 {
+                    if (openedChatId == roomNumber) openedChatId = 0;
+
                     ManagerCore.Network.ReqLeaveRoom(roomNumber);
                     if (roomList.TryGetValue(roomNumber, out var room))
                     {
@@ -282,6 +326,8 @@ public class MainSceneUI : BaseUIScene
 
     void OnLoaded()
     {
+        if (LabelChatLoaded == false || LabelEmoticonLoaded == false) return;
+
         LoadingUI.Hide();
         Scene.CheckLoadAllCompleted();
     }

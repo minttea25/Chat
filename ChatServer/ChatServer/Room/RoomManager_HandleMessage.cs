@@ -79,9 +79,6 @@ namespace Chat
             {
                 if (Rooms.ContainsKey(chat.RoomNumber) == false)
                 {
-                    // wrong request
-
-                    // TODO : Error Handling
                     return;
                 }
                 else

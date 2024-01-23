@@ -17,7 +17,8 @@ class ChatRightItemUIContext : UIContext
     public UIObject FailImage = new();
 }
 
-public class ChatRightItemUI : BaseUIItem
+public class ChatRightItemUI : BaseUIItem, IMyChat
+
 {
     [SerializeField]
     ChatRightItemUIContext Context = new();
@@ -55,6 +56,7 @@ public class ChatRightItemUI : BaseUIItem
     {
         sendChecking.Pause();
         Destroy(Context.LoadingImage.BindObject);
+        sendChecking = null;
 
         if (success == true) SetChecked();
         else SetFailed();
@@ -72,6 +74,10 @@ public class ChatRightItemUI : BaseUIItem
             = new Vector2(-1f * (contentWidth + UIValues.ContentLRPadding + UIValues.TimePosPadding), 0f);
         Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta
             = new Vector2(Context.TimeText.BindObject.GetComponent<RectTransform>().sizeDelta.x, contentHeight + UIValues.ContentUDPadding);
+
+        var width = GetComponent<RectTransform>().sizeDelta.x;
+        var height = Context.ContentBackground.BindObject.GetComponent<RectTransform>().sizeDelta.y + UIValues.ContentHeightBottomPadding;
+        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
     }
 
     public void SetChecked()

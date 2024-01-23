@@ -13,6 +13,8 @@ public partial class NetworkManager : IManager, IUpdate
 
     public void HandleChatIcon(CChatIcon chat)
     {
+        if (chat.SenderInfo.UserDbId == UserInfo.UserDbId) return;
+
         ManagerCore.Room.AddChat(chat);
     }
 

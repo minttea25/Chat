@@ -26,14 +26,17 @@ namespace Chat
 
         public static Encryption CreateTestEncryption()
         {
-#if DEBUG
             string key = "abcdefghijklmnop";
             string iv = "abcdefghijklmnop";
             return new Encryption(key, iv);
-#else
-            throw new Exception("This method is unavailable in Release.");
-            return null;
-#endif
+            //#if DEBUG
+            //            string key = "abcdefghijklmnop";
+            //            string iv = "abcdefghijklmnop";
+            //            return new Encryption(key, iv);
+            //#else
+            //            throw new Exception("This method is unavailable in Release.");
+            //            return null;
+            //#endif
         }
 
         public string Encrypt(string plainText)

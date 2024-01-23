@@ -18,6 +18,8 @@ public class AppConst
     public const float LoginChatServerTimeoutSeconds = 15f;
 
     public const int ProcessUnityJobQueuePerFrame = 20;
+
+    public const int NewMessageVisibleMaxCount = 99;
 }
 
 public class ResourcePath

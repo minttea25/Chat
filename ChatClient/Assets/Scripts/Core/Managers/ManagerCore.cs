@@ -76,7 +76,7 @@ namespace Core
 
         void ReleaseBaseResource()
         {
-            Resource.ReleaseAll(
+            Resource.Release(
                 AddrKeys.SimplePopupUI);
         }
 
