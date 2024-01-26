@@ -1,4 +1,5 @@
 using Chat;
+using Core;
 using System;
 using System.Collections;
 using System.Collections.Concurrent;
@@ -45,6 +46,15 @@ public class Room
             lock (chatLock)
             {
                 pendingChats.Add(chat);
+
+                var ui = ManagerCore.UI.SceneUI<MainSceneUI>();
+                if (ui != null)
+                {
+                    if (ui.RoomListItems.TryGetValue(RoomNumber, out var listItem))
+                    {
+                        listItem.AddNewMessageCount();
+                    }
+                }
             }
         }
     }

@@ -45,11 +45,13 @@ public class MainSceneUI : BaseUIScene
 
     public MainScene Scene { get; set; }
 
+    public Dictionary<uint, RoomListItemUI> RoomListItems => m_roomList;
+
     public ChatPanelItem SelectedChatPanel => GetChatPanel(openedChatId);
 
-    readonly MemoryQueue<ulong, ChatPanelItem> chatPanels = new(10);
-    readonly Dictionary<ulong, RoomListItemUI> roomList = new Dictionary<ulong, RoomListItemUI>();
-    ulong openedChatId = 0;
+    readonly MemoryQueue<uint, ChatPanelItem> chatPanels = new(10);
+    readonly Dictionary<uint, RoomListItemUI> m_roomList = new Dictionary<uint, RoomListItemUI>();
+    uint openedChatId = 0;
 
     bool LabelChatLoaded = false;
     bool LabelEmoticonLoaded = false;
@@ -134,7 +136,7 @@ public class MainSceneUI : BaseUIScene
         Context.SettingButton.Component.onClick.AddListener(OpenSettingPopup);
     }
 
-    public ChatPanelItem GetChatPanel(ulong roomId)
+    public ChatPanelItem GetChatPanel(uint roomId)
     {
         if (chatPanels.TryGetValue(roomId, out var chatpanel))
         {
@@ -154,15 +156,16 @@ public class MainSceneUI : BaseUIScene
         item.SetData(roomNumber, roomName);
         item.BindEventUnityAction(() => ShowChat(roomNumber));
         item.BindEventUnityAction(() => RoomListLongClicked(roomNumber), UIEvent.LongClick);
-        roomList.Add(roomNumber, item);
+
+        m_roomList.Add(roomNumber, item);
     }
 
     public void RemoveRoom(uint roomNumber)
     {
-        if (roomList.TryGetValue(roomNumber, out var room))
+        if (m_roomList.TryGetValue(roomNumber, out var room))
         {
+            m_roomList.Remove(roomNumber);
             Destroy(room.gameObject);
-            roomList.Remove(roomNumber);
         }
     }
 
@@ -220,7 +223,7 @@ public class MainSceneUI : BaseUIScene
         {
             opened.gameObject.SetActive(false);
         }
-        if (roomList.TryGetValue(openedChatId, out var roomListItem))
+        if (m_roomList.TryGetValue(openedChatId, out var roomListItem))
         {
             roomListItem.OnUnSelected();
         }
@@ -240,7 +243,7 @@ public class MainSceneUI : BaseUIScene
             chatPanels.Add(roomId, chat, out var removedChat);
             if(removedChat != null) ManagerCore.Resource.Destroy(removedChat.gameObject);
         }
-        if (roomList.TryGetValue(roomId, out var selectedRoomListItem))
+        if (m_roomList.TryGetValue(roomId, out var selectedRoomListItem))
         {
             selectedRoomListItem.OnSelected();
         }
@@ -262,7 +265,7 @@ public class MainSceneUI : BaseUIScene
                     if (openedChatId == roomNumber) openedChatId = 0;
 
                     ManagerCore.Network.ReqLeaveRoom(roomNumber);
-                    if (roomList.TryGetValue(roomNumber, out var room))
+                    if (m_roomList.TryGetValue(roomNumber, out var room))
                     {
                         room.gameObject.SetActive(false);
                     }
