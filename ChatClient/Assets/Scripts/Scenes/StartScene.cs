@@ -95,11 +95,17 @@ public class StartScene : BaseScene
         // TEMP
         Debug.Log(res);
 
+        if (res.Validate() == false)
+        {
+            Debug.LogError("Wrong response");
+            return;
+        }
+
         switch (res.Res)
         {
             case AppConst.WebResOk:
                 // successful
-                ManagerCore.Network.AccountServerConnected(res.AccountDbId, res.AuthToken);
+                ManagerCore.Network.AccountServerConnected(res.AccountDbId, res.AuthToken, res.ServerIp, res.ServerPort);
 
                 // 채팅 서버 연결
                 ManagerCore.Network.StartService(ConnectionFailed);
