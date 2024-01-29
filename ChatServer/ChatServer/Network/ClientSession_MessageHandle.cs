@@ -34,6 +34,10 @@ namespace Chat
 
         public void HandleLoginReq(SLoginReq req)
         {
+            // TEST
+            DbProcess.Login(this, req.AccountDbId);
+            return;
+
             if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
             LoginRes res;

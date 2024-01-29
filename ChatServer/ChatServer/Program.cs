@@ -45,11 +45,11 @@ namespace Chat
 
             ServerServiceConfig serverConfig = new()
             {
-                SessionPoolCount = 50,
-                SocketAsyncEventArgsPoolCount = 20,
+                SessionPoolCount = 200,
+                SocketAsyncEventArgsPoolCount = 500,
                 ReuseAddress = true,
                 RegisterListenCount = 10,
-                ListenerBacklogCount = 100,
+                ListenerBacklogCount = 150,
 
             };
 
