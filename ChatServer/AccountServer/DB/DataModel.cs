@@ -12,4 +12,16 @@ namespace AccountServer.DB
         public string? Password { get; set; }
         public ulong UserDbId { get; set; }
     }
+
+    [Table("ChatServerIp")]
+    public class ChatServerIpDb
+    {
+        [Key]
+        public long ChatServerIpDbId { get; set; }
+        public string? ChatServerName { get; set; }
+        public string? ChatServerIp { get; set; }
+        public int ? ChatServerPort { get; set; }
+        public bool ? IsOnline { get; set; }
+        public int ? Status { get; set; }
+    }
 }

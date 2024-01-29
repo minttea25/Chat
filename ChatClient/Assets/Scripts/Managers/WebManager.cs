@@ -1,4 +1,3 @@
-using Chat.Network;
 using Core;
 using System;
 using System.Collections;
@@ -86,6 +85,8 @@ public class WebManager : IManager
                 ErrorHandling.HandleError(ErrorHandling.ErrorType.Network,
                     ErrorHandling.ErrorLevel.Warning,
                     "Can not connect to AccountServer.");
+                NotificationUI.Show("Can not connect to AccountServer.");
+                ConnectingUI.Hide();
             }
             else
             {
