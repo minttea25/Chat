@@ -43,13 +43,16 @@ public class AccountLoginWebRes : IValidateWebPacket
     public int Res { get; set; }
     public string AuthToken { get; set; } 
     public long AccountDbId { get; set; }
+    public string ServerName { get; set; } // not used in client (temp)
+    public string ServerIp { get; set; } // ip address to connect for chat
+    public int ServerPort { get; set; }
 
     public bool Validate()
     {
         if (Res == 0) return true;
         else
         {
-            return !(string.IsNullOrEmpty(AuthToken) || AccountDbId == 0); 
+            return !(string.IsNullOrEmpty(AuthToken) || AccountDbId == 0 || string.IsNullOrEmpty(ServerIp) || ServerPort == 0 || string.IsNullOrEmpty(ServerName)); 
         }
     }
 

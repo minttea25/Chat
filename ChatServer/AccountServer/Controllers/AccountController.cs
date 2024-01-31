@@ -26,14 +26,11 @@ namespace AccountServer.Controllers
         {
             AccountLoginWebRes res = new AccountLoginWebRes();
 
-            if (string.IsNullOrEmpty(req.AccountId)
-                || string.IsNullOrEmpty(req.AccountPassword)
-                || string.IsNullOrEmpty(req.IPv4Address))
+            if (req.Validate() == false)
             {
                 res.Res = 0;
                 return res;
             }
-
 
             AccountDb? account = context.Accounts?
                 .AsNoTracking() // read only
@@ -51,7 +48,7 @@ namespace AccountServer.Controllers
                 AuthTokenDb? token = shared.Tokens?
                     .FirstOrDefault(a => a.AccountDbId == account.AccountDbId);
 
-                string dbToken = AuthToken.GenerateAuthToken(account.AccountDbId, account.AccountName, req.IPv4Address);
+                string dbToken = AuthToken.GenerateAuthToken(account.AccountDbId, account.AccountName!, req.IPv4Address!);
 
                 if (token == null)
                 {
@@ -84,10 +81,28 @@ namespace AccountServer.Controllers
                     }
                 }
 
-                res.Res = 1;
-                res.AccountDbId = account.AccountDbId;
-                res.AuthToken = AuthToken.EncryptAuthToken(dbToken);
+                // ip
+                // read-only
+                ChatServerIpDb? server = context.ChatServers?
+                    .AsNoTracking()
+                    .FirstOrDefault(c => c.IsOnline == true && c.Status == 1);
+                if (server == null)
+                {
+                    res.Res = 3; // can not find chat-server to connect.
+                }
+                else
+                {
+                    res.ServerIp = server.ChatServerIp;
+                    res.ServerPort = server.ChatServerPort;
+                    res.ServerName = server.ChatServerName;
+
+                    res.Res = 1;
+                    res.AccountDbId = account.AccountDbId;
+                    res.AuthToken = AuthToken.EncryptAuthToken(dbToken);
+                }
             }
+
+            if (res.Validate() == false) throw new Exception("Invalid response");
 
             return res;
         }
@@ -98,8 +113,7 @@ namespace AccountServer.Controllers
         {
             CreateAccountWebRes res = new();
 
-            if (string.IsNullOrEmpty(req.AccountId)
-                || string.IsNullOrEmpty(req.AccountPassword))
+            if (req.Validate() == false)
             {
                 res.Res = 0;
                 return res;
@@ -130,6 +144,8 @@ namespace AccountServer.Controllers
                 // duplicate
                 res.Res = 2;
             }
+
+            if (res.Validate() == false) throw new Exception("Invalid response");
 
             return res;
         }

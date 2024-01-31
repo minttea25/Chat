@@ -44,10 +44,12 @@ public partial class NetworkManager : IManager, IUpdate
     Coroutine pingTask = null;
 
 
-    public void AccountServerConnected(long accountDbId, string authToken)
+    public void AccountServerConnected(long accountDbId, string authToken, string serverIp, int serverPort)
     {
         AuthToken = authToken;
         AccountDbId = accountDbId;
+        endPoint = new IPEndPoint(IPAddress.Parse(serverIp), serverPort);
+        Debug.Log($"EndPoint: {endPoint} from account server");
     }
 
     public void SetConnected()
@@ -142,6 +144,7 @@ public partial class NetworkManager : IManager, IUpdate
         // Essential
         MessageManager.Instance.Init();
 
+#if DEBUG
         var config = Resources.Load<NetworkConfig>(ResourcePath.NetworkConfig);
         if (config == null)
         {
@@ -174,10 +177,10 @@ public partial class NetworkManager : IManager, IUpdate
             IPAddress ipHost = IPAddress.Parse(config.EndpointIPAddress);
             endPoint = new IPEndPoint(ipHost, config.Port);
         }
+        Debug.Log($"Loaded: EndPoint: {endPoint} for Debug");
+#endif
 
         CoreLogger.CreateLoggerWithFlag((uint)CoreLogger.LoggerSinks.FILE, LoggerConfig.GetDefault());
-
-        Debug.Log($"Loaded: EndPoint: {endPoint}");
     }
 
     public void Update()

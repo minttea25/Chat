@@ -49,7 +49,7 @@ namespace Chat
             ;
         }
 
-        public override void PreSessionCleanup()
+        public override void ClearSession()
         {
             UserInfo = null;
             _rooms = null;

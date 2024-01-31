@@ -71,7 +71,7 @@ public class RoomListItemUI : BaseUIItem
         }
         else
         {
-            NewMessageCount.Data = NewMessageCount.ToString();
+            NewMessageCount.Data = newMessageCount.ToString();
         }
     }
 

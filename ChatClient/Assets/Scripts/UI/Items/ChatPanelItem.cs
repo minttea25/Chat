@@ -66,6 +66,21 @@ public class ChatPanelItem : BaseUIItem
         // hide loading
     }
 
+    void InvokePendingActions()
+    {
+        if (RoomNumber == 0) return;
+
+        if (ManagerCore.Room.TryGetRoom(RoomNumber, out Room room) == false)
+        {
+            Utils.AssertCrash(false, $"The room[{RoomNumber}] is not in RoomManager");
+            return;
+        }
+
+        // invoke actions
+        var actions = room.GetPendingJobs();
+        foreach (var action in actions) action?.Invoke();
+    }
+
     public void SetRoom(uint roomId)
     {
         RoomNumber = roomId;
