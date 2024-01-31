@@ -48,7 +48,7 @@ namespace AccountServer.Controllers
                 AuthTokenDb? token = shared.Tokens?
                     .FirstOrDefault(a => a.AccountDbId == account.AccountDbId);
 
-                string dbToken = AuthToken.GenerateAuthToken(account.AccountDbId, account.AccountName, req.IPv4Address);
+                string dbToken = AuthToken.GenerateAuthToken(account.AccountDbId, account.AccountName!, req.IPv4Address!);
 
                 if (token == null)
                 {
