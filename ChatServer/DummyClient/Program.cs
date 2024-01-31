@@ -10,7 +10,7 @@ class Program
     static Random random = new Random();
 
     const int MAX_ROOM_NUMBER = 50;
-    const int CLIENTS_COUNT = 100;
+    const int CLIENTS_COUNT = 150;
 
     static void TrafficTest()
     {
