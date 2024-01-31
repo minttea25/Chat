@@ -5,20 +5,30 @@
     <version>6.0.0</version>
     <target-framework>.NET Standard2.0</target-framework>
   </plugin>
+  <plugin>
+    <name>System.Diagnostics.DiagnosticSource</name>
+    <version>8.0.0</version>
+    <target-framework>.NET Standard2.0</target-framework>
+  </plugin>
   <plugins>
     <name>Google.Protobuf</name>
-    <version>3.24.0</version>
+    <version>3.21.12</version>
     <target-framework>.NET Standard2.0</target-framework>
   </plugins>
   <plugins>
     <name>Serilog</name>
-    <version>3.0.1</version>
+    <version>3.1.1</version>
     <target-framework>.NET Standard2.1</target-framework>
   </plugins>
   <plugins>
-    <name>Serilog.Sinks.Async</name>
-    <version>1.5.0</version>
-    <target-framework>.NET Standard2.0</target-framework>
+    <name>Serilog.Sinks.Console</name>
+    <version>5.0.1</version>
+    <target-framework>.NET Standard2.1</target-framework>
+  </plugins>
+  <plugins>
+    <name>Serilog.Sinks.Debug</name>
+    <version>2.2.0</version>
+    <target-framework>.NET Standard2.1</target-framework>
   </plugins>
   <plugins>
     <name>Serilog.Sinks.File</name>
