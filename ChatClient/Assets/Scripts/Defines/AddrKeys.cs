@@ -20,7 +20,7 @@ public class AddrKeys
     // ex) const string item1 = "item1_spawnable"; or hashcode
 
     public const string SimplePopupUI = "SimplePopupUI";
-
+    public const string AlertPopupUI = "AlertPopupUI";
     
     public const string StartSceneUI = "StartSceneUI";
     public const string MainSceneUI = "MainSceneUI";

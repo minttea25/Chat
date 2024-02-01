@@ -92,6 +92,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - lChat
+  - m_GUID: 0820ed26b0e5c724b82f540b61e0738c
+    m_Address: AlertPopupUI
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - lBase
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ebb6c35e653131a49b4b627ed59fb469, type: 2}
   m_SchemaSet:

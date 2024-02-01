@@ -177,8 +177,7 @@ public class StartScene : BaseScene
 
         if (ManagerCore.Network.Connection != NetworkManager.ConnectState.Loginned)
         {
-            string msg = $"Failed to login: {ManagerCore.Network.Connection}";
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Error, msg);
+            ManagerCore.Error.HandleError(403, ErrorManager.ErrorLevel.Info, $"Login Timeout. Status: {ManagerCore.Network.Connection}");
 
             // failed to connect
             ManagerCore.Network.Logout();

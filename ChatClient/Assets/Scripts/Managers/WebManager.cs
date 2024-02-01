@@ -14,9 +14,7 @@ public class WebManager : IManager
     {
         if (account.Validate() == false)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
-                ErrorHandling.ErrorLevel.Error,
-                "AccountLoginWebReq is invalid.");
+            ManagerCore.Error.HandleError(201, ErrorManager.ErrorLevel.Warning, "AccountLoginWebReq is invalid.");
             return false;
         }
 
@@ -32,9 +30,7 @@ public class WebManager : IManager
     {
         if (account.Validate() == false)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
-                ErrorHandling.ErrorLevel.Error,
-                "AccountLoginWebReq is invalid.");
+            ManagerCore.Error.HandleError(202, ErrorManager.ErrorLevel.Warning, "AccountLoginWebReq is invalid.");
             return false;
         }
 
@@ -82,9 +78,8 @@ public class WebManager : IManager
             if (req.result == UnityWebRequest.Result.ConnectionError
                 || req.result == UnityWebRequest.Result.ProtocolError)
             {
-                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network,
-                    ErrorHandling.ErrorLevel.Warning,
-                    "Can not connect to AccountServer.");
+                ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Info, "Can not connect to AccountServer.");
+
                 NotificationUI.Show("Can not connect to AccountServer.");
                 ConnectingUI.Hide();
             }
@@ -106,24 +101,24 @@ public class WebManager : IManager
 
     void IManager.InitManager()
     {
-        bool suc = true;
-
+#if UNITY_EDITOR
         WebUrls = Resources.Load<WebUrls>(ResourcePath.WebUrls);
         if (WebUrls == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Null,
-                ErrorHandling.ErrorLevel.Warning,
-                "Can not find WebUrls in Resource directory");
-            suc = false;
+            ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Critical, "Failed to load Configs.");
         }
-        
-        if (suc == false)
+        Debug.Log($"[Scriptable Object]Loaded WebUrls: {WebUrls}");
+#else
+        WebConfig config = ReleaseConfig.GetReleaseConfigs();
+        if (config == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Null,
-                ErrorHandling.ErrorLevel.Critical,
-                "Can not load some network values.");
+            ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Critical, "Failed to load Configs.");
         }
-
-        Debug.Log($"WebUrls: {WebUrls}");
+        else
+        {
+            WebUrls = WebUrls.FromConfig(config);
+        }
+        Debug.Log($"[File] Loaded WebUrls: {WebUrls}  in {AppConst.ConfigPath}");
+#endif
     }
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Core
@@ -20,33 +18,38 @@ namespace Core
         readonly static SceneManagerCore _scene = new();
         readonly static SoundManagerCore _sound = new();
         readonly static DataManagerCore _data = new();
+        
 
         public static ResourceManagerCore Resource => _resource;
         public static UIManagerCore UI => _ui;
         public static SceneManagerCore Scene => _scene;
         public static SoundManagerCore Sound => _sound;
         public static DataManagerCore Data => _data;
+        
 
         // add custom managers...
         readonly static NetworkManager _network = new();
         readonly static UnityManager _unity = new();
         readonly static RoomManager _room = new();
         readonly static WebManager _web = new();
+        readonly static ErrorManager _error = new();
 
         public static NetworkManager Network => _network;
         public static UnityManager Unity => _unity;
         public static RoomManager Room => _room;
         public static WebManager Web => _web;
-
+        public static ErrorManager Error => _error;
 
         readonly static IManager[] _managers = new IManager[]
         {
             _resource, _ui, _scene, _sound, _data, // add customs...
-            _network, _unity, _room, _web
+            _network, _unity, _room, _web, _error
         };
 
         private void OnEnable()
         {
+            Error.LoadErrorFile(); // call first
+
             LoadBaseResource();
         }
 
@@ -71,13 +74,13 @@ namespace Core
                 {
                     Core.Utils.AssertCrash(failed.Count == 0);
                 },
-                AddrKeys.SimplePopupUI);
+                AddrKeys.SimplePopupUI, AddrKeys.AlertPopupUI);
         }
 
         void ReleaseBaseResource()
         {
             Resource.Release(
-                AddrKeys.SimplePopupUI);
+                AddrKeys.SimplePopupUI, AddrKeys.AlertPopupUI);
         }
 
 
