@@ -1,0 +1,13 @@
+{
+    "DBConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ChatDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False",
+    "SharedDBConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ChatSharedDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False",
+    "SessionPoolCount": 1,
+    "ReuseAddress": true,
+    "RegisterListenCount": 1,
+    "ListenerBacklogCount": 100,
+    "Port": 8888,
+    "HostEntryIndex": 0,
+    "LogFile": true,
+    "LogConsole": true,
+    "LogDebug": false
+}

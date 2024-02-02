@@ -1,18 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatSharedDb
 {
 
     public class SharedDbContext : DbContext
     {
-        public const string ConnString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ChatSharedDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-
+        public const string DefaultConnString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ChatSharedDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+        public static string? ConnString { get; private set; } = null;
         public DbSet<AuthTokenDb>? Tokens { get; set; }
 
         public SharedDbContext() { }
@@ -23,7 +17,8 @@ namespace ChatSharedDb
         {
             if (optionsBuilder.IsConfigured == false)
             {
-                optionsBuilder.UseSqlServer(ConnString);
+                if (ConnString == null) optionsBuilder.UseSqlServer(DefaultConnString);
+                else optionsBuilder.UseSqlServer(ConnString);
             }
         }
 
@@ -32,6 +27,11 @@ namespace ChatSharedDb
             modelBuilder.Entity<AuthTokenDb>()
                 .HasIndex(a => a.AccountDbId)
                 .IsUnique();
+        }
+
+        public static void SetConnString(string connString)
+        {
+            ConnString = connString;
         }
     }
 }

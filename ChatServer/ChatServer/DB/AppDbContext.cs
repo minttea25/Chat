@@ -1,5 +1,4 @@
-﻿using Chat.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Chat.DB
 {
@@ -15,9 +14,9 @@ namespace Chat.DB
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (Config.Configs != null && Config.Configs.DBConnectionString != null)
+            if (Config.Instance != null && Config.Instance.Loaded == true && Config.Instance.Configs.DBConnectionString != null)
             {
-                optionsBuilder.UseSqlServer(Config.Configs.DBConnectionString);
+                optionsBuilder.UseSqlServer(Config.Instance.Configs.DBConnectionString);
             }
             else
             {

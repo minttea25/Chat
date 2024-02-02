@@ -179,6 +179,8 @@ public class StartScene : BaseScene
         {
             ManagerCore.Error.HandleError(403, ErrorManager.ErrorLevel.Info, $"Login Timeout. Status: {ManagerCore.Network.Connection}");
 
+            ConnectingUI.Hide();
+
             // failed to connect
             ManagerCore.Network.Logout();
         }
