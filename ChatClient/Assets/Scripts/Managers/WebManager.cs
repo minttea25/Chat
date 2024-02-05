@@ -44,7 +44,7 @@ public class WebManager : IManager
 
     string GetUrl(string url) => WebUrls.AccountWebServerBaseUrl + url;
 
-    public void SendRequestPost<T>(string url, object data, Action<T> resCallback)
+    public void SendRequestPost<T>(string url, object data, Action<T> resCallback) where T : class
     {
         ManagerCore.Instance.StartCoroutine(SendWebRequestCo(url, UnityWebRequest.kHttpVerbPOST, data, resCallback));
     }
@@ -54,7 +54,7 @@ public class WebManager : IManager
         // TODO : 
     }
 
-    IEnumerator SendWebRequestCo<T>(string reqUrl, string method, object data, Action<T> resCallback)
+    IEnumerator SendWebRequestCo<T>(string reqUrl, string method, object data, Action<T> resCallback) where T : class
     {
 #if UNITY_EDITOR
         Debug.Log(data);
@@ -85,11 +85,22 @@ public class WebManager : IManager
             }
             else
             {
-                T resData = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
+                T resData = null;
+                try
+                {
+                    resData = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError(e);
+                }
+                finally
+                {
 #if UNITY_EDITOR
-                Debug.Log(resData);
+                    Debug.Log(resData);
 #endif
-                resCallback.Invoke(resData);
+                    resCallback.Invoke(resData);
+                }
             }
         }
     }
