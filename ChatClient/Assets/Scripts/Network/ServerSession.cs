@@ -46,7 +46,7 @@ public class ServerSession : PacketSession
         if (numOfBytes <= 0) Debug.LogError("Sent byte was 0");
     }
 
-    public override void PreSessionCleanup()
+    public override void ClearSession()
     {
         ;
     }

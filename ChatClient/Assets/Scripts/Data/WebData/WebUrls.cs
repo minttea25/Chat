@@ -23,6 +23,16 @@ public class WebUrls : ScriptableObject
         return $"BaseUrl: {AccountWebServerBaseUrl}, Login: {LoginUrl}, Register: {RegisterUrl}";
     }
 
+    public static WebUrls FromConfig(WebConfig config)
+    {
+        WebUrls webUrls = ScriptableObject.CreateInstance<WebUrls>();
+        webUrls.m_registerUrl = config.RegisterUrl;
+        webUrls.m_loginUrl = config.LoginUrl;
+        webUrls.m_accountWebServerBaseUrl = config.AccountWebServerBaseUrl;
+
+        return webUrls;
+    }
+
 #if UNITY_EDITOR
     private void OnValidate()
     {

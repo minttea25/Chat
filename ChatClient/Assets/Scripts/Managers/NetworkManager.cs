@@ -148,7 +148,7 @@ public partial class NetworkManager : IManager, IUpdate
         var config = Resources.Load<NetworkConfig>(ResourcePath.NetworkConfig);
         if (config == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Can not find NetworkConfig in Resource directory.");
+            ManagerCore.Error.HandleError(101, ErrorManager.ErrorLevel.Critical, "Failed to load NetworkConfig in Resource directory.");
             return;
         }
 
@@ -158,7 +158,7 @@ public partial class NetworkManager : IManager, IUpdate
         {
             if (config.Port == 0)
             {
-                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Port is 0.");
+                ManagerCore.Error.HandleError(102, ErrorManager.ErrorLevel.Critical, "Port was 0.");
                 return;
             }
 
@@ -170,7 +170,7 @@ public partial class NetworkManager : IManager, IUpdate
             if (string.IsNullOrEmpty(config.EndpointIPAddress)
                 || config.Port == 0)
             {
-                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Critical, "Empty endpoint.");
+                ManagerCore.Error.HandleError(103, ErrorManager.ErrorLevel.Critical, "Empty endpoint.");
                 return;
             }
 

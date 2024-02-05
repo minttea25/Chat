@@ -1,15 +1,19 @@
 ﻿using Chat.DB;
 using Chat.Network;
+using ChatSharedDb;
 using ServerCoreTCP;
 using ServerCoreTCP.CLogger;
 using System;
 using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Chat
 {
     class Program
     {
+        
+
         static void RoomManagerTask()
         {
             RoomManager.Instance.Update();
@@ -28,32 +32,40 @@ namespace Chat
             DbProcess.Instance.Flush();
         }
 
+        
         static void Main(string[] args)
         {
-            MessageManager.Instance.Init();
+            ServerService service;
 
-            var config = LoggerConfig.GetDefault();
-            config.RestrictedMinimumLevel = Serilog.Events.LogEventLevel.Error;
-            CoreLogger.CreateLoggerWithFlag(
-                (uint)(CoreLogger.LoggerSinks.CONSOLE | CoreLogger.LoggerSinks.FILE),
-                config);
-
-            string host = Dns.GetHostName(); // local host name of my pc
-            IPHostEntry ipHost = Dns.GetHostEntry(host);
-            IPAddress ipAddr = ipHost.AddressList[0];
-            IPEndPoint endPoint = new IPEndPoint(address: ipAddr, port: 8888);
-
-            ServerServiceConfig serverConfig = new()
+            try
             {
-                SessionPoolCount = 50,
-                ReuseAddress = true,
-                RegisterListenCount = 10,
-                ListenerBacklogCount = 100,
+                MessageManager.Instance.Init();
+                Console.WriteLine(Config.Instance.Configs);
 
-            };
+                SharedDbContext.SetConnString(Config.Instance.Configs.SharedDBConnectionString);
 
-            ServerService service = new ServerService(endPoint, SessionManager.Instance.CreateNewSession, serverConfig);
-            service.Start();
+                var config = LoggerConfig.GetDefault();
+                //config.RestrictedMinimumLevel = Serilog.Events.LogEventLevel.Error;
+                config.RestrictedMinimumLevel = Serilog.Events.LogEventLevel.Verbose;
+                CoreLogger.CreateLoggerWithFlag(
+                    Config.Instance.GetLoggerSinks(),
+                    config);
+
+                string host = Dns.GetHostName(); // local host name of my pc
+                IPHostEntry ipHost = Dns.GetHostEntry(host);
+                IPAddress ipAddr = ipHost.AddressList[Config.Instance.Configs.HostEntryIndex];
+                IPEndPoint endPoint = new IPEndPoint(address: ipAddr, port: Config.Instance.Configs.Port);
+
+                ServerServiceConfig serverConfig = Config.Instance.GetServiceConfig();
+
+                service = new ServerService(endPoint, SessionManager.Instance.CreateNewSession, serverConfig);
+                service.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return;
+            }
 
             //TaskManager taskManager = new TaskManager();
             //taskManager.AddTask(RoomManagerTask);
@@ -86,9 +98,36 @@ namespace Chat
             sessionTask.Start();
             dbTask.Start();
 
+            MainCommand(service);
 
-            Console.ReadLine();
+            //Console.ReadLine();
             service.Stop();
+        }
+
+        static void MainCommand(ServerService service)
+        {
+            while (true)
+            {
+                string command = Console.ReadLine();
+                switch (command)
+                {
+                    case "stop":
+                        return;
+                    case "config":
+                        Console.WriteLine(Config.Instance.Configs);
+                        break;
+                    case "pool_count":
+                        Console.WriteLine($"Total SAEA Pool Count: {service.SAEATotalPoolCount}");
+                        Console.WriteLine($"Current Pooled SAEA: {service.SAEACurrentPooledCount}");
+                        Console.WriteLine($"Total Session Pool Count: {service.SessionTotalPoolCount}");
+                        Console.WriteLine($"Current Pooled Session: {service.SessionCurrentPooledCount}");
+                        break;
+                    default:
+                        Console.WriteLine($"Unknown Command: {command}");
+                        break;
+                }
+                Thread.Yield();
+            }
         }
     }
 }

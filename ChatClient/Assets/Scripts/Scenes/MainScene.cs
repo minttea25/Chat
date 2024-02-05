@@ -4,6 +4,7 @@ using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 
 public class MainScene : BaseScene
@@ -41,18 +42,16 @@ public class MainScene : BaseScene
     {
         if (failedKeys.Count != 0)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Runtime,
-                ErrorHandling.ErrorLevel.Critical,
-                "Failed to load resources");
+            StringBuilder t = new StringBuilder("");
+            foreach (string key in failedKeys) { t.Append($"{key}, "); }
+            ManagerCore.Error.HandleError(1001, ErrorManager.ErrorLevel.Critical, $"Failed to load resources: {t}");
             return;
         }
 
         ui = ManagerCore.UI.ShowSceneUI<MainSceneUI>(AddrKeys.MainSceneUI);
         if (ui == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Runtime,
-                ErrorHandling.ErrorLevel.Critical,
-                "Failed to load MainSceneUI");
+            ManagerCore.Error.HandleError(1002, ErrorManager.ErrorLevel.Critical, "Failed to load MainSceneUI");
             return;
         }
 
@@ -75,18 +74,16 @@ public class MainScene : BaseScene
 
         if (ManagerCore.Network.Connection == NetworkManager.ConnectState.FailedToConnect)
         {
-            // TODO : 연결 실패
-
+            ManagerCore.Error.HandleError(401, ErrorManager.ErrorLevel.Info, "Failed to connect to chat server.");
         }
 
         if (ManagerCore.Network.Connection == NetworkManager.ConnectState.Disconnected)
         {
-            // TODO : 오류
+            ManagerCore.Error.HandleError(402, ErrorManager.ErrorLevel.Info, "Disconnected before starting application.");
         }
 
         // req room list
         ManagerCore.Network.ReqRoomList();
-
     }
     
 

@@ -25,4 +25,9 @@ public class NotificationUI : MonoBehaviour
         var noti = Instantiate(instance.NotiPrefab, instance.NotiPanel);
         noti.GetComponent<NotiItem>().Init(text, timeAfter);
     }
+
+    public static void Show_Unity(string text, float timeAfter = 1.5f)
+    {
+        UnityJobQueue.Instance.Push(() => { Show(text, timeAfter); });
+    }
 }

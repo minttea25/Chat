@@ -14,9 +14,7 @@ public class WebManager : IManager
     {
         if (account.Validate() == false)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
-                ErrorHandling.ErrorLevel.Error,
-                "AccountLoginWebReq is invalid.");
+            ManagerCore.Error.HandleError(201, ErrorManager.ErrorLevel.Warning, "AccountLoginWebReq is invalid.");
             return false;
         }
 
@@ -32,9 +30,7 @@ public class WebManager : IManager
     {
         if (account.Validate() == false)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
-                ErrorHandling.ErrorLevel.Error,
-                "AccountLoginWebReq is invalid.");
+            ManagerCore.Error.HandleError(202, ErrorManager.ErrorLevel.Warning, "AccountLoginWebReq is invalid.");
             return false;
         }
 
@@ -48,7 +44,7 @@ public class WebManager : IManager
 
     string GetUrl(string url) => WebUrls.AccountWebServerBaseUrl + url;
 
-    public void SendRequestPost<T>(string url, object data, Action<T> resCallback)
+    public void SendRequestPost<T>(string url, object data, Action<T> resCallback) where T : class
     {
         ManagerCore.Instance.StartCoroutine(SendWebRequestCo(url, UnityWebRequest.kHttpVerbPOST, data, resCallback));
     }
@@ -58,7 +54,7 @@ public class WebManager : IManager
         // TODO : 
     }
 
-    IEnumerator SendWebRequestCo<T>(string reqUrl, string method, object data, Action<T> resCallback)
+    IEnumerator SendWebRequestCo<T>(string reqUrl, string method, object data, Action<T> resCallback) where T : class
     {
 #if UNITY_EDITOR
         Debug.Log(data);
@@ -82,19 +78,29 @@ public class WebManager : IManager
             if (req.result == UnityWebRequest.Result.ConnectionError
                 || req.result == UnityWebRequest.Result.ProtocolError)
             {
-                ErrorHandling.HandleError(ErrorHandling.ErrorType.Network,
-                    ErrorHandling.ErrorLevel.Warning,
-                    "Can not connect to AccountServer.");
+                ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Info, "Can not connect to AccountServer.");
+
                 NotificationUI.Show("Can not connect to AccountServer.");
                 ConnectingUI.Hide();
             }
             else
             {
-                T resData = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
+                T resData = null;
+                try
+                {
+                    resData = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(req.downloadHandler.text);
+                }
+                catch(Exception e)
+                {
+                    Debug.LogError(e);
+                }
+                finally
+                {
 #if UNITY_EDITOR
-                Debug.Log(resData);
+                    Debug.Log(resData);
 #endif
-                resCallback.Invoke(resData);
+                    resCallback.Invoke(resData);
+                }
             }
         }
     }
@@ -106,24 +112,24 @@ public class WebManager : IManager
 
     void IManager.InitManager()
     {
-        bool suc = true;
-
+#if UNITY_EDITOR
         WebUrls = Resources.Load<WebUrls>(ResourcePath.WebUrls);
         if (WebUrls == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Null,
-                ErrorHandling.ErrorLevel.Warning,
-                "Can not find WebUrls in Resource directory");
-            suc = false;
+            ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Critical, "Failed to load Configs.");
         }
-        
-        if (suc == false)
+        Debug.Log($"[Scriptable Object]Loaded WebUrls: {WebUrls}");
+#else
+        WebConfig config = ReleaseConfig.GetReleaseConfigs();
+        if (config == null)
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Null,
-                ErrorHandling.ErrorLevel.Critical,
-                "Can not load some network values.");
+            ManagerCore.Error.HandleError(203, ErrorManager.ErrorLevel.Critical, "Failed to load Configs.");
         }
-
-        Debug.Log($"WebUrls: {WebUrls}");
+        else
+        {
+            WebUrls = WebUrls.FromConfig(config);
+        }
+        Debug.Log($"[File] Loaded WebUrls: {WebUrls}  in {AppConst.ConfigPath}");
+#endif
     }
 }

@@ -10,9 +10,10 @@ namespace Chat
 {
     public enum SessionStatus
     {
-        NOT_LOGINNED = 0,
-        LOGINNED = 1,
-        DISCONNECTED = 2,
+        None = 0,
+        NOT_LOGINNED = 1,
+        LOGINNED = 2,
+        DISCONNECTED = 3,
     }
 
     public partial class ClientSession : PacketSession
@@ -34,6 +35,8 @@ namespace Chat
 
         public void HandleLoginReq(SLoginReq req)
         {
+            if (SessionStatus == SessionStatus.None) return;
+
             if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
             LoginRes res;

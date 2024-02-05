@@ -92,6 +92,8 @@ public class StartScene : BaseScene
     {
         ConnectingUI.Hide();
 
+        if (res == null) return;
+
         // TEMP
         Debug.Log(res);
 
@@ -105,7 +107,7 @@ public class StartScene : BaseScene
         {
             case AppConst.WebResOk:
                 // successful
-                ManagerCore.Network.AccountServerConnected(res.AccountDbId, res.AuthToken, res.ServerIp, res.ServerPort);
+                ManagerCore.Network.AccountServerConnected(res.AccountDbId, res.AuthToken, res.ServerIp, (int)res.ServerPort);
 
                 // 채팅 서버 연결
                 ManagerCore.Network.StartService(ConnectionFailed);
@@ -114,7 +116,7 @@ public class StartScene : BaseScene
             // TODO : failed to login
             // --------- failed -----------
             default:
-                NotificationUI.Show($"Failed to login to account server. Code : {res}");
+                NotificationUI.Show($"Failed to login to account server.");
                 Debug.LogError($"Failed to login to account server. Code : {res}");
                 break;
         }
@@ -123,6 +125,8 @@ public class StartScene : BaseScene
     public void ResAccountRegister(CreateAccountWebRes res)
     {
         ConnectingUI.Hide();
+
+        if (res == null) return;
 
         // TEMP
         Debug.Log(res);
@@ -177,8 +181,9 @@ public class StartScene : BaseScene
 
         if (ManagerCore.Network.Connection != NetworkManager.ConnectState.Loginned)
         {
-            string msg = $"Failed to login: {ManagerCore.Network.Connection}";
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Network, ErrorHandling.ErrorLevel.Error, msg);
+            ManagerCore.Error.HandleError(403, ErrorManager.ErrorLevel.Info, $"Login Timeout. Status: {ManagerCore.Network.Connection}");
+
+            ConnectingUI.Hide();
 
             // failed to connect
             ManagerCore.Network.Logout();

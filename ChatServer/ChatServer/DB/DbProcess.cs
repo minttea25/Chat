@@ -78,6 +78,7 @@ namespace Chat.DB
                     {
                         res.LoginRes = loginRes;
                     }
+
                     session.Send(res);
                 }
             });

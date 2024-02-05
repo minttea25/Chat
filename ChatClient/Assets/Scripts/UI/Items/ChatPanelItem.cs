@@ -145,9 +145,7 @@ public class ChatPanelItem : BaseUIItem
         }
         else
         {
-            ErrorHandling.HandleError(ErrorHandling.ErrorType.Logic,
-                ErrorHandling.ErrorLevel.Error,
-                $"Can not find chat [id={chatId}]");
+            ManagerCore.Error.HandleError(501, ErrorManager.ErrorLevel.Error, "Can not find chat id.");
         }
     }
 

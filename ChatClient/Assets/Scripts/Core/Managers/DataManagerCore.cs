@@ -3,7 +3,6 @@ using System.IO;
 using System.Xml.Serialization;
 using UnityEngine;
 
-
 namespace Core
 {
     public class DataManagerCore : IManager
@@ -42,8 +41,6 @@ namespace Core
             {
                 m_emoticons = data;
             });
-
-
         }
 
         void LoadJsonAsync<T>(string key, Action<T> callback)
