@@ -218,6 +218,11 @@ namespace Core
 
         public void ClosePopupUI(BaseUIPopup popup)
         {
+            if (TopPopupUI != null && TopPopupUI.Equals(popup))
+            {
+                CloseTopPopupUI();
+            }
+
             if (_popupStack.Count == 0) return;
 
             // assertion crash

@@ -25,6 +25,7 @@ namespace Chat.Network
                 session.ServerSessionId = _idIssuer;
                 _sessions.Add(_idIssuer, session);
                 _idIssuer++;
+                _idIssuer = Math.Max(1, _idIssuer);
             }
             return session;
         }

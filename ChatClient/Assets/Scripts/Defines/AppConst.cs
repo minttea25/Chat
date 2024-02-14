@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class AppConst
 {
 
@@ -6,6 +8,8 @@ public class AppConst
 
 
 
+    public readonly static string ConfigPath = $"{Application.streamingAssetsPath}/Config.json";
+    public readonly static string ErrorFilePath = $"{Application.persistentDataPath}/Error.json";
 
 
 

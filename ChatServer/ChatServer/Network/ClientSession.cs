@@ -3,6 +3,7 @@ using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP.MessageWrapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Net;
 
@@ -31,7 +32,7 @@ namespace Chat
         {
             Console.WriteLine($"Connected to {endPoint}");
 
-
+            SessionStatus = SessionStatus.NOT_LOGINNED;
         }
 
         public override void OnDisconnected(EndPoint endPoint, object error = null)
@@ -51,6 +52,8 @@ namespace Chat
 
         public override void ClearSession()
         {
+            ServerSessionId = 0;
+            SessionStatus = SessionStatus.None;
             UserInfo = null;
             _rooms = null;
         }
