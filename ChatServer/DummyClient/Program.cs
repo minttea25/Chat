@@ -10,7 +10,7 @@ class Program
     static Random random = new Random();
 
     const int MAX_ROOM_NUMBER = 50;
-    const int CLIENTS_COUNT = 150;
+    const int CLIENTS_COUNT = 1000;
 
     static void TrafficTest()
     {
@@ -24,15 +24,15 @@ class Program
                 int r = random.Next(100);
                 DoSomething(r, session);
             }
-            int t = random.Next(3000);
+            int t = random.Next(2000);
             Task.Delay(t).Wait();
         }
     }
 
     static void DoSomething(int r, ServerSession ss)
     {
-        // create room for 10%
-        if (r < 10)
+        // create room for 7%
+        if (r < 7)
         {
             int roomId = random.Next(MAX_ROOM_NUMBER);
             SCreateRoomReq req = new SCreateRoomReq()
@@ -43,8 +43,8 @@ class Program
             ss.Send(req);
 
         }
-        // leave room for 10%
-        else if (r < 20)
+        // leave room for 7%
+        else if (r < 14)
         {
             int roomId = random.Next(ss.Rooms.Count);
             SLeaveRoomReq req = new SLeaveRoomReq()
@@ -54,8 +54,8 @@ class Program
             };
             ss.Send(req);
         }
-        // send chat for 40%
-        else if (r < 60) 
+        // send chat for 43%
+        else if (r < 57) 
         {
             int roomId = random.Next(ss.Rooms.Count);
             SSendChatText chat = new SSendChatText()
@@ -71,7 +71,7 @@ class Program
             };
             ss.Send(chat);
         }
-        // send emoticon for 40%
+        // send emoticon for 43%
         else
         {
             int roomId = random.Next(ss.Rooms.Count);

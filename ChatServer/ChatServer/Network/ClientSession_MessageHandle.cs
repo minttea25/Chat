@@ -10,9 +10,10 @@ namespace Chat
 {
     public enum SessionStatus
     {
-        NOT_LOGINNED = 0,
-        LOGINNED = 1,
-        DISCONNECTED = 2,
+        None = 0,
+        NOT_LOGINNED = 1,
+        LOGINNED = 2,
+        DISCONNECTED = 3,
     }
 
     public partial class ClientSession : PacketSession
@@ -34,11 +35,9 @@ namespace Chat
 
         public void HandleLoginReq(SLoginReq req)
         {
-            // TEST
-            DbProcess.Login(this, req.AccountDbId);
-            return;
-
-            if (MessageValidation.Validate_SLoginReq(req) == false) return;
+            if (SessionStatus == SessionStatus.None) return;
+            // For test
+            //if (MessageValidation.Validate_SLoginReq(req) == false) return;
 
             LoginRes res;
 
@@ -47,7 +46,7 @@ namespace Chat
                 AuthTokenDb token = db.Tokens?
                     .AsNoTracking() // read-only
                     .FirstOrDefault(a => a.AccountDbId == req.AccountDbId);
-                
+
                 if (token != null)
                 {
                     Console.WriteLine(token.Expired);
@@ -119,7 +118,7 @@ namespace Chat
 
             // 빠른 응답을 위해 성공 여부 상관 없이 바로 broad cast
             // db 저장과 동시 진행 가능
-            
+
 
             // broadcast
             RoomManager.Instance.HandleChatText(chat, this);
