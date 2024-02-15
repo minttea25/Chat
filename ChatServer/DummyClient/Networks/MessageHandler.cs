@@ -4,6 +4,7 @@ using ServerCoreTCP;
 using Google.Protobuf;
 using System.Diagnostics;
 using DummyClient;
+using ServerCoreTCP.CLogger;
 
 namespace Chat
 {
@@ -13,14 +14,16 @@ namespace Chat
         {
             CSendChat msg = message as CSendChat;
 
-            Console.WriteLine(msg);
+            //Console.WriteLine(msg);
+            //CoreLogger.LogInfo("", msg.ToString());
         }
 
         public static void CChatTextMessageHandler(IMessage message, Session session)
         {
             CChatText msg = message as CChatText;
 
-            Console.WriteLine(msg);
+            //Console.WriteLine(msg);
+            CoreLogger.LogInfo("", msg.ToString());
         }
 
 
@@ -28,14 +31,16 @@ namespace Chat
         {
             CChatIcon msg = message as CChatIcon;
 
-            Console.WriteLine(msg);
+            //Console.WriteLine(msg);
+            CoreLogger.LogInfo("", msg.ToString());
         }
 
         public static void CCreateRoomResMessageHandler(IMessage message, Session session)
         {
             CCreateRoomRes msg = message as CCreateRoomRes;
 
-            Console.WriteLine(msg);
+            //Console.WriteLine(msg);
+            CoreLogger.LogInfo("", msg.ToString());
         }
 
         public static void CEnterRoomResMessageHandler(IMessage message, Session session)
@@ -45,7 +50,8 @@ namespace Chat
 
             ss?.Rooms.Add(msg.RoomNumber);
 
-            Console.WriteLine(msg);
+            //Console.WriteLine(msg);
+            CoreLogger.LogInfo("", msg.ToString());
         }
 
         public static void CRoomListResMessageHandler(IMessage message, Session session)

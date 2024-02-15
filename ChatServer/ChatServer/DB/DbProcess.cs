@@ -78,7 +78,7 @@ namespace Chat.DB
                     {
                         res.LoginRes = loginRes;
                     }
-
+                    CoreLogger.LogInfo("login", res.ToString());
                     session.Send(res);
                 }
             });

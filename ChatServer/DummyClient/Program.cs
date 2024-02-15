@@ -2,6 +2,7 @@
 using DummyClient;
 using Google.Protobuf.WellKnownTypes;
 using ServerCoreTCP;
+using ServerCoreTCP.CLogger;
 using System.Net;
 
 class Program
@@ -40,6 +41,7 @@ class Program
                 RoomName = $"room_{roomId}",
                 RoomNumber = (uint)roomId,
             };
+            CoreLogger.LogInfo("", req.ToString());
             ss.Send(req);
 
         }
@@ -52,10 +54,22 @@ class Program
                 RoomNumber = (uint)roomId,
                 UserInfo = ss.UserInfo
             };
+            CoreLogger.LogInfo("", req.ToString());
+            ss.Send(req);
+        }
+        // enter room for 7%
+        else if (r < 21)
+        {
+            int roomId = random.Next(MAX_ROOM_NUMBER);
+            SEnterRoomReq req = new SEnterRoomReq()
+            {
+                RoomNumber = (uint)roomId,
+            };
+            CoreLogger.LogInfo("", req.ToString());
             ss.Send(req);
         }
         // send chat for 43%
-        else if (r < 57) 
+        else if (r < 64) 
         {
             int roomId = random.Next(ss.Rooms.Count);
             SSendChatText chat = new SSendChatText()
@@ -69,9 +83,10 @@ class Program
                 },
                 SenderInfo = ss.UserInfo
             };
+            CoreLogger.LogInfo("", chat.ToString());
             ss.Send(chat);
         }
-        // send emoticon for 43%
+        // send emoticon for 36%
         else
         {
             int roomId = random.Next(ss.Rooms.Count);
@@ -86,6 +101,7 @@ class Program
                 },
                 SenderInfo = ss.UserInfo
             };
+            CoreLogger.LogInfo("", chat.ToString());
             ss.Send(chat);
         }
     }
@@ -111,6 +127,13 @@ class Program
         IPHostEntry ipHost = Dns.GetHostEntry(host);
         IPAddress ipAddr = ipHost.AddressList[0];
         IPEndPoint endPoint = new IPEndPoint(address: ipAddr, port: 8888);
+
+        var config2 = LoggerConfig.GetDefault();
+        //config.RestrictedMinimumLevel = Serilog.Events.LogEventLevel.Error;
+        config2.RestrictedMinimumLevel = Serilog.Events.LogEventLevel.Verbose;
+        CoreLogger.CreateLoggerWithFlag(
+            (uint)(CoreLogger.LoggerSinks.FILE | CoreLogger.LoggerSinks.CONSOLE),
+            config2);
 
         ClientServiceConfig config = new ClientServiceConfig()
         {
